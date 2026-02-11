@@ -1,0 +1,30 @@
+# ============================================================
+# Stock Sentiment Strategy - Configuration
+# ============================================================
+
+# Finnhub API key (free: https://finnhub.io/register)
+finnhub_api_key: "YOUR_KEY"
+
+# Watchlist
+watchlist:
+  us_stocks:
+    - "AAPL"
+    - "TSLA"
+    - "NVDA"
+    - "MSFT"
+    - "GOOGL"
+  cn_stocks:
+    - "600519"   # 贵州茅台
+    - "000858"   # 五粮液
+    - "601318"   # 中国平安
+    - "000001"   # 平安银行
+    - "300750"   # 宁德时代
+
+# Strategy parameters
+strategy:
+  sentiment_weight: 0.4
+  technical_weight: 0.4
+  volume_weight: 0.2
+  max_position: 0.2
+  stop_loss: -0.08
+  news_lookback_days: 3

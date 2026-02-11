@@ -1,0 +1,28 @@
+# Data collection
+yfinance>=0.2.31
+akshare>=1.12.0
+finnhub-python>=2.4.18
+requests>=2.31.0
+
+# NLP / Sentiment analysis
+transformers>=4.36.0
+torch>=2.1.0
+
+# Technical indicators
+pandas-ta>=0.3.14b
+
+# Data processing
+pandas>=2.1.0
+numpy>=1.26.0
+
+# Output
+rich>=13.7.0
+streamlit>=1.29.0
+plotly>=5.18.0
+
+# API server
+fastapi>=0.104.0
+uvicorn>=0.24.0
+
+# Config
+pyyaml>=6.0.1
