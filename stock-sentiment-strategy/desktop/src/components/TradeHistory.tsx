@@ -98,9 +98,12 @@ export default function TradeHistory({ trades }: Props) {
                   </td>
                   <td className="py-1.5 px-2">
                     <span className="font-mono font-semibold text-white">{trade.ticker}</span>
-                    <span className={`ml-1 text-[9px] px-1 py-0.5 rounded
-                      ${trade.market === 'US' ? 'bg-blue-900/40 text-blue-400' : 'bg-red-900/40 text-red-400'}`}>
-                      {trade.market === 'US' ? '美' : 'A'}
+                    <span className={`ml-1 text-[9px] px-1 py-0.5 rounded ${
+                      trade.market === 'US' ? 'bg-blue-900/40 text-blue-400'
+                      : trade.market === 'FUTURES' ? 'bg-orange-900/40 text-orange-400'
+                      : 'bg-red-900/40 text-red-400'
+                    }`}>
+                      {trade.market === 'US' ? '美' : trade.market === 'FUTURES' ? '期' : 'A'}
                     </span>
                   </td>
                   <td className="py-1.5 px-2 text-center">

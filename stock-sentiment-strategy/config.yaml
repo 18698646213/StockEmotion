@@ -1,30 +1,33 @@
-# ============================================================
-# Stock Sentiment Strategy - Configuration
-# ============================================================
-
-# Finnhub API key (free: https://finnhub.io/register)
-finnhub_api_key: "YOUR_KEY"
-
-# Watchlist
+finnhub_api_key: YOUR_KEY
+deepseek:
+  api_key: sk-0156efe40a5347a8b2e4345f1addd9ab
+  base_url: https://api.deepseek.com
+  model: deepseek-chat
+tqsdk:
+  user: '18698646213'
+  password: 4717123c
+  trade_mode: live
+  broker_id: G国信期货
+  broker_account: '663958885817'
+  broker_password: 4717123c
 watchlist:
-  us_stocks:
-    - "AAPL"
-    - "TSLA"
-    - "NVDA"
-    - "MSFT"
-    - "GOOGL"
+  us_stocks: []
   cn_stocks:
-    - "600519"   # 贵州茅台
-    - "000858"   # 五粮液
-    - "601318"   # 中国平安
-    - "000001"   # 平安银行
-    - "300750"   # 宁德时代
-
-# Strategy parameters
+  - '600598'
+  futures_contracts:
+  - C2605
+  - SA2605
 strategy:
-  sentiment_weight: 0.4
-  technical_weight: 0.4
-  volume_weight: 0.2
+  sentiment_weight: 0.3263973888208894
+  technical_weight: 0.3263973888208894
+  volume_weight: 0.3472052223582211
   max_position: 0.2
   stop_loss: -0.08
-  news_lookback_days: 3
+  news_lookback_days: 7
+futures_strategy:
+  sentiment_weight: 0.16155088852988694
+  technical_weight: 0.4846526655896607
+  volume_weight: 0.35379644588045234
+  max_position: 0.3
+  stop_loss: -0.05
+  news_lookback_days: 10

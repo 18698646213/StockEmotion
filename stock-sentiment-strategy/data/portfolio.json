@@ -1,0 +1,116 @@
+{
+  "initial_capital": 100000.0,
+  "cash": 89304.61850000003,
+  "realized_pnl": 0.0,
+  "positions": {
+    "600598": {
+      "ticker": "600598",
+      "market": "CN",
+      "shares": 500,
+      "avg_cost": 15.23,
+      "buy_date": "2026-02-16",
+      "realized_pnl": 0.0
+    },
+    "RB0": {
+      "ticker": "RB0",
+      "market": "FUTURES",
+      "shares": 1,
+      "avg_cost": 3055.0,
+      "buy_date": "2026-02-16",
+      "realized_pnl": 0.0
+    }
+  },
+  "trades": [
+    {
+      "id": "86674f00",
+      "ticker": "600598",
+      "market": "CN",
+      "action": "BUY",
+      "shares": 100,
+      "price": 15.23,
+      "amount": 1523.0,
+      "commission": 5.0,
+      "stamp_tax": 0.0,
+      "transfer_fee": 0.0152,
+      "total_fee": 5.0152,
+      "timestamp": "2026-02-16T15:09:43.017977",
+      "signal_source": "manual"
+    },
+    {
+      "id": "b9c55507",
+      "ticker": "600598",
+      "market": "CN",
+      "action": "BUY",
+      "shares": 100,
+      "price": 15.23,
+      "amount": 1523.0,
+      "commission": 5.0,
+      "stamp_tax": 0.0,
+      "transfer_fee": 0.0152,
+      "total_fee": 5.0152,
+      "timestamp": "2026-02-16T15:09:50.302143",
+      "signal_source": "manual"
+    },
+    {
+      "id": "d9049c57",
+      "ticker": "600598",
+      "market": "CN",
+      "action": "BUY",
+      "shares": 100,
+      "price": 15.23,
+      "amount": 1523.0,
+      "commission": 5.0,
+      "stamp_tax": 0.0,
+      "transfer_fee": 0.0152,
+      "total_fee": 5.0152,
+      "timestamp": "2026-02-16T15:09:51.634529",
+      "signal_source": "manual"
+    },
+    {
+      "id": "55b7528b",
+      "ticker": "600598",
+      "market": "CN",
+      "action": "BUY",
+      "shares": 100,
+      "price": 15.23,
+      "amount": 1523.0,
+      "commission": 5.0,
+      "stamp_tax": 0.0,
+      "transfer_fee": 0.0152,
+      "total_fee": 5.0152,
+      "timestamp": "2026-02-16T15:09:52.158080",
+      "signal_source": "manual"
+    },
+    {
+      "id": "db0c7551",
+      "ticker": "600598",
+      "market": "CN",
+      "action": "BUY",
+      "shares": 100,
+      "price": 15.23,
+      "amount": 1523.0,
+      "commission": 5.0,
+      "stamp_tax": 0.0,
+      "transfer_fee": 0.0152,
+      "total_fee": 5.0152,
+      "timestamp": "2026-02-16T15:09:52.587154",
+      "signal_source": "manual"
+    },
+    {
+      "id": "e3127e8c",
+      "ticker": "RB0",
+      "market": "FUTURES",
+      "action": "BUY",
+      "shares": 1,
+      "price": 3055.0,
+      "amount": 3055.0,
+      "commission": 0.3055,
+      "stamp_tax": 0.0,
+      "transfer_fee": 0.0,
+      "total_fee": 0.3055,
+      "timestamp": "2026-02-16T15:55:00.477088",
+      "signal_source": "manual"
+    }
+  ],
+  "snapshots": []
+}

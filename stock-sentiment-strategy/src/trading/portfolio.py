@@ -1,7 +1,7 @@
 """Portfolio management with JSON persistence.
 
 Tracks positions, trade history, cash balance, and net-value snapshots.
-Data is persisted to ~/.stock-strategy/portfolio.json.
+Data is persisted to <project>/data/portfolio.json.
 """
 
 import json
@@ -17,7 +17,7 @@ from src.trading.fees import FeeCalculator, CommissionDetail
 
 logger = logging.getLogger(__name__)
 
-PORTFOLIO_DIR = Path.home() / ".stock-strategy"
+PORTFOLIO_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 PORTFOLIO_FILE = PORTFOLIO_DIR / "portfolio.json"
 
 
@@ -27,10 +27,10 @@ PORTFOLIO_FILE = PORTFOLIO_DIR / "portfolio.json"
 
 @dataclass
 class Position:
-    """A single stock position."""
+    """A single stock/futures position."""
     ticker: str
-    market: str            # 'US' or 'CN'
-    shares: int = 0
+    market: str            # 'US' | 'CN' | 'FUTURES'
+    shares: int = 0        # 股数（FUTURES 时为手数）
     avg_cost: float = 0.0  # 加权平均成本
     buy_date: str = ""     # ISO date of the latest purchase (for T+1 check)
     realized_pnl: float = 0.0  # 该票已实现盈亏
@@ -41,7 +41,7 @@ class Trade:
     """Record of a single executed trade."""
     id: str = ""
     ticker: str = ""
-    market: str = ""       # 'US' or 'CN'
+    market: str = ""       # 'US' | 'CN' | 'FUTURES'
     action: str = ""       # 'BUY' or 'SELL'
     shares: int = 0
     price: float = 0.0

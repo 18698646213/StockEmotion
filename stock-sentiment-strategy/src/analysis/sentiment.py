@@ -22,11 +22,25 @@ _models: Dict[str, Tuple] = {}
 
 
 def _get_model(model_name: str):
-    """Load and cache a HuggingFace model + tokenizer."""
+    """Load and cache a HuggingFace model + tokenizer.
+
+    Tries local cache first (offline mode) to avoid network timeouts behind
+    firewalls, then falls back to downloading if the cache is missing.
+    """
     if model_name not in _models:
-        logger.info("Loading model: %s (first time, may take a moment)...", model_name)
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-        model = AutoModelForSequenceClassification.from_pretrained(model_name)
+        logger.info("Loading model: %s ...", model_name)
+
+        # Try loading from local cache first (no network)
+        try:
+            tokenizer = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
+            model = AutoModelForSequenceClassification.from_pretrained(
+                model_name, local_files_only=True
+            )
+        except Exception:
+            logger.info("Local cache miss for %s, downloading...", model_name)
+            tokenizer = AutoTokenizer.from_pretrained(model_name)
+            model = AutoModelForSequenceClassification.from_pretrained(model_name)
+
         model.eval()
         _models[model_name] = (tokenizer, model)
     return _models[model_name]
@@ -130,10 +144,23 @@ def analyze_sentiment_cn(text: str) -> float:
         return 0.0
 
 
+def _is_cn_ticker(ticker: str) -> bool:
+    """Check if the ticker looks like an A-share code (6 digits)."""
+    return bool(ticker) and ticker.strip().isdigit() and len(ticker.strip()) == 6
+
+
+def _is_futures_symbol(ticker: str) -> bool:
+    """Check if the ticker looks like a Chinese futures symbol (letters + 0)."""
+    t = ticker.strip().upper()
+    return bool(t) and t[-1] == "0" and t[:-1].isalpha() and len(t) >= 2
+
+
 def analyze_news_sentiment(news_items: List[NewsItem]) -> List[Dict]:
     """Analyze sentiment for a list of news items.
 
     Automatically detects language and routes to the appropriate model.
+    Uses ticker information as primary signal (A-share codes are 6 digits),
+    falls back to text-based language detection.
 
     Args:
         news_items: List of NewsItem objects.
@@ -144,10 +171,17 @@ def analyze_news_sentiment(news_items: List[NewsItem]) -> List[Dict]:
     """
     results = []
     for item in news_items:
-        # Use title + summary for analysis
         text = f"{item.title}. {item.summary}" if item.summary else item.title
 
-        if _is_chinese(text):
+        # Route by ticker first (A-share codes are 6-digit numbers,
+        # futures symbols are letters+0), then fall back to text-based detection.
+        use_chinese = (
+            _is_cn_ticker(item.ticker)
+            or _is_futures_symbol(item.ticker)
+            or _is_chinese(item.title)
+        )
+
+        if use_chinese:
             score = analyze_sentiment_cn(text)
         else:
             score = analyze_sentiment_en(text)

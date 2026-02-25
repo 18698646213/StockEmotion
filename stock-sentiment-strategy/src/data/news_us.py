@@ -25,7 +25,7 @@ class NewsItem:
 def fetch_finnhub_news(
     ticker: str,
     api_key: str,
-    lookback_days: int = 3,
+    lookback_days: int = 7,
 ) -> List[NewsItem]:
     """Fetch company news from Finnhub API.
 
@@ -127,7 +127,7 @@ def fetch_yfinance_news(ticker: str) -> List[NewsItem]:
 def fetch_us_news(
     ticker: str,
     api_key: str = "",
-    lookback_days: int = 3,
+    lookback_days: int = 7,
 ) -> List[NewsItem]:
     """Fetch US stock news, trying Finnhub first then Yahoo Finance fallback.
 
@@ -154,5 +154,18 @@ def fetch_us_news(
 
     # Sort by publish time descending
     items.sort(key=lambda x: x.published_at, reverse=True)
-    logger.info("Fetched %d US news items for %s", len(items), ticker)
-    return items
+
+    # Apply date filter
+    cutoff = datetime.now() - timedelta(days=lookback_days)
+    filtered = [n for n in items if n.published_at >= cutoff]
+
+    # If date filtering removed everything, fall back to most recent items
+    if not filtered and items:
+        filtered = items[:5]
+        logger.info(
+            "Date filter returned 0 US news for %s (cutoff=%s), using %d most recent",
+            ticker, cutoff.strftime("%Y-%m-%d"), len(filtered),
+        )
+
+    logger.info("Fetched %d US news items for %s", len(filtered), ticker)
+    return filtered

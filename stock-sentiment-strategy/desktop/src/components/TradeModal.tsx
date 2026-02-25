@@ -17,6 +17,8 @@ const CN_COMM_RATE = 0.00025
 const CN_MIN_COMM = 5
 const CN_STAMP_TAX = 0.0005
 const CN_TRANSFER = 0.00001
+// Futures fee rate
+const FUTURES_COMM_RATE = 0.0001
 
 function estimateFee(market: string, action: string, shares: number, price: number) {
   const amount = shares * price
@@ -26,12 +28,16 @@ function estimateFee(market: string, action: string, shares: number, price: numb
     const transfer = amount * CN_TRANSFER
     return { commission: comm, stamp_tax: tax, transfer_fee: transfer, total: comm + tax + transfer }
   }
+  if (market === 'FUTURES') {
+    const comm = amount * FUTURES_COMM_RATE
+    return { commission: comm, stamp_tax: 0, transfer_fee: 0, total: comm }
+  }
   return { commission: 0, stamp_tax: 0, transfer_fee: 0, total: 0 }
 }
 
 export default function TradeModal({ analysis, cash, currentShares, onClose, onTradeComplete }: Props) {
   const [tab, setTab] = useState<TradeTab>('buy')
-  const [shares, setShares] = useState<number>(analysis.market === 'CN' ? 100 : 1)
+  const [shares, setShares] = useState<number>(analysis.market === 'CN' ? 100 : analysis.market === 'FUTURES' ? 1 : 1)
   const [price, setPrice] = useState<number>(0)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<TradeResult | null>(null)
@@ -103,9 +109,12 @@ export default function TradeModal({ analysis, cash, currentShares, onClose, onT
         <div className="flex items-center justify-between px-5 py-3 border-b border-gray-800">
           <div className="flex items-center gap-2">
             <h3 className="text-white font-bold">{analysis.ticker}</h3>
-            <span className={`text-[10px] px-1.5 py-0.5 rounded
-              ${analysis.market === 'US' ? 'bg-blue-900/40 text-blue-400' : 'bg-red-900/40 text-red-400'}`}>
-              {analysis.market === 'US' ? '美股' : 'A股'}
+            <span className={`text-[10px] px-1.5 py-0.5 rounded ${
+              analysis.market === 'US' ? 'bg-blue-900/40 text-blue-400'
+              : analysis.market === 'FUTURES' ? 'bg-orange-900/40 text-orange-400'
+              : 'bg-red-900/40 text-red-400'
+            }`}>
+              {analysis.market === 'US' ? '美股' : analysis.market === 'FUTURES' ? '期货' : 'A股'}
             </span>
           </div>
           <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
@@ -143,7 +152,7 @@ export default function TradeModal({ analysis, cash, currentShares, onClose, onT
           {currentShares > 0 && (
             <div className="flex justify-between text-xs">
               <span className="text-gray-500">当前持仓</span>
-              <span className="text-white font-mono">{currentShares} 股</span>
+              <span className="text-white font-mono">{currentShares} {analysis.market === 'FUTURES' ? '手' : '股'}</span>
             </div>
           )}
 
@@ -189,7 +198,7 @@ export default function TradeModal({ analysis, cash, currentShares, onClose, onT
               <div>
                 <div className="flex justify-between items-center mb-1">
                   <label className="text-xs text-gray-400">
-                    股数 {analysis.market === 'CN' && <span className="text-gray-600">(100整数倍)</span>}
+                    {analysis.market === 'FUTURES' ? '手数' : '股数'} {analysis.market === 'CN' && <span className="text-gray-600">(100整数倍)</span>}
                   </label>
                   {tab === 'buy' && (
                     <button
@@ -222,7 +231,7 @@ export default function TradeModal({ analysis, cash, currentShares, onClose, onT
                     <span className="text-gray-500">交易金额</span>
                     <span className="text-gray-300 font-mono">{(shares * price).toFixed(2)}</span>
                   </div>
-                  {analysis.market === 'CN' && (
+                  {(analysis.market === 'CN' || analysis.market === 'FUTURES') && (
                     <>
                       <div className="flex justify-between text-xs">
                         <span className="text-gray-500">佣金</span>
@@ -234,10 +243,12 @@ export default function TradeModal({ analysis, cash, currentShares, onClose, onT
                           <span className="text-gray-300 font-mono">{fee.stamp_tax.toFixed(2)}</span>
                         </div>
                       )}
-                      <div className="flex justify-between text-xs">
-                        <span className="text-gray-500">过户费</span>
-                        <span className="text-gray-300 font-mono">{fee.transfer_fee.toFixed(4)}</span>
-                      </div>
+                      {fee.transfer_fee > 0 && (
+                        <div className="flex justify-between text-xs">
+                          <span className="text-gray-500">过户费</span>
+                          <span className="text-gray-300 font-mono">{fee.transfer_fee.toFixed(4)}</span>
+                        </div>
+                      )}
                     </>
                   )}
                   <div className="flex justify-between text-xs border-t border-gray-700 pt-1.5">
@@ -257,6 +268,11 @@ export default function TradeModal({ analysis, cash, currentShares, onClose, onT
                   A 股 T+1 规则：今日买入的股票明日起方可卖出
                 </div>
               )}
+              {analysis.market === 'FUTURES' && tab === 'buy' && (
+                <div className="text-[10px] text-blue-400/70 bg-blue-900/10 rounded px-2 py-1.5">
+                  期货 T+0 规则：当日买入可当日平仓
+                </div>
+              )}
             </>
           )}
 
@@ -269,7 +285,7 @@ export default function TradeModal({ analysis, cash, currentShares, onClose, onT
             }`}>
               {result.success
                 ? result.trade
-                  ? `${result.trade.action === 'BUY' ? '买入' : '卖出'}成功：${result.trade.shares}股 @${result.trade.price.toFixed(2)}，手续费 ${result.trade.total_fee.toFixed(2)}`
+                  ? `${result.trade.action === 'BUY' ? '买入' : '卖出'}成功：${result.trade.shares}${analysis.market === 'FUTURES' ? '手' : '股'} @${result.trade.price.toFixed(2)}，手续费 ${result.trade.total_fee.toFixed(2)}`
                   : result.error_msg || '操作成功'
                 : result.error_msg
               }

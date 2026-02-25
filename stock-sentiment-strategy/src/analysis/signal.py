@@ -152,3 +152,62 @@ def generate_signal(
             "advice": technical_scores.get("advice", []),
         },
     )
+
+
+def generate_futures_swing_signal(
+    ticker: str,
+    sentiment_score: float,
+    swing_scores: Dict,
+    news_count: int,
+    sentiment_weight: float = 0.2,
+    technical_weight: float = 0.6,
+    volume_weight: float = 0.2,
+    baseline_news_count: float = 3.0,
+) -> TradingSignal:
+    """Minimal fallback signal for futures when DeepSeek is unavailable.
+
+    Combines raw technical scores with sentiment.  No fixed strategy rules —
+    those are handled by DeepSeek AI when configured.
+    """
+    swing_composite = swing_scores.get("composite", 0.0)
+    news_vol_score = compute_news_volume_score(news_count, baseline_news_count)
+
+    composite = (
+        sentiment_score * sentiment_weight
+        + swing_composite * technical_weight
+        + news_vol_score * volume_weight
+    )
+    composite = round(max(-1.0, min(1.0, composite)), 4)
+
+    signal_en, signal_cn = score_to_signal(composite)
+
+    advice = swing_scores.get("advice", [])
+    if not advice:
+        advice = [{"action": "HOLD", "rule": "请配置 DeepSeek",
+                    "detail": "配置 DeepSeek API Key 后可获得 AI 驱动的投资建议"}]
+
+    return TradingSignal(
+        ticker=ticker,
+        sentiment_score=round(sentiment_score, 4),
+        technical_score=round(swing_composite, 4),
+        news_volume_score=round(news_vol_score, 4),
+        composite_score=composite,
+        signal=signal_en,
+        signal_cn=signal_cn,
+        news_count=news_count,
+        detail={
+            "rsi_score": swing_scores.get("rsi_score", 0.0),
+            "macd_score": swing_scores.get("macd_score", 0.0),
+            "ma_score": swing_scores.get("ma_score", 0.0),
+            "weights": {
+                "sentiment": sentiment_weight,
+                "technical": technical_weight,
+                "volume": volume_weight,
+            },
+            "rsi6": swing_scores.get("rsi6"),
+            "macd_cross": swing_scores.get("macd_cross", "none"),
+            "macd_above_zero": swing_scores.get("macd_above_zero", False),
+            "advice": advice,
+            "swing": swing_scores.get("swing", {}),
+        },
+    )

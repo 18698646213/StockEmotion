@@ -33,18 +33,15 @@ function NewsDetailPanel({ item }: { item: SentimentResult }) {
     item.label === 'positive' ? 'text-green-400' :
     item.label === 'negative' ? 'text-red-400' : 'text-yellow-400'
 
-  // Show summary content — backend guarantees it's non-empty (falls back to title)
   const summary = item.summary && item.summary.trim() ? item.summary : null
-  // Check if summary has extra info beyond the title
   const hasDedicatedSummary = summary && summary !== item.title
 
   return (
     <div className="px-3 pb-3 pt-1 ml-4 border-l-2 border-gray-700/50">
-      {/* Meta info row */}
       <div className="flex items-center gap-2 mb-2 flex-wrap">
         <LabelBadge label={item.label} />
         <span className={`text-xs font-mono font-semibold ${scoreColor}`}>
-          情感得分: {item.score >= 0 ? '+' : ''}{item.score.toFixed(3)}
+          AI 情感得分: {item.score >= 0 ? '+' : ''}{item.score.toFixed(3)}
         </span>
         <span className="text-xs text-gray-500">|</span>
         <span className="text-xs text-gray-500">来源: {item.source}</span>
@@ -56,7 +53,18 @@ function NewsDetailPanel({ item }: { item: SentimentResult }) {
         </span>
       </div>
 
-      {/* Summary content */}
+      {item.ai_summary && (
+        <div className="mb-2 px-2.5 py-1.5 rounded bg-purple-900/20 border border-purple-700/30">
+          <div className="flex items-center gap-1 mb-0.5">
+            <svg className="w-3 h-3 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            <span className="text-xs font-medium text-purple-400">DeepSeek AI 解读</span>
+          </div>
+          <p className="text-xs text-gray-300 leading-relaxed">{item.ai_summary}</p>
+        </div>
+      )}
+
       {hasDedicatedSummary ? (
         <p className="text-xs text-gray-400 leading-relaxed whitespace-pre-wrap">
           {summary}
@@ -65,7 +73,6 @@ function NewsDetailPanel({ item }: { item: SentimentResult }) {
         <p className="text-xs text-gray-600 italic">该新闻来源未提供详细摘要</p>
       )}
 
-      {/* URL link */}
       {item.url && (
         <a
           href={item.url}
@@ -104,6 +111,9 @@ export default function NewsFeed({ items }: Props) {
         const scoreColor =
           item.label === 'positive' ? 'text-green-400' :
           item.label === 'negative' ? 'text-red-400' : 'text-yellow-400'
+        const scoreBg =
+          item.label === 'positive' ? 'bg-green-900/20' :
+          item.label === 'negative' ? 'bg-red-900/20' : 'bg-yellow-900/20'
         const isExpanded = expandedIndex === i
 
         return (
@@ -131,6 +141,14 @@ export default function NewsFeed({ items }: Props) {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
+
+                  {item.ai_summary && (
+                    <div className={`mt-1.5 px-2 py-1 rounded text-xs leading-relaxed ${scoreBg} border border-gray-700/40`}>
+                      <span className="text-purple-400 font-medium mr-1">AI:</span>
+                      <span className="text-gray-300">{item.ai_summary}</span>
+                    </div>
+                  )}
+
                   <div className="flex items-center gap-3 mt-1">
                     <span className="text-xs text-gray-500">
                       {new Date(item.published_at).toLocaleString('zh-CN', {
@@ -161,7 +179,6 @@ export default function NewsFeed({ items }: Props) {
               </div>
             </div>
 
-            {/* Expandable detail */}
             {isExpanded && <NewsDetailPanel item={item} />}
           </div>
         )

@@ -8,13 +8,16 @@ from src.data.news_us import NewsItem
 
 logger = logging.getLogger(__name__)
 
+# When date-based filtering returns 0 results, return the N most recent items
+_FALLBACK_NEWS_COUNT = 5
+
 
 def _normalize_stock_code(code: str) -> str:
     """Ensure stock code is 6 digits."""
     return code.strip().zfill(6)
 
 
-def fetch_eastmoney_news(code: str, lookback_days: int = 3) -> List[NewsItem]:
+def fetch_eastmoney_news(code: str, lookback_days: int = 7) -> List[NewsItem]:
     """Fetch individual stock news from Eastmoney via akshare.
 
     Args:
@@ -24,39 +27,34 @@ def fetch_eastmoney_news(code: str, lookback_days: int = 3) -> List[NewsItem]:
     Returns:
         List of NewsItem objects.
     """
-    items: List[NewsItem] = []
     code = _normalize_stock_code(code)
     cutoff = datetime.now() - timedelta(days=lookback_days)
+
+    all_parsed: List[NewsItem] = []
 
     try:
         import akshare as ak
 
-        # akshare provides individual stock news from Eastmoney
         df = ak.stock_news_em(symbol=code)
 
         if df is None or df.empty:
-            return items
+            return []
 
         for _, row in df.iterrows():
             title = str(row.get("新闻标题", ""))
             content = str(row.get("新闻内容", ""))
-            # Ensure content is not empty or just whitespace
             if not content or not content.strip() or content == "nan":
                 content = title
             source = str(row.get("文章来源", "eastmoney"))
             url = str(row.get("新闻链接", ""))
 
-            # Parse publish time
             pub_str = str(row.get("发布时间", ""))
             try:
                 pub_dt = datetime.strptime(pub_str, "%Y-%m-%d %H:%M:%S")
             except (ValueError, TypeError):
                 pub_dt = datetime.now()
 
-            if pub_dt < cutoff:
-                continue
-
-            items.append(
+            all_parsed.append(
                 NewsItem(
                     title=title,
                     summary=content[:500] if len(content) > 500 else content,
@@ -68,6 +66,19 @@ def fetch_eastmoney_news(code: str, lookback_days: int = 3) -> List[NewsItem]:
             )
     except Exception as e:
         logger.error("Eastmoney news fetch failed for %s: %s", code, e)
+        return []
+
+    # Filter by lookback window
+    items = [n for n in all_parsed if n.published_at >= cutoff]
+
+    # If date filtering removed everything, fall back to the most recent items
+    if not items and all_parsed:
+        all_parsed.sort(key=lambda x: x.published_at, reverse=True)
+        items = all_parsed[:_FALLBACK_NEWS_COUNT]
+        logger.info(
+            "Date filter returned 0 for %s (cutoff=%s), using %d most recent items instead",
+            code, cutoff.strftime("%Y-%m-%d"), len(items),
+        )
 
     return items
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import type { StockAnalysis } from '../types'
+import type { StockAnalysis, MarketType } from '../types'
 import SignalBadge from './SignalBadge'
 
 interface Props {
@@ -7,7 +7,13 @@ interface Props {
   selectedTicker: string | null
   onSelect: (ticker: string) => void
   isInWatchlist: (ticker: string) => boolean
-  onToggleWatchlist: (ticker: string, market: 'US' | 'CN') => void
+  onToggleWatchlist: (ticker: string, market: MarketType) => void
+}
+
+const MARKET_LABEL: Record<string, { text: string; bg: string; color: string }> = {
+  US: { text: '美股', bg: 'bg-blue-900/40', color: 'text-blue-400' },
+  CN: { text: 'A股', bg: 'bg-red-900/40', color: 'text-red-400' },
+  FUTURES: { text: '期货', bg: 'bg-orange-900/40', color: 'text-orange-400' },
 }
 
 function ScoreCell({ value }: { value: number }) {
@@ -86,10 +92,14 @@ export default function SummaryTable({ results, selectedTicker, onSelect, isInWa
                 </td>
                 <td className="px-3 py-2.5 font-semibold text-white">{r.ticker}</td>
                 <td className="px-3 py-2.5 text-center">
-                  <span className={`text-xs px-1.5 py-0.5 rounded
-                    ${r.market === 'US' ? 'bg-blue-900/40 text-blue-400' : 'bg-red-900/40 text-red-400'}`}>
-                    {r.market === 'US' ? '美股' : 'A股'}
-                  </span>
+                  {(() => {
+                    const ml = MARKET_LABEL[r.market] || MARKET_LABEL.US
+                    return (
+                      <span className={`text-xs px-1.5 py-0.5 rounded ${ml.bg} ${ml.color}`}>
+                        {ml.text}
+                      </span>
+                    )
+                  })()}
                 </td>
                 <td className="px-3 py-2.5 text-center"><ScoreCell value={r.signal.sentiment_score} /></td>
                 <td className="px-3 py-2.5 text-center"><ScoreCell value={r.signal.technical_score} /></td>

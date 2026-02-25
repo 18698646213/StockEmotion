@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
 
+import type { MarketType } from '../types'
+
 export interface WatchlistItem {
   ticker: string
-  market: 'US' | 'CN'
+  market: MarketType
   addedAt: string // ISO timestamp
 }
 
@@ -36,7 +38,7 @@ export function useWatchlist() {
     saveWatchlist(items)
   }, [items])
 
-  const add = useCallback((ticker: string, market: 'US' | 'CN') => {
+  const add = useCallback((ticker: string, market: MarketType) => {
     setItems(prev => {
       if (prev.some(i => i.ticker === ticker)) return prev
       return [...prev, { ticker, market, addedAt: new Date().toISOString() }]
@@ -47,7 +49,7 @@ export function useWatchlist() {
     setItems(prev => prev.filter(i => i.ticker !== ticker))
   }, [])
 
-  const toggle = useCallback((ticker: string, market: 'US' | 'CN') => {
+  const toggle = useCallback((ticker: string, market: MarketType) => {
     setItems(prev => {
       if (prev.some(i => i.ticker === ticker)) {
         return prev.filter(i => i.ticker !== ticker)
@@ -62,6 +64,7 @@ export function useWatchlist() {
 
   const usStocks = items.filter(i => i.market === 'US').map(i => i.ticker)
   const cnStocks = items.filter(i => i.market === 'CN').map(i => i.ticker)
+  const futuresContracts = items.filter(i => i.market === 'FUTURES').map(i => i.ticker)
 
-  return { items, usStocks, cnStocks, add, remove, toggle, has }
+  return { items, usStocks, cnStocks, futuresContracts, add, remove, toggle, has }
 }

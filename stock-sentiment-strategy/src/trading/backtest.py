@@ -15,6 +15,7 @@ import pandas as pd
 
 from src.data.price_us import fetch_us_price
 from src.data.price_cn import fetch_cn_price
+from src.data.price_futures import fetch_futures_price
 from src.analysis.technical import compute_indicators, compute_technical_score
 from src.analysis.signal import generate_signal
 from src.trading.fees import FeeCalculator, CommissionDetail
@@ -105,6 +106,8 @@ class BacktestEngine:
 
         if market.upper() == "CN":
             df = fetch_cn_price(ticker, period_days=total_days, interval="daily")
+        elif market.upper() == "FUTURES":
+            df = fetch_futures_price(ticker, period_days=total_days, interval="daily")
         else:
             df = fetch_us_price(ticker, period_days=total_days, interval="daily")
 

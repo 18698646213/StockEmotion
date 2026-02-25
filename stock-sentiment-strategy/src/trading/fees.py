@@ -37,6 +37,9 @@ class FeeCalculator:
     # ---- US stock fee rates ----
     US_PER_SHARE_FEE = 0.0  # 零佣金（可设为 0.005 模拟按股收费）
 
+    # ---- Futures fee rates ----
+    FUTURES_COMMISSION_RATE = 0.0001  # 万分之一（双边）
+
     # ---- A-share price-limit thresholds ----
     # 创业板 (300xxx) / 科创板 (688xxx): ±20%
     # 主板: ±10%
@@ -73,6 +76,10 @@ class FeeCalculator:
                 stamp_tax=round(stamp_tax, 4),
                 transfer_fee=round(transfer_fee, 4),
             )
+        elif market.upper() == "FUTURES":
+            # Futures: simplified commission (双边万分之一)
+            commission = amount * cls.FUTURES_COMMISSION_RATE
+            return CommissionDetail(commission=round(commission, 4))
         else:
             # US: zero or per-share
             commission = shares * cls.US_PER_SHARE_FEE
@@ -117,7 +124,7 @@ class FeeCalculator:
             True if shares can be sold today.
         """
         if market.upper() != "CN":
-            return True  # US market: T+0
+            return True  # US / FUTURES: T+0
 
         try:
             bought = datetime.fromisoformat(buy_date).date()

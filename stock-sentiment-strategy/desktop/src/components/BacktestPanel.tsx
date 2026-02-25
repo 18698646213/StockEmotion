@@ -7,7 +7,7 @@ import TradeHistory from './TradeHistory'
 
 export default function BacktestPanel() {
   const [ticker, setTicker] = useState('')
-  const [market, setMarket] = useState<'US' | 'CN'>('US')
+  const [market, setMarket] = useState<'US' | 'CN' | 'FUTURES'>('US')
   const [startDate, setStartDate] = useState(() => {
     const d = new Date()
     d.setFullYear(d.getFullYear() - 1)
@@ -59,7 +59,7 @@ export default function BacktestPanel() {
               type="text"
               value={ticker}
               onChange={e => setTicker(e.target.value)}
-              placeholder="AAPL / 600519"
+              placeholder="AAPL / 600519 / RB0"
               className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm
                 text-white font-mono focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
@@ -68,12 +68,13 @@ export default function BacktestPanel() {
             <label className="block text-xs text-gray-400 mb-1">市场</label>
             <select
               value={market}
-              onChange={e => setMarket(e.target.value as 'US' | 'CN')}
+              onChange={e => setMarket(e.target.value as 'US' | 'CN' | 'FUTURES')}
               className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm
                 text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
             >
               <option value="US">美股</option>
               <option value="CN">A股</option>
+              <option value="FUTURES">期货</option>
             </select>
           </div>
           <div>
@@ -179,7 +180,7 @@ export default function BacktestPanel() {
             <BacktestCandlestick
               priceData={report.price_data}
               buySellPoints={report.buy_sell_points}
-              market={report.market as 'US' | 'CN'}
+              market={report.market as 'US' | 'CN' | 'FUTURES'}
               ticker={report.ticker}
             />
           )}
@@ -207,9 +208,11 @@ function BacktestCandlestick({
 }: {
   priceData: PriceBar[]
   buySellPoints: { date: string; action: string; price: number }[]
-  market: 'US' | 'CN'
+  market: 'US' | 'CN' | 'FUTURES'
   ticker: string
 }) {
+  // CN market: red up, green down (Chinese convention)
+  // US/FUTURES: green up, red down (international convention)
   const upColor = market === 'CN' ? '#ef4444' : '#22c55e'
   const downColor = market === 'CN' ? '#22c55e' : '#ef4444'
 

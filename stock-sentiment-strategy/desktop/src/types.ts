@@ -1,9 +1,22 @@
 // TypeScript types matching the FastAPI response schema
 
+export type MarketType = 'US' | 'CN' | 'FUTURES'
+
 export interface AdviceItem {
   action: 'BUY' | 'SELL' | 'HOLD'
   rule: string
   detail: string
+}
+
+export interface SwingData {
+  trend: 'bullish' | 'bearish' | 'neutral'
+  ma5: number | null
+  ma20: number | null
+  ma60: number | null
+  ma5_ma20_cross: 'golden' | 'death' | 'none'
+  entry_price: number | null
+  stop_loss_price: number | null
+  take_profit_half: number | null
 }
 
 export interface SignalDetail {
@@ -20,6 +33,8 @@ export interface SignalDetail {
   macd_cross: 'golden' | 'death' | 'none'
   macd_above_zero: boolean
   advice: AdviceItem[]
+  // 期货波段策略
+  swing?: SwingData | null
 }
 
 export interface Signal {
@@ -42,6 +57,7 @@ export interface SentimentResult {
   source: string
   published_at: string
   url: string
+  ai_summary: string
 }
 
 export interface PriceBar {
@@ -55,7 +71,7 @@ export interface PriceBar {
 
 export interface StockAnalysis {
   ticker: string
-  market: 'US' | 'CN'
+  market: MarketType
   signal: Signal
   sentiment_results: SentimentResult[]
   price_data: PriceBar[]
@@ -63,10 +79,7 @@ export interface StockAnalysis {
   timestamp: string
 }
 
-export interface AppConfig {
-  finnhub_api_key: string
-  us_stocks: string[]
-  cn_stocks: string[]
+export interface StrategyWeights {
   sentiment_weight: number
   technical_weight: number
   volume_weight: number
@@ -75,13 +88,39 @@ export interface AppConfig {
   news_lookback_days: number
 }
 
+export interface AppConfig {
+  finnhub_api_key: string
+  deepseek_api_key: string
+  deepseek_model: string
+  tqsdk_user: string
+  tqsdk_connected: boolean
+  tqsdk_trade_mode: string     // "sim" or "live"
+  tqsdk_broker_id: string
+  tqsdk_broker_account: string
+  us_stocks: string[]
+  cn_stocks: string[]
+  futures_contracts: string[]
+  sentiment_weight: number
+  technical_weight: number
+  volume_weight: number
+  max_position: number
+  stop_loss: number
+  news_lookback_days: number
+  futures_strategy: StrategyWeights
+}
+
 export interface AnalyzeRequest {
   us_stocks: string[]
   cn_stocks: string[]
+  futures_contracts: string[]
   days: number
   sentiment_weight: number
   technical_weight: number
   volume_weight: number
+  futures_days: number
+  futures_sentiment_weight: number
+  futures_technical_weight: number
+  futures_volume_weight: number
 }
 
 // ---------------------------------------------------------------------------
@@ -90,7 +129,7 @@ export interface AnalyzeRequest {
 
 export interface Position {
   ticker: string
-  market: 'US' | 'CN'
+  market: MarketType
   shares: number
   avg_cost: number
   current_price: number
@@ -102,7 +141,7 @@ export interface Position {
 export interface TradeRecord {
   id: string
   ticker: string
-  market: 'US' | 'CN'
+  market: MarketType
   action: 'BUY' | 'SELL'
   shares: number
   price: number
@@ -131,7 +170,7 @@ export interface PortfolioSummary {
 
 export interface TradeRequest {
   ticker: string
-  market: 'US' | 'CN'
+  market: MarketType
   action: 'BUY' | 'SELL'
   shares: number
   price: number
@@ -139,7 +178,7 @@ export interface TradeRequest {
 
 export interface SignalTradeRequest {
   ticker: string
-  market: 'US' | 'CN'
+  market: MarketType
   signal: string
   composite_score: number
   position_pct: number
@@ -160,7 +199,7 @@ export interface TradeResult {
 
 export interface BacktestRequest {
   ticker: string
-  market: 'US' | 'CN'
+  market: MarketType
   start_date: string
   end_date: string
   initial_capital: number
@@ -178,7 +217,7 @@ export interface BacktestMetrics {
 
 export interface BacktestReport {
   ticker: string
-  market: 'US' | 'CN'
+  market: MarketType
   start_date: string
   end_date: string
   initial_capital: number
@@ -189,7 +228,69 @@ export interface BacktestReport {
   price_data: PriceBar[]
 }
 
-export type ActiveView = 'analysis' | 'portfolio' | 'backtest'
+// ---------------------------------------------------------------------------
+// Quant Trading types (TqSdk + DeepSeek auto-strategy)
+// ---------------------------------------------------------------------------
+
+export interface QuantAccount {
+  balance: number
+  available: number
+  float_profit: number
+  position_profit: number
+  close_profit: number
+  margin: number
+  commission: number
+  risk_ratio: number
+  static_balance: number
+}
+
+export interface QuantPosition {
+  symbol: string
+  long_volume: number
+  short_volume: number
+  long_avg_price: number
+  short_avg_price: number
+  float_profit: number
+}
+
+export interface QuantDecision {
+  timestamp: string
+  symbol: string
+  action: string
+  lots: number
+  price: number
+  reason: string
+  signal: string
+  composite_score: number
+  order_result: Record<string, unknown> | null
+}
+
+export interface QuantAutoStatus {
+  running: boolean
+  contracts: string[]
+  config: {
+    max_lots: number
+    max_positions: number
+    signal_threshold: number
+    analysis_interval: number
+    atr_sl_multiplier: number
+    atr_tp_multiplier: number
+    trail_step_atr: number
+    trail_move_atr: number
+  }
+  managed_positions: Record<string, {
+    direction: string
+    entry_price: number
+    atr: number
+    stop_loss: number
+    take_profit: number
+    lots: number
+  }>
+  decisions_count: number
+  decisions: QuantDecision[]
+}
+
+export type ActiveView = 'analysis' | 'portfolio' | 'backtest' | 'quant'
 
 export type SignalType = Signal['signal']
 

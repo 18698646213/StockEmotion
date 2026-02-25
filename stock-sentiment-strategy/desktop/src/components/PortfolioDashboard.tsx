@@ -176,9 +176,12 @@ export default function PortfolioDashboard({ onSellClick, refreshKey }: Props) {
                 <tr key={pos.ticker} className="border-b border-gray-800/30 hover:bg-gray-800/30 transition-colors">
                   <td className="py-2 px-3 font-mono font-semibold text-white">{pos.ticker}</td>
                   <td className="py-2 px-2">
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded
-                      ${pos.market === 'US' ? 'bg-blue-900/40 text-blue-400' : 'bg-red-900/40 text-red-400'}`}>
-                      {pos.market === 'US' ? '美股' : 'A股'}
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded ${
+                      pos.market === 'US' ? 'bg-blue-900/40 text-blue-400'
+                      : pos.market === 'FUTURES' ? 'bg-orange-900/40 text-orange-400'
+                      : 'bg-red-900/40 text-red-400'
+                    }`}>
+                      {pos.market === 'US' ? '美股' : pos.market === 'FUTURES' ? '期货' : 'A股'}
                     </span>
                   </td>
                   <td className="py-2 px-2 text-right font-mono">{pos.shares}</td>

@@ -58,12 +58,45 @@ export async function healthCheck(): Promise<boolean> {
   }
 }
 
+export interface TqStatus {
+  tqsdk_connected: boolean
+  tqsdk_trade_mode: string
+}
+
+export async function getTqStatus(): Promise<TqStatus> {
+  const data = await request<TqStatus>('/api/health', { timeout: 3000 })
+  return data
+}
+
 export async function getConfig(): Promise<AppConfig> {
   return request<AppConfig>('/api/config')
 }
 
+export interface ConfigUpdatePayload {
+  us_stocks?: string[]
+  cn_stocks?: string[]
+  futures_contracts?: string[]
+  finnhub_api_key?: string
+  deepseek_api_key?: string
+  deepseek_model?: string
+  tqsdk_user?: string
+  tqsdk_password?: string
+  tqsdk_trade_mode?: string
+  tqsdk_broker_id?: string
+  tqsdk_broker_account?: string
+  tqsdk_broker_password?: string
+  sentiment_weight?: number
+  technical_weight?: number
+  volume_weight?: number
+  news_lookback_days?: number
+  futures_sentiment_weight?: number
+  futures_technical_weight?: number
+  futures_volume_weight?: number
+  futures_news_lookback_days?: number
+}
+
 export async function updateConfig(
-  updates: Partial<AppConfig>
+  updates: ConfigUpdatePayload
 ): Promise<AppConfig> {
   return request<AppConfig>('/api/config', {
     method: 'POST',
@@ -83,7 +116,7 @@ export async function analyzeStocks(
 
 export async function analyzeSingle(
   ticker: string,
-  market: 'US' | 'CN' = 'US'
+  market: 'US' | 'CN' | 'FUTURES' = 'US'
 ): Promise<StockAnalysis> {
   return request<StockAnalysis>(
     `/api/analyze/${ticker}?market=${market}`,
@@ -91,9 +124,22 @@ export async function analyzeSingle(
   )
 }
 
+// Lightweight full refresh (news + sentiment + technicals), 60s timeout
+const REFRESH_TIMEOUT = 60_000
+
+export async function refreshAnalysis(
+  ticker: string,
+  market: 'US' | 'CN' | 'FUTURES' = 'US'
+): Promise<StockAnalysis> {
+  return request<StockAnalysis>(
+    `/api/refresh/${encodeURIComponent(ticker)}?market=${market}`,
+    { timeout: REFRESH_TIMEOUT }
+  )
+}
+
 export interface PriceRequest {
   ticker: string
-  market: 'US' | 'CN'
+  market: 'US' | 'CN' | 'FUTURES'
   interval: string  // '1m' | '5m' | '15m' | 'daily' | 'weekly' | 'monthly'
   period_days: number
 }
@@ -106,6 +152,88 @@ export async function fetchPrice(
     body: JSON.stringify(req),
     timeout: 30_000,
   })
+}
+
+// ---------------------------------------------------------------------------
+// Real-time quote
+// ---------------------------------------------------------------------------
+
+export interface QuoteData {
+  ticker: string
+  market: string
+  price: number
+  change_pct: number
+  high: number
+  low: number
+  volume: number
+  timestamp: string
+  swing: import('./types').SwingData | null
+  advice: import('./types').AdviceItem[]
+  signal: string
+  signal_cn: string
+  composite_score: number
+}
+
+// ---------------------------------------------------------------------------
+// Ticker search
+// ---------------------------------------------------------------------------
+
+export interface SearchResult {
+  code: string
+  name: string
+  market: 'CN' | 'FUTURES' | 'US'
+}
+
+export interface SearchDetailItem {
+  code: string
+  name: string
+  market: string
+  price: number
+  change_pct: number
+  change_amt: number
+  volume: number
+  open_interest: number
+  amplitude: number
+  settlement: number
+  pre_settlement: number
+  pre_close: number
+  open_price: number
+  high: number
+  low: number
+  turnover: number
+  turnover_rate: number
+}
+
+export async function searchTickers(
+  query: string,
+  market: string = ''
+): Promise<SearchResult[]> {
+  if (!query.trim()) return []
+  return request<SearchResult[]>(
+    `/api/search?q=${encodeURIComponent(query)}&market=${encodeURIComponent(market)}`,
+    { timeout: 5_000 }
+  )
+}
+
+export async function searchTickerDetails(
+  query: string,
+  market: string = ''
+): Promise<SearchDetailItem[]> {
+  if (!query.trim()) return []
+  return request<SearchDetailItem[]>(
+    `/api/search/detail?q=${encodeURIComponent(query)}&market=${encodeURIComponent(market)}`,
+    { timeout: 30_000 }
+  )
+}
+
+export async function fetchQuote(
+  ticker: string,
+  market: 'US' | 'CN' | 'FUTURES' = 'FUTURES'
+): Promise<QuoteData> {
+  return request<QuoteData>(
+    `/api/quote/${encodeURIComponent(ticker)}?market=${market}`,
+    { timeout: 15_000 }
+  )
 }
 
 // ---------------------------------------------------------------------------
@@ -157,4 +285,74 @@ export async function runBacktest(
     body: JSON.stringify(req),
     timeout: ANALYZE_TIMEOUT,
   })
+}
+
+// ---------------------------------------------------------------------------
+// Quant Trading API (TqSdk + DeepSeek)
+// ---------------------------------------------------------------------------
+
+import type { QuantAccount, QuantPosition, QuantAutoStatus } from './types'
+
+export async function getQuantAccount(): Promise<{
+  connected: boolean
+  trade_mode?: string
+  account: QuantAccount | null
+  positions: QuantPosition[]
+}> {
+  return request('/api/quant/account', { timeout: 10_000 })
+}
+
+export async function getQuantPositions(): Promise<QuantPosition[]> {
+  return request<QuantPosition[]>('/api/quant/positions', { timeout: 10_000 })
+}
+
+export async function placeQuantOrder(params: {
+  symbol: string
+  direction: string
+  offset: string
+  volume: number
+  price: number
+}): Promise<Record<string, unknown>> {
+  return request('/api/quant/order', {
+    method: 'POST',
+    body: JSON.stringify(params),
+    timeout: 15_000,
+  })
+}
+
+export async function closeQuantPosition(
+  symbol: string, direction: string = ''
+): Promise<Record<string, unknown>> {
+  const qs = new URLSearchParams({ symbol })
+  if (direction) qs.set('direction', direction)
+  return request(`/api/quant/close?${qs}`, { method: 'POST', timeout: 15_000 })
+}
+
+export async function startAutoTrade(params: {
+  contracts: string[]
+  max_lots?: number
+  signal_threshold?: number
+  analysis_interval?: number
+  atr_sl_multiplier?: number
+  atr_tp_multiplier?: number
+  trail_step_atr?: number
+  trail_move_atr?: number
+}): Promise<Record<string, unknown>> {
+  return request('/api/quant/auto/start', {
+    method: 'POST',
+    body: JSON.stringify(params),
+    timeout: 10_000,
+  })
+}
+
+export async function stopAutoTrade(): Promise<Record<string, unknown>> {
+  return request('/api/quant/auto/stop', { method: 'POST', timeout: 10_000 })
+}
+
+export async function getAutoTradeStatus(): Promise<QuantAutoStatus> {
+  return request<QuantAutoStatus>('/api/quant/auto/status', { timeout: 10_000 })
+}
+
+export async function getQuantTrades(): Promise<Record<string, unknown>[]> {
+  return request('/api/quant/trades', { timeout: 10_000 })
 }

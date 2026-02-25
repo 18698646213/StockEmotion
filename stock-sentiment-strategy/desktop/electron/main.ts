@@ -8,6 +8,7 @@ import * as net from 'net'
 const PYTHON_PORT = 8321
 const PYTHON_URL = `http://127.0.0.1:${PYTHON_PORT}`
 const VITE_DEV_URL = 'http://127.0.0.1:5173'
+
 const isDev = !app.isPackaged
 
 let mainWindow: BrowserWindow | null = null
@@ -235,10 +236,9 @@ async function createWindow(): Promise<void> {
     if (url.startsWith('http://') || url.startsWith('https://')) {
       shell.openExternal(url)
     }
-    return { action: 'deny' } // Prevent Electron from opening a new window
+    return { action: 'deny' }
   })
 
-  // Also handle in-page navigation to external URLs
   mainWindow.webContents.on('will-navigate', (event, url) => {
     const isInternal = url.startsWith(VITE_DEV_URL) || url.startsWith('file://')
     if (!isInternal) {

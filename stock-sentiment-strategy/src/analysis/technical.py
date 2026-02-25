@@ -2,10 +2,12 @@
 
 Calculates RSI, MACD, Moving Averages, and Bollinger Bands,
 then produces a composite technical score in [-1, 1].
+
+Also includes a dedicated futures swing strategy based on MA5/MA20/MA60.
 """
 
 import logging
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 import pandas as pd
 import pandas_ta as ta
@@ -369,3 +371,102 @@ def generate_rule_advice(
         })
 
     return advice_list
+
+
+# ===========================================================================
+# 期货技术数据计算（纯数据，不含策略建议——策略由 DeepSeek AI 提供）
+# ===========================================================================
+
+def _detect_ma_cross(df: pd.DataFrame, fast_col: str, slow_col: str, lookback: int = 3) -> str:
+    """Detect golden/death cross between two MA lines within recent bars."""
+    if len(df) < lookback + 1:
+        return "none"
+    try:
+        for i in range(-1, -(lookback + 1), -1):
+            curr_fast = df[fast_col].iloc[i]
+            curr_slow = df[slow_col].iloc[i]
+            prev_fast = df[fast_col].iloc[i - 1]
+            prev_slow = df[slow_col].iloc[i - 1]
+            if pd.isna(curr_fast) or pd.isna(curr_slow) or pd.isna(prev_fast) or pd.isna(prev_slow):
+                continue
+            if prev_fast < prev_slow and curr_fast >= curr_slow:
+                return "golden"
+            if prev_fast > prev_slow and curr_fast <= curr_slow:
+                return "death"
+    except (IndexError, KeyError):
+        pass
+    return "none"
+
+
+def compute_futures_swing_score(df: pd.DataFrame) -> Dict:
+    """Compute raw technical data for futures (MA, RSI, MACD, cross signals).
+
+    Only provides numerical data and indicator values — no fixed strategy
+    advice.  Strategy interpretation is delegated to DeepSeek AI.
+
+    Returns:
+        Dict with technical scores and swing raw data.
+    """
+    empty = {
+        "rsi_score": 0.0, "macd_score": 0.0, "ma_score": 0.0, "composite": 0.0,
+        "rsi6": None, "macd_cross": "none", "macd_above_zero": False, "advice": [],
+        "swing": {
+            "trend": "neutral",
+            "ma5": None, "ma20": None, "ma60": None,
+            "ma5_ma20_cross": "none",
+            "entry_price": None, "stop_loss_price": None,
+            "take_profit_half": None,
+        },
+    }
+
+    if df.empty or len(df) < 60:
+        return empty
+
+    last = df.iloc[-1]
+    close = last.get("close")
+    ma5 = last.get("ma5")
+    ma20 = last.get("ma20")
+    ma60 = last.get("ma60")
+
+    if any(v is None or pd.isna(v) for v in [close, ma5, ma20, ma60]):
+        return empty
+
+    close = float(close)
+    ma5 = float(ma5)
+    ma20 = float(ma20)
+    ma60 = float(ma60)
+
+    trend = "bullish" if close > ma60 else "bearish"
+    ma5_ma20_cross = _detect_ma_cross(df, "ma5", "ma20", lookback=3)
+
+    rsi_val = last.get("rsi")
+    rsi_score = compute_rsi_score(rsi_val if pd.notna(rsi_val) else None)
+    macd_score = compute_macd_score(df)
+    ma_score = compute_ma_score(df)
+    rsi6_val = float(last.get("rsi6")) if last.get("rsi6") is not None and pd.notna(last.get("rsi6")) else None
+    macd_cross = detect_macd_cross(df)
+    macd_above_zero = detect_macd_above_zero(df)
+
+    composite = rsi_score * 0.2 + macd_score * 0.4 + ma_score * 0.4
+    composite = round(max(-1.0, min(1.0, composite)), 4)
+
+    return {
+        "rsi_score": rsi_score,
+        "macd_score": macd_score,
+        "ma_score": ma_score,
+        "composite": composite,
+        "rsi6": round(rsi6_val, 2) if rsi6_val is not None else None,
+        "macd_cross": macd_cross,
+        "macd_above_zero": macd_above_zero,
+        "advice": [],
+        "swing": {
+            "trend": trend,
+            "ma5": round(ma5, 2),
+            "ma20": round(ma20, 2),
+            "ma60": round(ma60, 2),
+            "ma5_ma20_cross": ma5_ma20_cross,
+            "entry_price": None,
+            "stop_loss_price": None,
+            "take_profit_half": None,
+        },
+    }
