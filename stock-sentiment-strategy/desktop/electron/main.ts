@@ -217,6 +217,8 @@ function stopPythonBackend(): void {
 // ---------------------------------------------------------------------------
 
 async function createWindow(): Promise<void> {
+  if (mainWindow !== null) return
+
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 900,

@@ -64,7 +64,7 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
   const tradeMode = tqsdkTradeMode === 'live' ? 'live' : 'sim'
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [showHold, setShowHold] = useState(false)
+  const [showHold, setShowHold] = useState(() => localStorage.getItem('quant_showHold') === 'true')
 
   // Auto-trade config
   const [maxLots, setMaxLots] = useState(1)
@@ -547,7 +547,7 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
                 ({actionCount} 条交易 / 共 {autoStatus?.decisions_count || 0} 条)
               </span>
             </h3>
-            <button onClick={() => setShowHold(!showHold)}
+            <button onClick={() => { const v = !showHold; setShowHold(v); localStorage.setItem('quant_showHold', String(v)) }}
               className={`text-[10px] px-2 py-0.5 rounded transition-colors ${
                 showHold ? 'bg-gray-700 text-gray-300' : 'bg-gray-800 text-gray-500 hover:text-gray-300'}`}>
               {showHold ? '隐藏观望' : '显示观望'}

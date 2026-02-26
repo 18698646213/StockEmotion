@@ -326,7 +326,7 @@ export default function CandlestickChart({ analysis, onQuoteUpdate }: Props) {
     plot_bgcolor: 'rgba(17,24,39,0.5)',
     font: { color: '#9ca3af', size: 10 },
     height: 420,
-    margin: { l: 50, r: 60, t: 40, b: 40 },
+    margin: { l: 50, r: 70, t: 40, b: 40 },
     xaxis: {
       rangeslider: { visible: false },
       gridcolor: 'rgba(75,85,99,0.2)',
@@ -382,7 +382,32 @@ export default function CandlestickChart({ analysis, onQuoteUpdate }: Props) {
         </div>
       ) : (
         <div className="plotly-chart-wrapper">
-          <style>{`.plotly-chart-wrapper .modebar-container { left: 8px !important; right: auto !important; }`}</style>
+          <style>{`
+            .plotly-chart-wrapper .modebar-container {
+              left: 8px !important;
+              right: auto !important;
+              top: 8px !important;
+            }
+            .plotly-chart-wrapper .modebar {
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: flex-start !important;
+            }
+            .plotly-chart-wrapper .modebar-group {
+              display: flex !important;
+              flex-direction: column !important;
+              background: rgba(17,24,39,0.75) !important;
+              border-radius: 4px !important;
+              margin-bottom: 2px !important;
+            }
+            .plotly-chart-wrapper .modebar-btn {
+              opacity: 0.4;
+              transition: opacity 0.2s;
+            }
+            .plotly-chart-wrapper .modebar-container:hover .modebar-btn {
+              opacity: 1;
+            }
+          `}</style>
           <Plot
             data={data}
             layout={layout}
@@ -392,7 +417,8 @@ export default function CandlestickChart({ analysis, onQuoteUpdate }: Props) {
               responsive: true,
               scrollZoom: true,
               modeBarButtonsToRemove: [
-                'autoScale2d', 'lasso2d', 'select2d',
+                'zoom2d', 'pan2d', 'select2d', 'lasso2d',
+                'zoomIn2d', 'zoomOut2d', 'autoScale2d',
                 'hoverClosestCartesian', 'hoverCompareCartesian',
                 'toggleSpikelines',
               ],

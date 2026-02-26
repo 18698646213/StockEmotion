@@ -193,18 +193,54 @@ class AutoTrader:
     # Core loop
     # ------------------------------------------------------------------
 
+    # Trading session open times (hour, minute)
+    _SESSION_OPENS = [(9, 0), (13, 30), (21, 0)]
+
     def _trading_loop(self):
         logger.info("自动交易循环启动")
+        was_trading = self._is_trading_hours()
         while self._running:
+            now_trading = self._is_trading_hours()
+            session_just_opened = now_trading and not was_trading
+            was_trading = now_trading
+
+            if session_just_opened:
+                logger.info("检测到新交易时段开盘，立即执行分析")
+
             try:
                 self._run_one_cycle()
             except Exception as e:
                 logger.error("自动交易循环异常: %s", e)
-            for _ in range(self.config.analysis_interval):
+
+            sleep_secs = self._seconds_until_next_event()
+            for _ in range(sleep_secs):
                 if not self._running:
                     break
                 time.sleep(1)
         logger.info("自动交易循环结束")
+
+    def _seconds_until_next_event(self) -> int:
+        """Return seconds to sleep: either the normal interval or until the
+        next session opens, whichever comes first."""
+        interval = self.config.analysis_interval
+        if self._is_trading_hours():
+            return interval
+
+        now = datetime.now()
+        now_mins = now.hour * 60 + now.minute
+        secs_into_min = now.second
+
+        best = interval
+        for h, m in self._SESSION_OPENS:
+            open_mins = h * 60 + m
+            diff = open_mins - now_mins
+            if diff <= 0:
+                diff += 24 * 60
+            secs = diff * 60 - secs_into_min
+            if secs < best:
+                best = secs
+
+        return max(1, best)
 
     @staticmethod
     def _is_trading_hours() -> bool:

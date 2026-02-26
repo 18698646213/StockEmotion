@@ -4,7 +4,7 @@ import logging
 import os
 from pathlib import Path
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Optional
 
 import yaml
 
@@ -64,7 +64,7 @@ class AppConfig:
     futures_strategy: FuturesStrategyConfig = field(default_factory=FuturesStrategyConfig)
 
 
-def load_config(config_path: str | None = None) -> AppConfig:
+def load_config(config_path: Optional[str] = None) -> AppConfig:
     """Load configuration from YAML file.
 
     Looks for config.yaml in the project root by default.
@@ -131,7 +131,7 @@ def load_config(config_path: str | None = None) -> AppConfig:
     )
 
 
-def save_config(config: AppConfig, config_path: str | None = None) -> None:
+def save_config(config: AppConfig, config_path: Optional[str] = None) -> None:
     """Persist the current AppConfig back to the YAML file."""
     if config_path is None:
         config_path = _DEFAULT_CONFIG_PATH

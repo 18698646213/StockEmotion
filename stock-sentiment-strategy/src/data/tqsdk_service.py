@@ -119,6 +119,10 @@ class TqDataService:
     Supports both TqSim (paper) and TqAccount (live) trading modes.
     """
 
+    _RECONNECT_BASE_DELAY = 3      # initial delay in seconds
+    _RECONNECT_MAX_DELAY = 60       # max delay between retries
+    _RECONNECT_MAX_ATTEMPTS = 0     # 0 = unlimited
+
     def __init__(self):
         self._api = None
         self._user = ""
@@ -150,9 +154,26 @@ class TqDataService:
         self._trade_log: list[dict] = []         # all executed trades
         self._load_trade_log()
 
+        # Reconnection state
+        self._reconnect_count = 0
+        self._last_error: Optional[str] = None
+        self._reconnecting = False
+
     @property
     def is_ready(self) -> bool:
         return self._ready.is_set() and self._running
+
+    @property
+    def is_reconnecting(self) -> bool:
+        return self._reconnecting
+
+    @property
+    def reconnect_count(self) -> int:
+        return self._reconnect_count
+
+    @property
+    def last_error(self) -> Optional[str]:
+        return self._last_error
 
     @property
     def trade_mode(self) -> str:
@@ -184,6 +205,9 @@ class TqDataService:
         self._broker_id = broker_id
         self._broker_account = broker_account
         self._broker_password = broker_password
+        self._reconnect_count = 0
+        self._last_error = None
+        self._reconnecting = False
 
         self._thread = threading.Thread(target=self._run_loop, daemon=True, name="tqsdk")
         self._running = True
@@ -200,6 +224,7 @@ class TqDataService:
 
     def stop(self):
         self._running = False
+        self._reconnecting = False
         if self._api:
             try:
                 self._api.close()
@@ -207,44 +232,96 @@ class TqDataService:
                 pass
         self._ready.clear()
 
+    def _cleanup_connection(self):
+        """Close current API connection and clear transient state."""
+        self._ready.clear()
+        if self._api:
+            try:
+                self._api.close()
+            except Exception:
+                pass
+            self._api = None
+        self._account = None
+        self._quotes.clear()
+        self._kline_cache.clear()
+        self._atr_cache.clear()
+        self._positions.clear()
+
+    def _connect(self) -> bool:
+        """Establish TqSdk connection. Returns True on success."""
+        from tqsdk import TqApi, TqAuth
+
+        auth = TqAuth(self._user, self._password)
+        if self._trade_mode == "live" and self._broker_id and self._broker_account:
+            from tqsdk import TqAccount
+            account = TqAccount(
+                self._broker_id, self._broker_account, self._broker_password)
+            self._api = TqApi(auth=auth, account=account)
+            logger.info("天勤以实盘模式连接: %s / %s", self._broker_id, self._broker_account)
+        else:
+            self._api = TqApi(auth=auth)
+            logger.info("天勤以模拟盘模式连接 (TqSim)")
+
+        self._account = self._api.get_account()
+        self._ready.set()
+        self._reconnecting = False
+        self._last_error = None
+        return True
+
     def _run_loop(self):
-        """Background thread: runs the TqSdk event loop."""
-        try:
-            from tqsdk import TqApi, TqAuth
+        """Background thread: outer reconnect loop wrapping the TqSdk event loop."""
+        delay = self._RECONNECT_BASE_DELAY
 
-            auth = TqAuth(self._user, self._password)
-            if self._trade_mode == "live" and self._broker_id and self._broker_account:
-                from tqsdk import TqAccount
-                account = TqAccount(
-                    self._broker_id, self._broker_account, self._broker_password)
-                self._api = TqApi(auth=auth, account=account)
-                logger.info("天勤以实盘模式连接: %s / %s", self._broker_id, self._broker_account)
-            else:
-                self._api = TqApi(auth=auth)
-                logger.info("天勤以模拟盘模式连接 (TqSim)")
+        while self._running:
+            try:
+                self._connect()
 
-            self._account = self._api.get_account()
-            self._ready.set()
+                if self._reconnect_count > 0:
+                    logger.info("天勤量化重连成功 (第 %d 次重连)", self._reconnect_count)
+                delay = self._RECONNECT_BASE_DELAY
 
-            while self._running:
-                self._process_pending()
-                self._process_orders()
-                try:
-                    self._api.wait_update(deadline=time.time() + 0.5)
-                except Exception as e:
-                    if self._running:
-                        logger.debug("tqsdk wait_update: %s", e)
-        except Exception as e:
-            logger.error("天勤量化服务异常: %s", e)
-        finally:
-            self._ready.clear()
-            self._running = False
-            if self._api:
-                try:
-                    self._api.close()
-                except Exception:
-                    pass
-                self._api = None
+                while self._running:
+                    self._process_pending()
+                    self._process_orders()
+                    try:
+                        self._api.wait_update(deadline=time.time() + 0.5)
+                    except Exception as e:
+                        if self._running:
+                            logger.warning("tqsdk 连接异常: %s", e)
+                            self._last_error = str(e)
+                        break
+
+            except Exception as e:
+                self._last_error = str(e)
+                logger.error("天勤量化服务异常: %s", e)
+
+            finally:
+                self._cleanup_connection()
+
+            if not self._running:
+                break
+
+            if (self._RECONNECT_MAX_ATTEMPTS > 0
+                    and self._reconnect_count >= self._RECONNECT_MAX_ATTEMPTS):
+                logger.error("天勤量化重连次数已达上限 (%d)，停止服务",
+                             self._RECONNECT_MAX_ATTEMPTS)
+                break
+
+            self._reconnect_count += 1
+            self._reconnecting = True
+            logger.info("天勤量化将在 %ds 后尝试第 %d 次重连...",
+                        delay, self._reconnect_count)
+
+            for _ in range(int(delay)):
+                if not self._running:
+                    break
+                time.sleep(1)
+
+            delay = min(delay * 2, self._RECONNECT_MAX_DELAY)
+
+        self._running = False
+        self._reconnecting = False
+        logger.info("天勤量化服务线程退出")
 
     def _process_pending(self):
         """Process queued subscription requests (must run in tqsdk thread)."""

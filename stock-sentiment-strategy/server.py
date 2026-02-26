@@ -592,10 +592,16 @@ def _safe_float(val, default: float = 0.0) -> float:
 def health():
     tq_ok = False
     tq_mode = _config.tqsdk.trade_mode
+    tq_reconnecting = False
+    tq_reconnect_count = 0
+    tq_last_error = None
     try:
         from src.data.tqsdk_service import get_tq_service
         svc = get_tq_service()
         tq_ok = svc.is_ready
+        tq_reconnecting = svc.is_reconnecting
+        tq_reconnect_count = svc.reconnect_count
+        tq_last_error = svc.last_error
         if tq_ok:
             tq_mode = svc.trade_mode
     except Exception:
@@ -606,6 +612,9 @@ def health():
         "deepseek_configured": bool(_config.deepseek.api_key),
         "tqsdk_connected": tq_ok,
         "tqsdk_trade_mode": tq_mode,
+        "tqsdk_reconnecting": tq_reconnecting,
+        "tqsdk_reconnect_count": tq_reconnect_count,
+        "tqsdk_last_error": tq_last_error,
         "timestamp": datetime.now().isoformat(),
     }
 

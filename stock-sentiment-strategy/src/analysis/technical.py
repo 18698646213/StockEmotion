@@ -1,4 +1,4 @@
-"""Technical indicator computation using pandas-ta.
+"""Technical indicator computation.
 
 Calculates RSI, MACD, Moving Averages, and Bollinger Bands,
 then produces a composite technical score in [-1, 1].
@@ -9,10 +9,55 @@ Also includes a dedicated futures swing strategy based on MA5/MA20/MA60.
 import logging
 from typing import Dict, List, Optional
 
+import numpy as np
 import pandas as pd
-import pandas_ta as ta
 
 logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------------------------
+# Lightweight technical indicator helpers (replaces pandas-ta dependency)
+# ---------------------------------------------------------------------------
+
+def _rsi(series: pd.Series, length: int = 14) -> pd.Series:
+    delta = series.diff()
+    gain = delta.clip(lower=0)
+    loss = -delta.clip(upper=0)
+    avg_gain = gain.ewm(alpha=1 / length, min_periods=length).mean()
+    avg_loss = loss.ewm(alpha=1 / length, min_periods=length).mean()
+    rs = avg_gain / avg_loss.replace(0, np.nan)
+    return 100 - (100 / (1 + rs))
+
+
+def _sma(series: pd.Series, length: int) -> pd.Series:
+    return series.rolling(window=length).mean()
+
+
+def _macd(
+    series: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9
+) -> pd.DataFrame:
+    ema_fast = series.ewm(span=fast, adjust=False).mean()
+    ema_slow = series.ewm(span=slow, adjust=False).mean()
+    macd_line = ema_fast - ema_slow
+    signal_line = macd_line.ewm(span=signal, adjust=False).mean()
+    histogram = macd_line - signal_line
+    return pd.DataFrame({
+        f"MACD_{fast}_{slow}_{signal}": macd_line,
+        f"MACDs_{fast}_{slow}_{signal}": signal_line,
+        f"MACDh_{fast}_{slow}_{signal}": histogram,
+    })
+
+
+def _bbands(series: pd.Series, length: int = 20, std: float = 2.0) -> pd.DataFrame:
+    mid = series.rolling(window=length).mean()
+    rolling_std = series.rolling(window=length).std()
+    upper = mid + std * rolling_std
+    lower = mid - std * rolling_std
+    return pd.DataFrame({
+        f"BBL_{length}_{std}": lower,
+        f"BBM_{length}_{std}": mid,
+        f"BBU_{length}_{std}": upper,
+    })
 
 
 def compute_indicators(df: pd.DataFrame) -> pd.DataFrame:
@@ -30,26 +75,17 @@ def compute_indicators(df: pd.DataFrame) -> pd.DataFrame:
 
     df = df.copy()
 
-    # RSI (14-period) — 用于综合评分
-    df["rsi"] = ta.rsi(df["close"], length=14)
+    df["rsi"] = _rsi(df["close"], length=14)
+    df["rsi6"] = _rsi(df["close"], length=6)
 
-    # RSI (6-period) — 用于口诀规则
-    df["rsi6"] = ta.rsi(df["close"], length=6)
+    macd_result = _macd(df["close"], fast=12, slow=26, signal=9)
+    df = pd.concat([df, macd_result], axis=1)
 
-    # MACD (12, 26, 9)
-    macd_result = ta.macd(df["close"], fast=12, slow=26, signal=9)
-    if macd_result is not None:
-        df = pd.concat([df, macd_result], axis=1)
-
-    # Moving Averages
     for period in [5, 10, 20, 60]:
-        col_name = f"ma{period}"
-        df[col_name] = ta.sma(df["close"], length=period)
+        df[f"ma{period}"] = _sma(df["close"], length=period)
 
-    # Bollinger Bands (20, 2)
-    bb = ta.bbands(df["close"], length=20, std=2)
-    if bb is not None:
-        df = pd.concat([df, bb], axis=1)
+    bb = _bbands(df["close"], length=20, std=2)
+    df = pd.concat([df, bb], axis=1)
 
     return df
 
