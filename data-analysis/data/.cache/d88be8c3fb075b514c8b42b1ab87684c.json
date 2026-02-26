@@ -1,0 +1,2981 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head><title>
+	第十二届实盘大赛(内盘)排行
+</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="keywords" content="期货实战" />
+<meta name="description" content="期货实战平台" /><link rel="shortcut icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon" /><link rel="stylesheet" type="text/css" href="/Css/sp10.css" /><link rel="stylesheet" type="text/css" href="/JqueryUI/artDialog/css/ui-dialog.css" /><link href="/css/pagination.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/JqueryUI/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.artDialog.js?skin=default"></script>
+    <script type="text/javascript" src="/js/artDialog.iframeTools.js"></script>
+    <script src="/JqueryUI/datepicker/WdatePicker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(".admintable tr:gt(0)").hover(
+			    function() {
+			        $(this).css({ background: "#55c0ff" });
+			    },
+			    function() {
+			        $(this).css({ background: "#fff" });
+			    }
+		    );
+        });
+    </script>
+</head>
+<body>
+    <form name="form1" method="post" action="SPOverSee1.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=VNwubk5FwVpSfDk_RsQCoZo_P-tl4cWMhcNUJgGIawqqDDALUqGg_qAd5ShsxyAQkwaWM2Cu6uaFWz8k8_QtUynASgg1&amp;t=636271959297880478" type="text/javascript"></script>
+
+
+<script src="/WebResource.axd?d=yof9fRIpw4Z6SS2xebf4pLNT6onvWMHqZsLAPds2nK4UdZAuuSpUfi6QaliB2gIY-klkEaZhcTRHyMzMpWwvWkWl5901&amp;t=636271959297880478" type="text/javascript"></script><script language="Javascript"><!--
+
+--></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="D419A6A7" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWGAKs776OCQLPr9uqBALPr9+qBALPr+OqBALPr+eqBALPr+uqBALPr++qBALPr/OqBALPr/eqBALPr/uqBALd14v9BwL4wKmSAgKnhdDSAwKqoM2iDQKd0+5gAur+z5wPAp3Y3f8CAoLvv+oIAueFotUOAsHYk+MHAsTau8oKAtjvvP4OAvir1KABAvK0qJcM4apUznXlU6IcorAVEDl+0F3jhs0=" />
+</div>
+    
+<script type="text/javascript">
+    // 设置为主页
+    function SetHome(obj, vrl) {
+        try {
+            obj.style.behavior = 'url(#default#homepage)'; obj.setHomePage(vrl);
+        }
+        catch (e) {
+            if (window.netscape) {
+                try {
+                    netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+                }
+                catch (e) {
+                    alert("此操作被浏览器拒绝！\n请在浏览器地址栏输入“about:config”并回车\n然后将 [signed.applets.codebase_principal_support]的值设置为'true',双击即可。");
+                }
+                var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
+                prefs.setCharPref('browser.startup.homepage', vrl);
+            }
+            else {
+                alert("您的浏览器不支持，请按照下面步骤操作：1.打开浏览器设置。2.点击设置网页。3.输入：" + vrl + "点击确定。");
+            }
+        }
+    }
+    // 加入收藏 兼容360和IE6
+    function shoucang(sTitle, sURL) {
+        try {
+            window.external.addFavorite(sURL, sTitle);
+        }
+        catch (e) {
+            try {
+                window.sidebar.addPanel(sTitle, sURL, "");
+            }
+            catch (e) {
+                alert("加入收藏失败，请使用Ctrl+D进行添加");
+            }
+        }
+    }
+    $(function() {
+        var NickName = $.cookie('NickName');
+        var MemberId = $.cookie('MemberId');
+        if (NickName && MemberId) {
+            $("#sNickName").html(NickName);
+            $("#dLogin").show();
+            $("#dNoLogin").hide();
+        }
+        else {
+            $("#dLogin").hide();
+            $("#dNoLogin").show();
+        }
+    });
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?f6716959e3ba8bc15ce8021a4f6e1cf0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<!--header样式开始-->
+<div id="header" class="clear">
+    <div class="huanying">
+        <div class="hy" id="dNoLogin">
+            
+        </div>
+        <div class="wx" style="text-align:right;">
+            <dl>
+                <dd>
+                    <a href="javascript:;" onclick="SetHome(this,'http://ds.qhrb.com.cn');">设为首页</a> 
+                    <a href="javascript:;" onclick="shoucang(document.title,window.location);">加入收藏</a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="tf1"><img src="/images/ds14.png" height="379px" width="1400px" /></div>
+
+
+<div id="header" class="clear">
+    <div class="nav">
+        <ul>
+        	<li><a href="http://ds.qhrb.com.cn" target="_blank" style="width:175px;">大赛首页</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+        	<li><a href="/SP12/SPOverSee1.aspx" style="width:175px;">内盘排行</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+        	<li><a href="/SP12/SPOverSee2.aspx" style="width:175px;">外盘排行</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+        	<li><a href="/SP12/Statistical1.aspx" style="width:175px;">内盘概况</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+            <li><a href="/SP12/Statistical2.aspx" style="width:175px;">外盘概况</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+            <li><a href="/SP12/ProductRank.aspx" style="width:185px;">资管奖排名</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+            <li><a href="/SP12/SpecialAwardRank.aspx" style="width:195px;color:Red;font-weight:bold;">长期稳定盈利奖</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+            
+            <li><a href="/SP12/ZSSOverSee.aspx">芝商所专项奖</a></li>
+            
+            
+        </ul>
+    </div>
+</div>
+
+    
+    <!--main样式开始-->
+    <div class="main">
+        <div class="wp m10">
+            <p>内盘排行榜</p>
+        </div>
+        <div class="fl">
+            <dl class="secitem bb">
+                <dt>组别：</dt>
+                <dd>
+                    <a id="lbAccountType1" class="select" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType1&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">轻量组</a>
+                    <a id="lbAccountType2" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType2&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">重量组</a>
+                    <a id="lbAccountType3" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType3&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">基金组</a>
+                    <a id="lbAccountType4" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType4&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">程序化组</a>
+                    <a id="lbAccountType5" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType5&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">最佳金融期货</a>
+                    <a id="lbAccountType6" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType6&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">最佳工业品</a>
+                    <a id="lbAccountType7" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType7&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">最佳贵金属</a>
+                    <a id="lbAccountType8" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType8&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">最佳农副产品</a>
+                    <a id="lbAccountType9" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType9&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">最佳能源化工</a>
+                    <a id="lbAccountType10" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType10&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">最大收益额</a>
+                    <a id="lbAccountType11" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType11&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">商品期权</a>
+                    <a id="lbAccountType12" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType12&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">对冲套利</a>
+                    <input type="hidden" name="hidAccountType" id="hidAccountType" value="1" />
+                    <input type="hidden" name="hidMatchType" id="hidMatchType" value="2" />
+                    <input type="hidden" name="hidTradeBreedType" id="hidTradeBreedType" value="0" /> 
+                </dd>
+            </dl>
+            <div class="clear">
+            </div>
+            <dl id="dlRankType" class="secitem bb">
+                <dt>排行榜类型：</dt>
+                <dd>
+                    <a id="lbRankType1" class="select" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbRankType1&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">总排行</a>
+                    <a id="lbRankType2" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbRankType2&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">月排行</a>
+                    <a id="lbRankType3" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbRankType3&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">周排行</a> 
+                    <input type="hidden" name="hidRankType" id="hidRankType" value="1" /> 
+                </dd>
+            </dl>
+            <div class="clear">
+            </div>
+            <table  height="44" border="0" style="font-weight:bold ; font-size:20px; text-align:right;">
+              <tr>
+                <td height="40">资金账号：</td>
+                <td width="150"><input name="txtInternalAccount" type="text" id="txtInternalAccount" placeholder="请输入账号" style="color:Red;font-size:20px;font-weight:bold;height:30px;" /></td>
+                <td>昵称：</td>
+                <td width="150"><input name="txtNickName" type="text" id="txtNickName" placeholder="请输入昵称" style="color:Red;font-size:20px;font-weight:bold;height:30px;" /></td>
+                <td>交易日期：</td>
+                <td width="155">
+                    <input name="txtTradeDate" type="text" value="2018-09-28" id="txtTradeDate" placeholder="交易日期" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="color:Red;font-size:20px;font-weight:bold;height:30px;" />
+                    <span id="RequiredFieldValidator1" style="color:Red;display:none;">*必填</span>
+                </td>
+                <td width="56"><input type="image" name="ibSearch" id="ibSearch" src="/images/so.jpg" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ibSearch&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" style="height:24px;width:72px;border-width:0px;" /></td>
+              </tr>
+            </table>
+        </div>
+        
+                <table border="0" cellpadding="1" cellspacing="1" style="color: #000; background: #ccc" width="100%" class="admintable">
+                    <tr style="background:url(../images/cp_bg.jpg) repeat-x;" align="center" height="32">
+                        <td height="32" style="padding-top: 1px">
+                            排名
+                        </td>
+                        <td style="padding-top: 1px;">
+                            客户昵称
+                        </td>
+                        <td style="padding-top: 1px;">
+                            当日权益
+                        </td>
+                        <td style="padding-top: 1px;">
+                            风险度(%)
+                        </td>
+                        <td style="padding-top: 1px;">
+                            净利润
+                        </td>
+                        <td style="padding-top: 1px;">
+                            净利润得分
+                        </td>
+                        <td style="padding-top: 1px;">
+                            回撤率(%)
+                        </td>
+                        <td style="padding-top: 1px;">
+                            回撤率得分
+                        </td>
+                        <td style="padding-top: 1px;">
+                            日净值
+                        </td>
+                        <td style="padding-top: 1px;">
+                            累计净值
+                        </td>
+                        <td style="padding-top: 1px;">
+                            净值得分
+                        </td>
+                        <td style="padding-top: 1px;">
+                            综合得分
+                        </td>
+                        <td style="padding-top: 1px;">
+                            参考收益率(%)
+                        </td>
+                        <td style="padding-top: 1px;">
+                            指定交易商
+                        </td>
+                        <td style="padding-top: 1px;">
+                            操作指导
+                        </td>
+                        <td style="padding-top: 1px;">
+                            账户评估
+                        </td>
+                    </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        1
+                    </td>
+                    <td>
+                        封号斗罗
+                    </td>
+                    <td>
+                        43238.930
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        143228.670
+                    </td>
+                    <td>
+                        68.76293
+                    </td>
+                    <td style="color:#ff0000;">
+                        40.35
+                    </td>
+                    <td>
+                        87.73012
+                    </td>
+                    <td>
+                        0.96970
+                    </td>
+                    <td style="color:#ff0000;">
+                        153.47835
+                    </td>
+                    <td>
+                        100.00000
+                    </td>
+                    <td>
+                        92.52560
+                    </td>
+                    <td>
+                        558.98
+                    </td>
+                    <td>
+                        大陆期货
+                    </td>
+                    <td>
+                        神剑山庄
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=2525' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        2
+                    </td>
+                    <td>
+                        燕夕
+                    </td>
+                    <td>
+                        208232.690
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        7753005.120
+                    </td>
+                    <td>
+                        100.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        31.15
+                    </td>
+                    <td>
+                        90.54849
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.03464
+                    </td>
+                    <td>
+                        69.31496
+                    </td>
+                    <td>
+                        77.57532
+                    </td>
+                    <td>
+                        228.62
+                    </td>
+                    <td>
+                        招金期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=18245' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        3
+                    </td>
+                    <td>
+                        2333
+                    </td>
+                    <td>
+                        71756.510
+                    </td>
+                    <td>
+                        105.268%
+                    </td>
+                    <td style="color:#ff0000;">
+                        158708.770
+                    </td>
+                    <td>
+                        68.99332
+                    </td>
+                    <td style="color:#ff0000;">
+                        40.49
+                    </td>
+                    <td>
+                        87.68584
+                    </td>
+                    <td>
+                        1.09731
+                    </td>
+                    <td style="color:#ff0000;">
+                        36.49475
+                    </td>
+                    <td>
+                        77.13132
+                    </td>
+                    <td>
+                        76.55917
+                    </td>
+                    <td>
+                        356.92
+                    </td>
+                    <td>
+                        方正中期期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=39343' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        4
+                    </td>
+                    <td>
+                        沧海一粟888
+                    </td>
+                    <td>
+                        135041.690
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        333203.560
+                    </td>
+                    <td>
+                        70.55642
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.61
+                    </td>
+                    <td>
+                        99.53185
+                    </td>
+                    <td>
+                        1.01848
+                    </td>
+                    <td style="color:#ff0000;">
+                        24.82806
+                    </td>
+                    <td>
+                        74.84864
+                    </td>
+                    <td>
+                        76.45852
+                    </td>
+                    <td>
+                        329.24
+                    </td>
+                    <td>
+                        徽商期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=1079' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        5
+                    </td>
+                    <td>
+                        权益的游戏
+                    </td>
+                    <td>
+                        4735.350
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        84683.520
+                    </td>
+                    <td>
+                        67.53335
+                    </td>
+                    <td style="color:#ff0000;">
+                        4.42
+                    </td>
+                    <td>
+                        98.68413
+                    </td>
+                    <td>
+                        1.10971
+                    </td>
+                    <td style="color:#ff0000;">
+                        22.23096
+                    </td>
+                    <td>
+                        74.33878
+                    </td>
+                    <td>
+                        75.41223
+                    </td>
+                    <td>
+                        324.99
+                    </td>
+                    <td>
+                        华安期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=51616' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        6
+                    </td>
+                    <td>
+                        由势18载
+                    </td>
+                    <td>
+                        149429.210
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        3719692.700
+                    </td>
+                    <td>
+                        84.38659
+                    </td>
+                    <td style="color:#ff0000;">
+                        41.25
+                    </td>
+                    <td>
+                        87.45809
+                    </td>
+                    <td>
+                        1.13798
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.60079
+                    </td>
+                    <td>
+                        69.95703
+                    </td>
+                    <td>
+                        74.59305
+                    </td>
+                    <td>
+                        101.18
+                    </td>
+                    <td>
+                        大陆期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=34274' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        7
+                    </td>
+                    <td>
+                        梦莉
+                    </td>
+                    <td>
+                        239853.720
+                    </td>
+                    <td>
+                        79.545%
+                    </td>
+                    <td style="color:#ff0000;">
+                        838496.130
+                    </td>
+                    <td>
+                        73.05190
+                    </td>
+                    <td style="color:#ff0000;">
+                        19.39
+                    </td>
+                    <td>
+                        94.16398
+                    </td>
+                    <td>
+                        0.93031
+                    </td>
+                    <td style="color:#ff0000;">
+                        11.29169
+                    </td>
+                    <td>
+                        72.19608
+                    </td>
+                    <td>
+                        74.56404
+                    </td>
+                    <td>
+                        243.29
+                    </td>
+                    <td>
+                        国贸期货
+                    </td>
+                    <td>
+                        梦莉
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=23481' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        8
+                    </td>
+                    <td>
+                        惊鸿一瞥
+                    </td>
+                    <td>
+                        4072.390
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        866980.360
+                    </td>
+                    <td>
+                        73.17319
+                    </td>
+                    <td style="color:#ff0000;">
+                        5.33
+                    </td>
+                    <td>
+                        98.41210
+                    </td>
+                    <td>
+                        1.01036
+                    </td>
+                    <td style="color:#ff0000;">
+                        7.64648
+                    </td>
+                    <td>
+                        71.45478
+                    </td>
+                    <td>
+                        74.49419
+                    </td>
+                    <td>
+                        207.72
+                    </td>
+                    <td>
+                        申银万国期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=36346' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        9
+                    </td>
+                    <td>
+                        钧凌基金
+                    </td>
+                    <td>
+                        1520835.370
+                    </td>
+                    <td>
+                        60.832%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1815957.920
+                    </td>
+                    <td>
+                        76.97808
+                    </td>
+                    <td style="color:#ff0000;">
+                        50.17
+                    </td>
+                    <td>
+                        84.76308
+                    </td>
+                    <td>
+                        1.00122
+                    </td>
+                    <td style="color:#ff0000;">
+                        11.18038
+                    </td>
+                    <td>
+                        72.17211
+                    </td>
+                    <td>
+                        74.39240
+                    </td>
+                    <td>
+                        181.11
+                    </td>
+                    <td>
+                        中信建投期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=14607' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        10
+                    </td>
+                    <td>
+                        宋女士
+                    </td>
+                    <td>
+                        304465.640
+                    </td>
+                    <td>
+                        125.894%
+                    </td>
+                    <td style="color:#ff0000;">
+                        4491738.240
+                    </td>
+                    <td>
+                        87.37842
+                    </td>
+                    <td style="color:#ff0000;">
+                        55.93
+                    </td>
+                    <td>
+                        83.02018
+                    </td>
+                    <td>
+                        0.94308
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.05623
+                    </td>
+                    <td>
+                        69.33689
+                    </td>
+                    <td>
+                        74.31352
+                    </td>
+                    <td>
+                        199.78
+                    </td>
+                    <td>
+                        大越期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=46659' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        11
+                    </td>
+                    <td>
+                        雨后的树林
+                    </td>
+                    <td>
+                        914569.160
+                    </td>
+                    <td>
+                        92.920%
+                    </td>
+                    <td style="color:#ff0000;">
+                        2014390.300
+                    </td>
+                    <td>
+                        77.75698
+                    </td>
+                    <td style="color:#ff0000;">
+                        26.92
+                    </td>
+                    <td>
+                        91.85487
+                    </td>
+                    <td>
+                        1.05398
+                    </td>
+                    <td style="color:#ff0000;">
+                        4.64399
+                    </td>
+                    <td>
+                        70.78818
+                    </td>
+                    <td>
+                        74.28861
+                    </td>
+                    <td>
+                        179.52
+                    </td>
+                    <td>
+                        方正中期期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=36073' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        12
+                    </td>
+                    <td>
+                        jxzbpt42
+                    </td>
+                    <td>
+                        5889198.470
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        3013674.940
+                    </td>
+                    <td>
+                        81.65024
+                    </td>
+                    <td style="color:#ff0000;">
+                        6.62
+                    </td>
+                    <td>
+                        98.01354
+                    </td>
+                    <td>
+                        1.00282
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.74459
+                    </td>
+                    <td>
+                        68.58736
+                    </td>
+                    <td>
+                        74.14255
+                    </td>
+                    <td>
+                        66.14
+                    </td>
+                    <td>
+                        建信期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=3155' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        13
+                    </td>
+                    <td>
+                        爬山虎
+                    </td>
+                    <td>
+                        2418752.140
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1970197.040
+                    </td>
+                    <td>
+                        77.58375
+                    </td>
+                    <td style="color:#ff0000;">
+                        37.49
+                    </td>
+                    <td>
+                        88.59999
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        5.39220
+                    </td>
+                    <td>
+                        70.98093
+                    </td>
+                    <td>
+                        74.06340
+                    </td>
+                    <td>
+                        127.72
+                    </td>
+                    <td>
+                        渤海期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=17957' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        14
+                    </td>
+                    <td>
+                        苦瓜灬有点甜丶
+                    </td>
+                    <td>
+                        321808.460
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1024053.090
+                    </td>
+                    <td>
+                        73.82526
+                    </td>
+                    <td style="color:#ff0000;">
+                        19.62
+                    </td>
+                    <td>
+                        94.09439
+                    </td>
+                    <td>
+                        1.00026
+                    </td>
+                    <td style="color:#ff0000;">
+                        6.06930
+                    </td>
+                    <td>
+                        71.12656
+                    </td>
+                    <td>
+                        73.96308
+                    </td>
+                    <td>
+                        269.05
+                    </td>
+                    <td>
+                        瑞达期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=40452' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        15
+                    </td>
+                    <td>
+                        重庆2022
+                    </td>
+                    <td>
+                        505022.070
+                    </td>
+                    <td>
+                        70.290%
+                    </td>
+                    <td style="color:#ff0000;">
+                        902259.470
+                    </td>
+                    <td>
+                        73.32520
+                    </td>
+                    <td style="color:#ff0000;">
+                        28.67
+                    </td>
+                    <td>
+                        91.31397
+                    </td>
+                    <td>
+                        1.02147
+                    </td>
+                    <td style="color:#ff0000;">
+                        8.17096
+                    </td>
+                    <td>
+                        71.56616
+                    </td>
+                    <td>
+                        73.89275
+                    </td>
+                    <td>
+                        202.11
+                    </td>
+                    <td>
+                        徽商期货
+                    </td>
+                    <td>
+                        王一刀
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=41827' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        16
+                    </td>
+                    <td>
+                        郭*
+                    </td>
+                    <td>
+                        100.000
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        2123863.490
+                    </td>
+                    <td>
+                        78.18944
+                    </td>
+                    <td style="color:#ff0000;">
+                        37.27
+                    </td>
+                    <td>
+                        88.66641
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.77484
+                    </td>
+                    <td>
+                        70.53194
+                    </td>
+                    <td>
+                        73.87689
+                    </td>
+                    <td>
+                        193.25
+                    </td>
+                    <td>
+                        安粮期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=24890' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        17
+                    </td>
+                    <td>
+                        李文丽
+                    </td>
+                    <td>
+                        1043009.560
+                    </td>
+                    <td>
+                        87.001%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1094650.000
+                    </td>
+                    <td>
+                        74.11836
+                    </td>
+                    <td style="color:#ff0000;">
+                        19.46
+                    </td>
+                    <td>
+                        94.14184
+                    </td>
+                    <td>
+                        1.02814
+                    </td>
+                    <td style="color:#ff0000;">
+                        4.34744
+                    </td>
+                    <td>
+                        70.70808
+                    </td>
+                    <td>
+                        73.73351
+                    </td>
+                    <td>
+                        130.78
+                    </td>
+                    <td>
+                        中信建投期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=14423' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        18
+                    </td>
+                    <td>
+                        昨天的路
+                    </td>
+                    <td>
+                        1008083.990
+                    </td>
+                    <td>
+                        56.126%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1067262.040
+                    </td>
+                    <td>
+                        74.00574
+                    </td>
+                    <td style="color:#ff0000;">
+                        39.19
+                    </td>
+                    <td>
+                        88.08439
+                    </td>
+                    <td>
+                        0.99449
+                    </td>
+                    <td style="color:#ff0000;">
+                        8.30834
+                    </td>
+                    <td>
+                        71.59744
+                    </td>
+                    <td>
+                        73.72779
+                    </td>
+                    <td>
+                        110.22
+                    </td>
+                    <td>
+                        一德期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=1441' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        19
+                    </td>
+                    <td>
+                        期市丽人
+                    </td>
+                    <td>
+                        2204372.380
+                    </td>
+                    <td>
+                        33.857%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1748510.340
+                    </td>
+                    <td>
+                        76.71488
+                    </td>
+                    <td style="color:#ff0000;">
+                        43.00
+                    </td>
+                    <td>
+                        86.92351
+                    </td>
+                    <td>
+                        1.00169
+                    </td>
+                    <td style="color:#ff0000;">
+                        4.83561
+                    </td>
+                    <td>
+                        70.84114
+                    </td>
+                    <td>
+                        73.62412
+                    </td>
+                    <td>
+                        96.54
+                    </td>
+                    <td>
+                        英大期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=18622' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        20
+                    </td>
+                    <td>
+                        朱x
+                    </td>
+                    <td>
+                        2545636.550
+                    </td>
+                    <td>
+                        106.468%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1627293.070
+                    </td>
+                    <td>
+                        76.23919
+                    </td>
+                    <td style="color:#ff0000;">
+                        24.07
+                    </td>
+                    <td>
+                        92.72791
+                    </td>
+                    <td>
+                        1.00664
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.77208
+                    </td>
+                    <td>
+                        70.09016
+                    </td>
+                    <td>
+                        73.58374
+                    </td>
+                    <td>
+                        83.15
+                    </td>
+                    <td>
+                        国海良时期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=31586' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        21
+                    </td>
+                    <td>
+                        顺其自然
+                    </td>
+                    <td>
+                        121247.260
+                    </td>
+                    <td>
+                        41.710%
+                    </td>
+                    <td style="color:#ff0000;">
+                        291734.460
+                    </td>
+                    <td>
+                        70.28303
+                    </td>
+                    <td style="color:#ff0000;">
+                        14.32
+                    </td>
+                    <td>
+                        95.71392
+                    </td>
+                    <td>
+                        0.99345
+                    </td>
+                    <td style="color:#ff0000;">
+                        7.10305
+                    </td>
+                    <td>
+                        71.33970
+                    </td>
+                    <td>
+                        73.56579
+                    </td>
+                    <td>
+                        234.38
+                    </td>
+                    <td>
+                        安粮期货
+                    </td>
+                    <td>
+                        林老师
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=44531' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        22
+                    </td>
+                    <td>
+                        老金5
+                    </td>
+                    <td>
+                        767589.900
+                    </td>
+                    <td>
+                        32.640%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1230233.850
+                    </td>
+                    <td>
+                        74.66071
+                    </td>
+                    <td style="color:#ff0000;">
+                        29.93
+                    </td>
+                    <td>
+                        90.92491
+                    </td>
+                    <td>
+                        0.97828
+                    </td>
+                    <td style="color:#ff0000;">
+                        4.45995
+                    </td>
+                    <td>
+                        70.74335
+                    </td>
+                    <td>
+                        73.54498
+                    </td>
+                    <td>
+                        172.63
+                    </td>
+                    <td>
+                        海证期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=17759' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        23
+                    </td>
+                    <td>
+                        张玉珍
+                    </td>
+                    <td>
+                        1030494.570
+                    </td>
+                    <td>
+                        88.057%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1160601.040
+                    </td>
+                    <td>
+                        74.38241
+                    </td>
+                    <td style="color:#ff0000;">
+                        11.43
+                    </td>
+                    <td>
+                        96.58063
+                    </td>
+                    <td>
+                        1.02639
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.62615
+                    </td>
+                    <td>
+                        69.97527
+                    </td>
+                    <td>
+                        73.51724
+                    </td>
+                    <td>
+                        112.12
+                    </td>
+                    <td>
+                        中信建投期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=14601' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        24
+                    </td>
+                    <td>
+                        无名英雄_327
+                    </td>
+                    <td>
+                        824061.740
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        2538985.270
+                    </td>
+                    <td>
+                        79.80680
+                    </td>
+                    <td style="color:#ff0000;">
+                        13.09
+                    </td>
+                    <td>
+                        96.07452
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.71312
+                    </td>
+                    <td>
+                        68.49264
+                    </td>
+                    <td>
+                        73.51366
+                    </td>
+                    <td>
+                        45.08
+                    </td>
+                    <td>
+                        海通期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=11324' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        25
+                    </td>
+                    <td>
+                        胡**
+                    </td>
+                    <td>
+                        126997.880
+                    </td>
+                    <td>
+                        70.074%
+                    </td>
+                    <td style="color:#ff0000;">
+                        314978.110
+                    </td>
+                    <td>
+                        70.43497
+                    </td>
+                    <td style="color:#ff0000;">
+                        18.74
+                    </td>
+                    <td>
+                        94.36958
+                    </td>
+                    <td>
+                        1.01582
+                    </td>
+                    <td style="color:#ff0000;">
+                        7.35978
+                    </td>
+                    <td>
+                        71.39431
+                    </td>
+                    <td>
+                        73.49997
+                    </td>
+                    <td>
+                        227.11
+                    </td>
+                    <td>
+                        安粮期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=28038' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        26
+                    </td>
+                    <td>
+                        陈**
+                    </td>
+                    <td>
+                        2985859.760
+                    </td>
+                    <td>
+                        103.037%
+                    </td>
+                    <td style="color:#ff0000;">
+                        3505041.480
+                    </td>
+                    <td>
+                        83.55379
+                    </td>
+                    <td style="color:#ff0000;">
+                        84.17
+                    </td>
+                    <td>
+                        74.50497
+                    </td>
+                    <td>
+                        1.02034
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.28257
+                    </td>
+                    <td>
+                        70.35379
+                    </td>
+                    <td>
+                        73.40891
+                    </td>
+                    <td>
+                        228.18
+                    </td>
+                    <td>
+                        安粮期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=25964' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        27
+                    </td>
+                    <td>
+                        兵贵神速
+                    </td>
+                    <td>
+                        1008771.260
+                    </td>
+                    <td>
+                        74.905%
+                    </td>
+                    <td style="color:#ff0000;">
+                        920761.260
+                    </td>
+                    <td>
+                        73.40122
+                    </td>
+                    <td style="color:#ff0000;">
+                        20.36
+                    </td>
+                    <td>
+                        93.86348
+                    </td>
+                    <td>
+                        1.02039
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.57954
+                    </td>
+                    <td>
+                        70.47384
+                    </td>
+                    <td>
+                        73.39828
+                    </td>
+                    <td>
+                        129.71
+                    </td>
+                    <td>
+                        渤海期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=48578' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        28
+                    </td>
+                    <td>
+                        银海
+                    </td>
+                    <td>
+                        2324277.830
+                    </td>
+                    <td>
+                        90.189%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1410753.680
+                    </td>
+                    <td>
+                        75.38580
+                    </td>
+                    <td style="color:#ff0000;">
+                        20.40
+                    </td>
+                    <td>
+                        93.85083
+                    </td>
+                    <td>
+                        1.04778
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.54472
+                    </td>
+                    <td>
+                        69.90179
+                    </td>
+                    <td>
+                        73.39349
+                    </td>
+                    <td>
+                        76.56
+                    </td>
+                    <td>
+                        中国国际期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=16969' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        29
+                    </td>
+                    <td>
+                        祥子
+                    </td>
+                    <td>
+                        1125180.960
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1001211.120
+                    </td>
+                    <td>
+                        73.73466
+                    </td>
+                    <td style="color:#ff0000;">
+                        13.84
+                    </td>
+                    <td>
+                        95.85627
+                    </td>
+                    <td>
+                        1.03525
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.67557
+                    </td>
+                    <td>
+                        70.01815
+                    </td>
+                    <td>
+                        73.34526
+                    </td>
+                    <td>
+                        103.19
+                    </td>
+                    <td>
+                        首创期货
+                    </td>
+                    <td>
+                        佟远明
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=53364' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        30
+                    </td>
+                    <td>
+                        jxzl70
+                    </td>
+                    <td>
+                        522653.350
+                    </td>
+                    <td>
+                        95.856%
+                    </td>
+                    <td style="color:#ff0000;">
+                        589720.010
+                    </td>
+                    <td>
+                        71.92320
+                    </td>
+                    <td style="color:#ff0000;">
+                        38.72
+                    </td>
+                    <td>
+                        88.22990
+                    </td>
+                    <td>
+                        1.00659
+                    </td>
+                    <td style="color:#ff0000;">
+                        8.41742
+                    </td>
+                    <td>
+                        71.62098
+                    </td>
+                    <td>
+                        73.34231
+                    </td>
+                    <td>
+                        192.50
+                    </td>
+                    <td>
+                        建信期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=7776' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        31
+                    </td>
+                    <td>
+                        jxsz50
+                    </td>
+                    <td>
+                        974864.460
+                    </td>
+                    <td>
+                        108.996%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1379253.020
+                    </td>
+                    <td>
+                        75.25505
+                    </td>
+                    <td style="color:#ff0000;">
+                        32.06
+                    </td>
+                    <td>
+                        90.26064
+                    </td>
+                    <td>
+                        0.97015
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.28995
+                    </td>
+                    <td>
+                        70.35744
+                    </td>
+                    <td>
+                        73.32728
+                    </td>
+                    <td>
+                        104.08
+                    </td>
+                    <td>
+                        建信期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=6623' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        32
+                    </td>
+                    <td>
+                        Steven9
+                    </td>
+                    <td>
+                        38600.030
+                    </td>
+                    <td>
+                        96.970%
+                    </td>
+                    <td style="color:#ff0000;">
+                        2279231.430
+                    </td>
+                    <td>
+                        78.79727
+                    </td>
+                    <td style="color:#ff0000;">
+                        64.02
+                    </td>
+                    <td>
+                        80.51180
+                    </td>
+                    <td>
+                        0.92320
+                    </td>
+                    <td style="color:#ff0000;">
+                        4.37729
+                    </td>
+                    <td>
+                        70.71833
+                    </td>
+                    <td>
+                        73.31347
+                    </td>
+                    <td>
+                        239.42
+                    </td>
+                    <td>
+                        海通期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=13266' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        33
+                    </td>
+                    <td>
+                        刘**
+                    </td>
+                    <td>
+                        234201.830
+                    </td>
+                    <td>
+                        127.857%
+                    </td>
+                    <td style="color:#ff0000;">
+                        639830.030
+                    </td>
+                    <td>
+                        72.16360
+                    </td>
+                    <td style="color:#ff0000;">
+                        37.67
+                    </td>
+                    <td>
+                        88.54938
+                    </td>
+                    <td>
+                        1.08285
+                    </td>
+                    <td style="color:#ff0000;">
+                        7.24109
+                    </td>
+                    <td>
+                        71.36890
+                    </td>
+                    <td>
+                        73.24589
+                    </td>
+                    <td>
+                        265.66
+                    </td>
+                    <td>
+                        安粮期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=26888' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        34
+                    </td>
+                    <td>
+                        琴子
+                    </td>
+                    <td>
+                        629621.460
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        784728.010
+                    </td>
+                    <td>
+                        72.81949
+                    </td>
+                    <td style="color:#ff0000;">
+                        24.10
+                    </td>
+                    <td>
+                        92.71842
+                    </td>
+                    <td>
+                        1.05245
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.92553
+                    </td>
+                    <td>
+                        70.58354
+                    </td>
+                    <td>
+                        73.24421
+                    </td>
+                    <td>
+                        144.45
+                    </td>
+                    <td>
+                        美尔雅期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=24486' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        35
+                    </td>
+                    <td>
+                        飘叶
+                    </td>
+                    <td>
+                        37077.310
+                    </td>
+                    <td>
+                        81.074%
+                    </td>
+                    <td style="color:#ff0000;">
+                        235450.940
+                    </td>
+                    <td>
+                        69.82168
+                    </td>
+                    <td style="color:#ff0000;">
+                        26.75
+                    </td>
+                    <td>
+                        91.90865
+                    </td>
+                    <td>
+                        1.01092
+                    </td>
+                    <td style="color:#ff0000;">
+                        8.08759
+                    </td>
+                    <td>
+                        71.54543
+                    </td>
+                    <td>
+                        73.23700
+                    </td>
+                    <td>
+                        248.30
+                    </td>
+                    <td>
+                        徽商期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=39866' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        36
+                    </td>
+                    <td>
+                        天道酬勤诚信是金
+                    </td>
+                    <td>
+                        163886.670
+                    </td>
+                    <td>
+                        100.888%
+                    </td>
+                    <td style="color:#ff0000;">
+                        170961.630
+                    </td>
+                    <td>
+                        69.14701
+                    </td>
+                    <td style="color:#ff0000;">
+                        53.92
+                    </td>
+                    <td>
+                        83.62751
+                    </td>
+                    <td>
+                        0.86570
+                    </td>
+                    <td style="color:#ff0000;">
+                        14.84658
+                    </td>
+                    <td>
+                        72.89317
+                    </td>
+                    <td>
+                        73.21737
+                    </td>
+                    <td>
+                        113.00
+                    </td>
+                    <td>
+                        华安期货
+                    </td>
+                    <td>
+                        商品部
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=39941' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        37
+                    </td>
+                    <td>
+                        坚持就是胜利
+                    </td>
+                    <td>
+                        107181.910
+                    </td>
+                    <td>
+                        17.654%
+                    </td>
+                    <td style="color:#ff0000;">
+                        183562.170
+                    </td>
+                    <td>
+                        69.29763
+                    </td>
+                    <td style="color:#ff0000;">
+                        25.59
+                    </td>
+                    <td>
+                        92.25660
+                    </td>
+                    <td>
+                        1.07020
+                    </td>
+                    <td style="color:#ff0000;">
+                        8.25193
+                    </td>
+                    <td>
+                        71.58420
+                    </td>
+                    <td>
+                        73.19412
+                    </td>
+                    <td>
+                        206.44
+                    </td>
+                    <td>
+                        国海良时期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=31007' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        38
+                    </td>
+                    <td>
+                        疯狂的土贼
+                    </td>
+                    <td>
+                        835770.370
+                    </td>
+                    <td>
+                        75.582%
+                    </td>
+                    <td style="color:#ff0000;">
+                        638726.090
+                    </td>
+                    <td>
+                        72.15711
+                    </td>
+                    <td style="color:#ff0000;">
+                        21.43
+                    </td>
+                    <td>
+                        93.53451
+                    </td>
+                    <td>
+                        1.02090
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.90162
+                    </td>
+                    <td>
+                        70.57001
+                    </td>
+                    <td>
+                        73.18388
+                    </td>
+                    <td>
+                        165.35
+                    </td>
+                    <td>
+                        中信建投期货
+                    </td>
+                    <td>
+                        胡笛
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=14571' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        39
+                    </td>
+                    <td>
+                        熊熊
+                    </td>
+                    <td>
+                        1374703.000
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        2032463.300
+                    </td>
+                    <td>
+                        77.82912
+                    </td>
+                    <td style="color:#ff0000;">
+                        52.46
+                    </td>
+                    <td>
+                        84.07351
+                    </td>
+                    <td>
+                        1.04561
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.04850
+                    </td>
+                    <td>
+                        70.23939
+                    </td>
+                    <td>
+                        73.14075
+                    </td>
+                    <td>
+                        125.81
+                    </td>
+                    <td>
+                        上海中期期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=22928' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        40
+                    </td>
+                    <td>
+                        吴**
+                    </td>
+                    <td>
+                        707816.300
+                    </td>
+                    <td>
+                        62.841%
+                    </td>
+                    <td style="color:#ff0000;">
+                        960541.220
+                    </td>
+                    <td>
+                        73.56400
+                    </td>
+                    <td style="color:#ff0000;">
+                        25.58
+                    </td>
+                    <td>
+                        92.25976
+                    </td>
+                    <td>
+                        1.01826
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.10822
+                    </td>
+                    <td>
+                        70.28428
+                    </td>
+                    <td>
+                        73.13777
+                    </td>
+                    <td>
+                        125.00
+                    </td>
+                    <td>
+                        国海良时期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=31486' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        41
+                    </td>
+                    <td>
+                        曾蕾
+                    </td>
+                    <td>
+                        842403.940
+                    </td>
+                    <td>
+                        97.097%
+                    </td>
+                    <td style="color:#ff0000;">
+                        759242.170
+                    </td>
+                    <td>
+                        72.71423
+                    </td>
+                    <td style="color:#ff0000;">
+                        14.47
+                    </td>
+                    <td>
+                        95.66964
+                    </td>
+                    <td>
+                        1.00140
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.67792
+                    </td>
+                    <td>
+                        70.02082
+                    </td>
+                    <td>
+                        73.12438
+                    </td>
+                    <td>
+                        100.39
+                    </td>
+                    <td>
+                        国海良时期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=31300' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        42
+                    </td>
+                    <td>
+                        由势跃明
+                    </td>
+                    <td>
+                        890596.550
+                    </td>
+                    <td>
+                        56.239%
+                    </td>
+                    <td style="color:#ff0000;">
+                        2814187.860
+                    </td>
+                    <td>
+                        80.87612
+                    </td>
+                    <td style="color:#ff0000;">
+                        51.43
+                    </td>
+                    <td>
+                        84.38350
+                    </td>
+                    <td>
+                        0.99854
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.01823
+                    </td>
+                    <td>
+                        69.27632
+                    </td>
+                    <td>
+                        73.10700
+                    </td>
+                    <td>
+                        126.85
+                    </td>
+                    <td>
+                        大陆期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=34273' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        43
+                    </td>
+                    <td>
+                        茹**
+                    </td>
+                    <td>
+                        578662.420
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        599460.500
+                    </td>
+                    <td>
+                        71.96975
+                    </td>
+                    <td style="color:#ff0000;">
+                        27.97
+                    </td>
+                    <td>
+                        91.52907
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        4.66850
+                    </td>
+                    <td>
+                        70.79519
+                    </td>
+                    <td>
+                        73.10349
+                    </td>
+                    <td>
+                        125.67
+                    </td>
+                    <td>
+                        安粮期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=26185' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        44
+                    </td>
+                    <td>
+                        顺势而为
+                    </td>
+                    <td>
+                        500.170
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        2378822.540
+                    </td>
+                    <td>
+                        79.18485
+                    </td>
+                    <td style="color:#ff0000;">
+                        71.21
+                    </td>
+                    <td>
+                        78.33238
+                    </td>
+                    <td>
+                        0.84868
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.95382
+                    </td>
+                    <td>
+                        70.59128
+                    </td>
+                    <td>
+                        73.08410
+                    </td>
+                    <td>
+                        176.26
+                    </td>
+                    <td>
+                        方正中期期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=36076' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        45
+                    </td>
+                    <td>
+                        微生物
+                    </td>
+                    <td>
+                        234015.760
+                    </td>
+                    <td>
+                        91.170%
+                    </td>
+                    <td style="color:#ff0000;">
+                        541169.070
+                    </td>
+                    <td>
+                        71.68662
+                    </td>
+                    <td style="color:#ff0000;">
+                        33.38
+                    </td>
+                    <td>
+                        89.84627
+                    </td>
+                    <td>
+                        0.90135
+                    </td>
+                    <td style="color:#ff0000;">
+                        5.81146
+                    </td>
+                    <td>
+                        71.07395
+                    </td>
+                    <td>
+                        73.07372
+                    </td>
+                    <td>
+                        201.13
+                    </td>
+                    <td>
+                        一德期货
+                    </td>
+                    <td>
+                        赵根强
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=36524' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        46
+                    </td>
+                    <td>
+                        王士杰
+                    </td>
+                    <td>
+                        0.000
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        808866.630
+                    </td>
+                    <td>
+                        72.91732
+                    </td>
+                    <td style="color:#ff0000;">
+                        23.72
+                    </td>
+                    <td>
+                        92.83229
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.11836
+                    </td>
+                    <td>
+                        70.28848
+                    </td>
+                    <td>
+                        73.06863
+                    </td>
+                    <td>
+                        173.87
+                    </td>
+                    <td>
+                        华泰期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=21940' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        47
+                    </td>
+                    <td>
+                        jxsz98
+                    </td>
+                    <td>
+                        12668.760
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        1628827.030
+                    </td>
+                    <td>
+                        76.24734
+                    </td>
+                    <td style="color:#ff0000;">
+                        30.56
+                    </td>
+                    <td>
+                        90.72563
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.23923
+                    </td>
+                    <td>
+                        69.62508
+                    </td>
+                    <td>
+                        73.05959
+                    </td>
+                    <td>
+                        83.69
+                    </td>
+                    <td>
+                        建信期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=6671' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        48
+                    </td>
+                    <td>
+                        mubalake
+                    </td>
+                    <td>
+                        337975.050
+                    </td>
+                    <td>
+                        83.958%
+                    </td>
+                    <td style="color:#ff0000;">
+                        447653.250
+                    </td>
+                    <td>
+                        71.19634
+                    </td>
+                    <td style="color:#ff0000;">
+                        26.71
+                    </td>
+                    <td>
+                        91.92130
+                    </td>
+                    <td>
+                        0.99796
+                    </td>
+                    <td style="color:#ff0000;">
+                        4.97680
+                    </td>
+                    <td>
+                        70.87759
+                    </td>
+                    <td>
+                        73.04571
+                    </td>
+                    <td>
+                        161.92
+                    </td>
+                    <td>
+                        海通期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=12416' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        49
+                    </td>
+                    <td>
+                        yzmyyy
+                    </td>
+                    <td>
+                        8979.400
+                    </td>
+                    <td>
+                        0.000%
+                    </td>
+                    <td style="color:#ff0000;">
+                        971302.940
+                    </td>
+                    <td>
+                        73.60786
+                    </td>
+                    <td style="color:#ff0000;">
+                        41.28
+                    </td>
+                    <td>
+                        87.44860
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        4.69840
+                    </td>
+                    <td>
+                        70.80546
+                    </td>
+                    <td>
+                        73.03025
+                    </td>
+                    <td>
+                        99.30
+                    </td>
+                    <td>
+                        华安期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=17644' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        50
+                    </td>
+                    <td>
+                        3290018
+                    </td>
+                    <td>
+                        6642053.510
+                    </td>
+                    <td>
+                        127.369%
+                    </td>
+                    <td style="color:#ff0000;">
+                        4364602.300
+                    </td>
+                    <td>
+                        86.88426
+                    </td>
+                    <td style="color:#ff0000;">
+                        54.65
+                    </td>
+                    <td>
+                        83.41241
+                    </td>
+                    <td>
+                        1.08723
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.51756
+                    </td>
+                    <td>
+                        67.54437
+                    </td>
+                    <td>
+                        72.99915
+                    </td>
+                    <td>
+                        127.90
+                    </td>
+                    <td>
+                        创元期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href='/ShiPan/S12/Index.aspx?id=28879' target='_blank' style='color:#0000FF;'>账户评估</a>
+                    </td>
+                </tr>
+            
+                </table>
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <div style="line-height: 30px; height: 30px;">
+            <div class="right flickr">
+                
+<!-- AspNetPager V7.0.2 for VS2005 & VS2008  Copyright:2003-2007 Webdiyer (www.webdiyer.com) -->
+<div id="AspNetPager1" class="Pager">
+<a disabled="disabled" style="margin-right:5px;">&lt;&lt;</a><a disabled="disabled" style="margin-right:5px;">&lt;</a><span class="CurrentPager" style="margin-right:5px;">[1]</span><a href="javascript:__doPostBack('AspNetPager1','2')" class="Pager" title="转到第2页" style="margin-right:5px;">[2]</a><a href="javascript:__doPostBack('AspNetPager1','3')" class="Pager" title="转到第3页" style="margin-right:5px;">[3]</a><a href="javascript:__doPostBack('AspNetPager1','4')" class="Pager" title="转到第4页" style="margin-right:5px;">[4]</a><a href="javascript:__doPostBack('AspNetPager1','5')" class="Pager" title="转到第5页" style="margin-right:5px;">[5]</a><a href="javascript:__doPostBack('AspNetPager1','6')" class="Pager" title="转到第6页" style="margin-right:5px;">[6]</a><a href="javascript:__doPostBack('AspNetPager1','7')" class="Pager" title="转到第7页" style="margin-right:5px;">[7]</a><a href="javascript:__doPostBack('AspNetPager1','8')" class="Pager" title="转到第8页" style="margin-right:5px;">[8]</a><a href="javascript:__doPostBack('AspNetPager1','9')" class="Pager" title="转到第9页" style="margin-right:5px;">[9]</a><a href="javascript:__doPostBack('AspNetPager1','10')" class="Pager" title="转到第10页" style="margin-right:5px;">[10]</a><span style="margin-right:5px;"><a class="Pager" href="javascript:__doPostBack('AspNetPager1','11')" title="转到第11页">...</a></span><a class="Pager" title="转到第2页" href="javascript:__doPostBack('AspNetPager1','2')" style="margin-right:5px;">&gt;</a><a class="Pager" title="转到第633页" href="javascript:__doPostBack('AspNetPager1','633')" style="margin-right:5px;">&gt;&gt;</a>&nbsp;&nbsp;跳转到第<select name="AspNetPager1_input" id="AspNetPager1_input" onchange="__doPostBack('AspNetPager1','')">
+	<option value="1" selected="true">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">......</option><option value="629">629</option><option value="630">630</option><option value="631">631</option><option value="632">632</option><option value="633">633</option>
+</select>页
+</div>
+<!-- AspNetPager V7.0.2 for VS2005 & VS2008 End -->
+
+
+            </div>
+        </div>
+    </div>
+    <!--main样式结束-->
+    
+<!--footer样式开始-->
+<div id="footer" class="clear">
+    <div class="bot1">
+        <p>
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">报社简介</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">广告业务</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">发行业务</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">联系我们</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">在线客服</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">友情链接</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">版权声明</a>
+        </p>
+    </div>
+    <div class="bot2">
+        <p> 
+        期货日报网QQ交流群：&nbsp;141896004（能源化工一）&nbsp;162392246（能源化工二）&nbsp;140824088（农产品）
+        
+        161652943 (农产品2)&nbsp;90977191（金属）&nbsp; 108718876（分析师群）<br>&nbsp;69511486（股指期货群）
+       
+        158968638（黄金群） &nbsp;145930167（钢铁群）&nbsp;42941643（铜-铝1） 186750572（铜-铝2）&nbsp;81840197(豆类棕榈油)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        期货日报 期货日报网 版权所有&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41010702002005" style="color:Blue;"><img src="/Images/beian.png" />豫公网安备 41010702002005号</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://beian.miit.gov.cn/" target="_blank" style="color:Blue;">豫ICP备13022189号</a>
+        </p>
+    </div>
+</div>
+<style>
+/*下面是漂浮广告的css代码*/
+.floadAd { position: absolute;z-index: 999900; display: none; }  
+.floadAd .item { display: block; }  
+.floadAd .item{ vertical-align: bottom; }/* a img 的组合浏览器默认下边会有几个像素的空白，这里可以消除空白*/ 
+</style>
+<div id="floadAD" class="floadAd">  
+    <a class="close" href="javascript:void();" style="color: red">×关闭</a> 
+    <img class="item" src="http://upload.qhrb.com.cn/2017/0120/1484894996328.jpg" />  
+</div>
+<script type="text/javascript">
+    //广告漂浮窗口
+    function FloatAd(selector) {
+        var obj = $(selector);
+        if (obj.find(".item").length == 0) return; //如果没有内容，不执行
+        var windowHeight = $(document).height(); //浏览器高度
+        var windowWidth = $(document).width(); //浏览器宽度  
+        var dirX = -1.5; //每次水平漂浮方向及距离(单位：px)，正数向右，负数向左，如果越大的话就会看起来越不流畅，但在某些需求下你可能会需要这种效果  
+        var dirY = -1; //每次垂直漂浮方向及距离(单位：px)，正数向下，负数向上，如果越大的话就会看起来越不流畅，但在某些需求下你可能会需要这种效果  
+
+        var delay = 20; //定期执行的时间间隔，单位毫秒  
+        obj.css({ left: windowWidth / 2 - obj.width() / 2 + "px", top: windowHeight / 2 - obj.height() / 2 + "px" }); //把元素设置成在页面中间  
+        obj.show(); //元素默认是隐藏的，避免上一句代码改变位置视觉突兀，改变位置后再显示出来  
+        var handler = setInterval(move, delay); //定期执行，返回一个值，这个值可以用来取消定期执行  
+
+        obj.hover(function() {//鼠标经过时暂停，离开时继续  
+            clearInterval(handler); //取消定期执行  
+        }, function() {
+            handler = setInterval(move, delay);
+        });
+
+        obj.find(".close").click(function() {//绑定关闭按钮事件  
+            close();
+        });
+//        $(window).resize(function() {//当改变窗口大小时，重新获取浏览器大小，以保证不会过界（飘出浏览器可视范围）或漂的范围小于新的大小  
+//            windowHeight = $(window).height(); //浏览器高度  
+//            windowWidth = $(window).width(); //浏览器宽度  
+//        });
+        function move() {//定期执行的函数，使元素移动  
+            var currentPos = obj.position(); //获取当前位置，这是JQuery的函数，具体见：http://hemin.cn/jq/position.html  
+            var nextPosX = currentPos.left + dirX; //下一个水平位置  
+            var nextPosY = currentPos.top + dirY; //下一个垂直位置  
+
+            if (nextPosX <= 0 || nextPosX >= windowWidth - obj.width()) {//如果达到左边，或者达到右边，则改变为相反方向  
+                dirX = dirX * -1; //改变方向  
+                nextPosX = currentPos.left + dirX; //为了不过界，重新获取下一个位置  
+            }
+            if (nextPosY <= 0 || nextPosY >= windowHeight - obj.height() - 5) {//如果达到上边，或者达到下边，则改变为相反方向。              
+                dirY = dirY * -1; //改变方向  
+                nextPosY = currentPos.top + dirY; //为了不过界，重新获取下一个位置  
+            }
+            obj.css({ left: nextPosX + "px", top: nextPosY + "px" }); //移动到下一个位置  
+        }
+
+        function close() {//停止漂浮，并销毁漂浮窗口  
+            clearInterval(handler);
+            obj.remove();
+        }
+    }
+    //FloatAd("#floadAD"); //调用
+</script>
+<!--footer样式结束-->
+    
+<script type="text/javascript">
+//<![CDATA[
+var Page_Validators =  new Array(document.getElementById("RequiredFieldValidator1"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var RequiredFieldValidator1 = document.all ? document.all["RequiredFieldValidator1"] : document.getElementById("RequiredFieldValidator1");
+RequiredFieldValidator1.controltovalidate = "txtTradeDate";
+RequiredFieldValidator1.errormessage = "*必填";
+RequiredFieldValidator1.display = "Dynamic";
+RequiredFieldValidator1.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+RequiredFieldValidator1.initialvalue = "";
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        //]]>
+</script>
+</form>
+</body>
+</html>

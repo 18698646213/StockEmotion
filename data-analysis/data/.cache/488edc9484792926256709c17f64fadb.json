@@ -1,0 +1,2856 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head><title>
+	第十二届实盘大赛(外盘)排行
+</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="keywords" content="期货实战" />
+<meta name="description" content="期货实战平台" /><link rel="shortcut icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon" /><link rel="stylesheet" type="text/css" href="/Css/sp10.css" /><link href="/css/pagination.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/JqueryUI/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.artDialog.js?skin=default"></script>
+    <script type="text/javascript" src="/js/artDialog.iframeTools.js"></script>
+    <script src="/JqueryUI/datepicker/WdatePicker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(".admintable tr:gt(0)").hover(
+			    function() {
+			        $(this).css({ background: "#55c0ff" });
+			    },
+			    function() {
+			        $(this).css({ background: "#fff" });
+			    }
+		    );
+        });
+    </script>
+</head>
+<body>
+    <form name="form1" method="post" action="SPOverSee2.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=VNwubk5FwVpSfDk_RsQCoZo_P-tl4cWMhcNUJgGIawqqDDALUqGg_qAd5ShsxyAQkwaWM2Cu6uaFWz8k8_QtUynASgg1&amp;t=636271959297880478" type="text/javascript"></script>
+
+
+<script src="/WebResource.axd?d=yof9fRIpw4Z6SS2xebf4pLNT6onvWMHqZsLAPds2nK4UdZAuuSpUfi6QaliB2gIY-klkEaZhcTRHyMzMpWwvWkWl5901&amp;t=636271959297880478" type="text/javascript"></script><script language="Javascript"><!--
+
+--></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="E1A382E1" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWPwLwuJdmAs+v26oEAs+v36oEAqqgzaINAp3T7mACndjd/wICgu+/6ggC54Wi1Q4CwdiT4wcCxNq7ygoC2O+8/g4C+KvUoAEC8rSolwwCn76LwwUChNWJlwoCmLDe+gwC6evTowQC6euftAsCzoLeugsCssqV1QICs5no+QgCs5n0vAsCrpvPog4Crpub/QIC/9bQtgQCk7KlvA4C+Mjj3QEC+MjvoAQCyYTlyQECrcyc5AgCkuPakg8CkuOmowYCqbOa7g4CqbOG2AsCjsrEvAQC8pG87gsC8+DuEQLz4Nr7DALY99jPAQK8v5DqCAKN+6WUAgKN+5H+DgK4kJX+DAK4kIHoCQKJzLahCwLtk67TAgLSqozOCwLSqvi3CALT+cq0CAK3wYLPDwKc2KAkApzYjI4NArOogNkFArOo7MICApi/qqcLAvyGgoANAs3C96gEAs3C45IBArLZ4eYFAsa0lq4FApfwi/8IApfw9+gFApLy8qcORWtpzjjw0AQMUhEh6MwzjwWT0uI=" />
+</div>
+    
+<script type="text/javascript">
+    // 设置为主页
+    function SetHome(obj, vrl) {
+        try {
+            obj.style.behavior = 'url(#default#homepage)'; obj.setHomePage(vrl);
+        }
+        catch (e) {
+            if (window.netscape) {
+                try {
+                    netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+                }
+                catch (e) {
+                    alert("此操作被浏览器拒绝！\n请在浏览器地址栏输入“about:config”并回车\n然后将 [signed.applets.codebase_principal_support]的值设置为'true',双击即可。");
+                }
+                var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
+                prefs.setCharPref('browser.startup.homepage', vrl);
+            }
+            else {
+                alert("您的浏览器不支持，请按照下面步骤操作：1.打开浏览器设置。2.点击设置网页。3.输入：" + vrl + "点击确定。");
+            }
+        }
+    }
+    // 加入收藏 兼容360和IE6
+    function shoucang(sTitle, sURL) {
+        try {
+            window.external.addFavorite(sURL, sTitle);
+        }
+        catch (e) {
+            try {
+                window.sidebar.addPanel(sTitle, sURL, "");
+            }
+            catch (e) {
+                alert("加入收藏失败，请使用Ctrl+D进行添加");
+            }
+        }
+    }
+    $(function() {
+        var NickName = $.cookie('NickName');
+        var MemberId = $.cookie('MemberId');
+        if (NickName && MemberId) {
+            $("#sNickName").html(NickName);
+            $("#dLogin").show();
+            $("#dNoLogin").hide();
+        }
+        else {
+            $("#dLogin").hide();
+            $("#dNoLogin").show();
+        }
+    });
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?f6716959e3ba8bc15ce8021a4f6e1cf0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<!--header样式开始-->
+<div id="header" class="clear">
+    <div class="huanying">
+        <div class="hy" id="dNoLogin">
+            
+        </div>
+        <div class="wx" style="text-align:right;">
+            <dl>
+                <dd>
+                    <a href="javascript:;" onclick="SetHome(this,'http://ds.qhrb.com.cn');">设为首页</a> 
+                    <a href="javascript:;" onclick="shoucang(document.title,window.location);">加入收藏</a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="tf1"><img src="/images/ds14.png" height="379px" width="1400px" /></div>
+
+
+<div id="header" class="clear">
+    <div class="nav">
+        <ul>
+        	<li><a href="http://ds.qhrb.com.cn" target="_blank" style="width:175px;">大赛首页</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+        	<li><a href="/SP12/SPOverSee1.aspx" style="width:175px;">内盘排行</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+        	<li><a href="/SP12/SPOverSee2.aspx" style="width:175px;">外盘排行</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+        	<li><a href="/SP12/Statistical1.aspx" style="width:175px;">内盘概况</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+            <li><a href="/SP12/Statistical2.aspx" style="width:175px;">外盘概况</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+            <li><a href="/SP12/ProductRank.aspx" style="width:185px;">资管奖排名</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+            <li><a href="/SP12/SpecialAwardRank.aspx" style="width:195px;color:Red;font-weight:bold;">长期稳定盈利奖</a><span class="tb2"><img src="/images/tb2_13.jpg" /></span></li>
+            
+            <li><a href="/SP12/ZSSOverSee.aspx">芝商所专项奖</a></li>
+            
+            
+        </ul>
+    </div>
+</div>
+
+    <!--main样式开始-->
+    <div class="main">
+        <div class="wp m10">
+            <p>外盘排行榜</p>
+        </div>
+        <div class="fl">
+            <dl class="secitem bb">
+                <dt>组别：</dt>
+                <dd>
+                    <a id="lbAccountType1" class="select" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType1&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">轻量组</a>
+                    <a id="lbAccountType2" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbAccountType2&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">重量组</a>
+                    <input type="hidden" name="hidAccountType" id="hidAccountType" value="1" />
+                    <input type="hidden" name="hidMatchType" id="hidMatchType" value="1" />
+                </dd>
+            </dl>
+            <div class="clear">
+            </div>
+            <dl id="dlRankType" class="secitem bb">
+                <dt>排行榜类型：</dt>
+                <dd>
+                    <a id="lbRankType1" class="select" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbRankType1&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">总排行</a>
+                    <a id="lbRankType2" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbRankType2&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">月排行</a>
+                    <a id="lbRankType3" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lbRankType3&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">周排行</a> 
+                    <input type="hidden" name="hidRankType" id="hidRankType" value="1" /> 
+                </dd>
+            </dl>
+            <div class="clear">
+            </div>
+            <table  height="44" border="0" style="font-weight:bold ; font-size:20px; text-align:right;">
+              <tr>
+                <td height="40">账号：</td>
+                <td width="150"><input name="txtInternalAccount" type="text" id="txtInternalAccount" placeholder="请输入账号" style="color:Red;font-size:20px;font-weight:bold;height:30px;" /></td>
+                <td>昵称：</td>
+                <td width="150"><input name="txtNickName" type="text" id="txtNickName" placeholder="请输入昵称" style="color:Red;font-size:20px;font-weight:bold;height:30px;" /></td>
+                <td>交易日期：</td>
+                <td width="155">
+                    <input name="txtTradeDate" type="text" value="2018-09-28" id="txtTradeDate" placeholder="交易日期" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="color:Red;font-size:20px;font-weight:bold;height:30px;" />
+                    <span id="RequiredFieldValidator1" style="color:Red;display:none;">*必填</span>
+                </td>
+                <td width="56"><input type="image" name="ibSearch" id="ibSearch" src="/images/so.jpg" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ibSearch&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" style="height:24px;width:72px;border-width:0px;" /></td>
+              </tr>
+            </table>
+        </div>
+        
+                <table border="0" cellpadding="1" cellspacing="1" style="color: #000; background: #ccc" width="100%" class="admintable">
+                    <tr style="background:url(../images/cp_bg.jpg) repeat-x;" align="center" height="32">
+                        <td height="32" style="padding-top: 1px">
+                            排名
+                        </td>
+                        <td style="padding-top: 1px;">
+                            客户昵称
+                        </td>
+                        <td style="padding-top: 1px;">
+                            当日权益<span style="color:#ff0000;">(美元)</span>
+                        </td>
+                        <td style="padding-top: 1px;">
+                            净利润<span style="color:#ff0000;">(美元)</span>
+                        </td>
+                        <td style="padding-top: 1px;">
+                            净利润得分
+                        </td>
+                        <td style="padding-top: 1px;">
+                            回撤率(%)
+                        </td>
+                        <td style="padding-top: 1px;">
+                            回撤率得分
+                        </td>
+                        <td style="padding-top: 1px;">
+                            日净值
+                        </td>
+                        <td style="padding-top: 1px;">
+                            累计净值
+                        </td>
+                        <td style="padding-top: 1px;">
+                            净值得分
+                        </td>
+                        <td style="padding-top: 1px;">
+                            综合得分
+                        </td>
+                        <td style="padding-top: 1px;">
+                            参考收益率(%)
+                        </td>
+                        <td style="padding-top: 1px;">
+                            指定交易商
+                        </td>
+                        <td style="padding-top: 1px;">
+                            操作指导
+                        </td>
+                        <td style="padding-top: 1px;">
+                            账户评估
+                        </td>
+                    </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        1
+                    </td>
+                    <td>
+                        弱水三千
+                    </td>
+                    <td style="color:#ff0000;">
+                        399375.60
+                    </td>
+                    <td>
+                        331688.00
+                    </td>
+                    <td>
+                        100.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl01_lblWithdrawRateC" style="color:Red;">52.16</span>
+                        <input type="hidden" name="rptTRRank1$ctl01$hidPlayerId" id="rptTRRank1_ctl01_hidPlayerId" value="1334" />
+                    </td>
+                    <td>
+                        64.76346
+                    </td>
+                    <td>
+                        0.96850
+                    </td>
+                    <td style="color:#ff0000;">
+                        5.90017
+                    </td>
+                    <td>
+                        100.00000
+                    </td>
+                    <td>
+                        94.71452
+                    </td>
+                    <td>
+                        109.10
+                    </td>
+                    <td>
+                        中国国际期货(香港)
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1334&bid=98957&type=1&mt=1',{title:'弱水三千的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        2
+                    </td>
+                    <td>
+                        岁月静好
+                    </td>
+                    <td style="color:#ff0000;">
+                        160244.30
+                    </td>
+                    <td>
+                        131351.29
+                    </td>
+                    <td>
+                        81.76607
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl02_lblWithdrawRateC" style="color:Red;">48.03</span>
+                        <input type="hidden" name="rptTRRank1$ctl02$hidPlayerId" id="rptTRRank1_ctl02_hidPlayerId" value="1210" />
+                    </td>
+                    <td>
+                        67.53670
+                    </td>
+                    <td>
+                        0.81083
+                    </td>
+                    <td style="color:#ff0000;">
+                        5.47673
+                    </td>
+                    <td>
+                        97.61860
+                    </td>
+                    <td>
+                        89.14318
+                    </td>
+                    <td>
+                        102.45
+                    </td>
+                    <td>
+                        横华国际
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1210&bid=98367&type=1&mt=1',{title:'岁月静好的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        3
+                    </td>
+                    <td>
+                        双赢一秒引爆8
+                    </td>
+                    <td style="color:#ff0000;">
+                        6844.10
+                    </td>
+                    <td>
+                        13602.57
+                    </td>
+                    <td>
+                        67.91872
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl03_lblWithdrawRateC" style="color:Red;">19.60</span>
+                        <input type="hidden" name="rptTRRank1$ctl03$hidPlayerId" id="rptTRRank1_ctl03_hidPlayerId" value="1286" />
+                    </td>
+                    <td>
+                        85.15498
+                    </td>
+                    <td>
+                        1.40591
+                    </td>
+                    <td style="color:#ff0000;">
+                        5.64320
+                    </td>
+                    <td>
+                        98.57922
+                    </td>
+                    <td>
+                        88.90046
+                    </td>
+                    <td>
+                        189.56
+                    </td>
+                    <td>
+                        ATFX
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1286&bid=98529&type=1&mt=1',{title:'双赢一秒引爆8的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        4
+                    </td>
+                    <td>
+                        马先生
+                    </td>
+                    <td style="color:#ff0000;">
+                        117332.19
+                    </td>
+                    <td>
+                        85325.20
+                    </td>
+                    <td>
+                        77.48898
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl04_lblWithdrawRateC" style="color:Red;">11.87</span>
+                        <input type="hidden" name="rptTRRank1$ctl04$hidPlayerId" id="rptTRRank1_ctl04_hidPlayerId" value="521" />
+                    </td>
+                    <td>
+                        90.53834
+                    </td>
+                    <td>
+                        1.00314
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.51070
+                    </td>
+                    <td>
+                        87.27954
+                    </td>
+                    <td>
+                        85.32072
+                    </td>
+                    <td>
+                        162.13
+                    </td>
+                    <td>
+                        直达国际金融
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=521&bid=98643&type=1&mt=1',{title:'马先生的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        5
+                    </td>
+                    <td>
+                        小流星
+                    </td>
+                    <td style="color:#ff0000;">
+                        1837.23
+                    </td>
+                    <td>
+                        1337.23
+                    </td>
+                    <td>
+                        60.98555
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl05_lblWithdrawRateC" style="color:Red;">19.89</span>
+                        <input type="hidden" name="rptTRRank1$ctl05$hidPlayerId" id="rptTRRank1_ctl05_hidPlayerId" value="2233" />
+                    </td>
+                    <td>
+                        84.99184
+                    </td>
+                    <td>
+                        0.94213
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.67456
+                    </td>
+                    <td>
+                        88.22689
+                    </td>
+                    <td>
+                        80.93130
+                    </td>
+                    <td>
+                        95.97
+                    </td>
+                    <td>
+                        TRADEMAX
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=2233&bid=98590&type=1&mt=1',{title:'小流星的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        6
+                    </td>
+                    <td>
+                        lyt2000
+                    </td>
+                    <td style="color:#ff0000;">
+                        105032.61
+                    </td>
+                    <td>
+                        78188.65
+                    </td>
+                    <td>
+                        76.72931
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl06_lblWithdrawRateC" style="color:Red;">23.14</span>
+                        <input type="hidden" name="rptTRRank1$ctl06$hidPlayerId" id="rptTRRank1_ctl06_hidPlayerId" value="712" />
+                    </td>
+                    <td>
+                        83.19739
+                    </td>
+                    <td>
+                        1.04121
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.55788
+                    </td>
+                    <td>
+                        81.97806
+                    </td>
+                    <td>
+                        80.84877
+                    </td>
+                    <td>
+                        105.24
+                    </td>
+                    <td>
+                        中国国际期货(香港)
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=712&bid=98967&type=1&mt=1',{title:'lyt2000的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        7
+                    </td>
+                    <td>
+                        盈冠系統
+                    </td>
+                    <td style="color:#ff0000;">
+                        9825.02
+                    </td>
+                    <td>
+                        3202.75
+                    </td>
+                    <td>
+                        63.43813
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl07_lblWithdrawRateC" style="color:Red;">45.02</span>
+                        <input type="hidden" name="rptTRRank1$ctl07$hidPlayerId" id="rptTRRank1_ctl07_hidPlayerId" value="2247" />
+                    </td>
+                    <td>
+                        69.49429
+                    </td>
+                    <td>
+                        1.00016
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.47852
+                    </td>
+                    <td>
+                        87.00173
+                    </td>
+                    <td>
+                        78.48471
+                    </td>
+                    <td>
+                        43.68
+                    </td>
+                    <td>
+                        六福金融
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=2247&bid=98306&type=1&mt=1',{title:'盈冠系統的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        8
+                    </td>
+                    <td>
+                        重试江湖
+                    </td>
+                    <td style="color:#ff0000;">
+                        15735.20
+                    </td>
+                    <td>
+                        9371.09
+                    </td>
+                    <td>
+                        66.39408
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl08_lblWithdrawRateC" style="color:Red;">20.02</span>
+                        <input type="hidden" name="rptTRRank1$ctl08$hidPlayerId" id="rptTRRank1_ctl08_hidPlayerId" value="2273" />
+                    </td>
+                    <td>
+                        84.82871
+                    </td>
+                    <td>
+                        0.87295
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.47246
+                    </td>
+                    <td>
+                        81.31535
+                    </td>
+                    <td>
+                        78.11204
+                    </td>
+                    <td>
+                        65.75
+                    </td>
+                    <td>
+                        香港金山期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=2273&bid=98286&type=1&mt=1',{title:'重试江湖的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        9
+                    </td>
+                    <td>
+                        fortune teller
+                    </td>
+                    <td style="color:#ff0000;">
+                        1393.51
+                    </td>
+                    <td>
+                        15464.46
+                    </td>
+                    <td>
+                        68.54390
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl09_lblWithdrawRateC" style="color:Red;">52.00</span>
+                        <input type="hidden" name="rptTRRank1$ctl09$hidPlayerId" id="rptTRRank1_ctl09_hidPlayerId" value="394" />
+                    </td>
+                    <td>
+                        65.08972
+                    </td>
+                    <td>
+                        0.81325
+                    </td>
+                    <td style="color:#ff0000;">
+                        3.12286
+                    </td>
+                    <td>
+                        85.07915
+                    </td>
+                    <td>
+                        77.94692
+                    </td>
+                    <td>
+                        147.55
+                    </td>
+                    <td>
+                        美国盈透证券
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=394&bid=98848&type=1&mt=1',{title:'fortune teller的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        10
+                    </td>
+                    <td>
+                        john
+                    </td>
+                    <td style="color:#ff0000;">
+                        153515.34
+                    </td>
+                    <td>
+                        48128.10
+                    </td>
+                    <td>
+                        73.78205
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl10_lblWithdrawRateC" style="color:Red;">9.72</span>
+                        <input type="hidden" name="rptTRRank1$ctl10$hidPlayerId" id="rptTRRank1_ctl10_hidPlayerId" value="1173" />
+                    </td>
+                    <td>
+                        91.51713
+                    </td>
+                    <td>
+                        1.00638
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.61121
+                    </td>
+                    <td>
+                        75.68012
+                    </td>
+                    <td>
+                        77.58116
+                    </td>
+                    <td>
+                        44.37
+                    </td>
+                    <td>
+                        中国国际期货(香港)
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1173&bid=98975&type=1&mt=1',{title:'john的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        11
+                    </td>
+                    <td>
+                        来日方长
+                    </td>
+                    <td style="color:#ff0000;">
+                        35663.83
+                    </td>
+                    <td>
+                        54611.64
+                    </td>
+                    <td>
+                        74.48266
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl11_lblWithdrawRateC" style="color:Red;">68.32</span>
+                        <input type="hidden" name="rptTRRank1$ctl11$hidPlayerId" id="rptTRRank1_ctl11_hidPlayerId" value="384" />
+                    </td>
+                    <td>
+                        54.32300
+                    </td>
+                    <td>
+                        0.96783
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.94675
+                    </td>
+                    <td>
+                        84.06950
+                    </td>
+                    <td>
+                        77.21082
+                    </td>
+                    <td>
+                        195.71
+                    </td>
+                    <td>
+                        美国盈透证券
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=384&bid=98838&type=1&mt=1',{title:'来日方长的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        12
+                    </td>
+                    <td>
+                        puppylsy
+                    </td>
+                    <td style="color:#ff0000;">
+                        54573.35
+                    </td>
+                    <td>
+                        35330.73
+                    </td>
+                    <td>
+                        72.28200
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl12_lblWithdrawRateC" style="color:Red;">26.69</span>
+                        <input type="hidden" name="rptTRRank1$ctl12$hidPlayerId" id="rptTRRank1_ctl12_hidPlayerId" value="342" />
+                    </td>
+                    <td>
+                        81.07667
+                    </td>
+                    <td>
+                        1.01330
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.88113
+                    </td>
+                    <td>
+                        77.96610
+                    </td>
+                    <td>
+                        77.01166
+                    </td>
+                    <td>
+                        75.55
+                    </td>
+                    <td>
+                        美国盈透证券
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=342&bid=98902&type=1&mt=1',{title:'puppylsy的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        13
+                    </td>
+                    <td>
+                        豹子
+                    </td>
+                    <td style="color:#ff0000;">
+                        82377.84
+                    </td>
+                    <td>
+                        40542.11
+                    </td>
+                    <td>
+                        72.98174
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl13_lblWithdrawRateC" style="color:Red;">36.92</span>
+                        <input type="hidden" name="rptTRRank1$ctl13$hidPlayerId" id="rptTRRank1_ctl13_hidPlayerId" value="475" />
+                    </td>
+                    <td>
+                        74.06199
+                    </td>
+                    <td>
+                        1.00362
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.96470
+                    </td>
+                    <td>
+                        78.50521
+                    </td>
+                    <td>
+                        76.45786
+                    </td>
+                    <td>
+                        65.05
+                    </td>
+                    <td>
+                        直达国际金融
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=475&bid=98597&type=1&mt=1',{title:'豹子的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        14
+                    </td>
+                    <td>
+                        自然而然
+                    </td>
+                    <td style="color:#ff0000;">
+                        97.39
+                    </td>
+                    <td>
+                        2939.81
+                    </td>
+                    <td>
+                        63.18596
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl14_lblWithdrawRateC" style="color:Red;">6.90</span>
+                        <input type="hidden" name="rptTRRank1$ctl14$hidPlayerId" id="rptTRRank1_ctl14_hidPlayerId" value="1593" />
+                    </td>
+                    <td>
+                        93.80098
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.74283
+                    </td>
+                    <td>
+                        76.80613
+                    </td>
+                    <td>
+                        75.95031
+                    </td>
+                    <td>
+                        44.93
+                    </td>
+                    <td>
+                        老虎期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1593&bid=98402&type=1&mt=1',{title:'自然而然的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        15
+                    </td>
+                    <td>
+                        好朋友一起来
+                    </td>
+                    <td style="color:#ff0000;">
+                        62967.08
+                    </td>
+                    <td>
+                        27661.59
+                    </td>
+                    <td>
+                        71.01739
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl15_lblWithdrawRateC" style="color:Red;">27.19</span>
+                        <input type="hidden" name="rptTRRank1$ctl15$hidPlayerId" id="rptTRRank1_ctl15_hidPlayerId" value="429" />
+                    </td>
+                    <td>
+                        80.75041
+                    </td>
+                    <td>
+                        0.99298
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.72935
+                    </td>
+                    <td>
+                        76.50920
+                    </td>
+                    <td>
+                        75.77243
+                    </td>
+                    <td>
+                        54.30
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商肖熠
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=429&bid=98428&type=1&mt=1',{title:'好朋友一起来的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        16
+                    </td>
+                    <td>
+                        sterno
+                    </td>
+                    <td style="color:#ff0000;">
+                        14525.53
+                    </td>
+                    <td>
+                        6540.01
+                    </td>
+                    <td>
+                        65.90963
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl16_lblWithdrawRateC" style="color:Red;">23.14</span>
+                        <input type="hidden" name="rptTRRank1$ctl16$hidPlayerId" id="rptTRRank1_ctl16_hidPlayerId" value="377" />
+                    </td>
+                    <td>
+                        83.19739
+                    </td>
+                    <td>
+                        0.97747
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.81892
+                    </td>
+                    <td>
+                        77.53559
+                    </td>
+                    <td>
+                        75.47837
+                    </td>
+                    <td>
+                        55.76
+                    </td>
+                    <td>
+                        美国盈透证券
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=377&bid=98918&type=1&mt=1',{title:'sterno的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        17
+                    </td>
+                    <td>
+                        期飞股跳
+                    </td>
+                    <td style="color:#ff0000;">
+                        36061.61
+                    </td>
+                    <td>
+                        20680.60
+                    </td>
+                    <td>
+                        69.58664
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl17_lblWithdrawRateC" style="color:Red;">22.95</span>
+                        <input type="hidden" name="rptTRRank1$ctl17$hidPlayerId" id="rptTRRank1_ctl17_hidPlayerId" value="19" />
+                    </td>
+                    <td>
+                        83.52365
+                    </td>
+                    <td>
+                        1.01680
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.53333
+                    </td>
+                    <td>
+                        74.94156
+                    </td>
+                    <td>
+                        74.89014
+                    </td>
+                    <td>
+                        42.03
+                    </td>
+                    <td>
+                        直达国际金融
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=19&bid=98771&type=1&mt=1',{title:'期飞股跳的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        18
+                    </td>
+                    <td>
+                        明哥
+                    </td>
+                    <td style="color:#ff0000;">
+                        69164.88
+                    </td>
+                    <td>
+                        15205.70
+                    </td>
+                    <td>
+                        68.40629
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl18_lblWithdrawRateC" style="color:Red;">7.42</span>
+                        <input type="hidden" name="rptTRRank1$ctl18$hidPlayerId" id="rptTRRank1_ctl18_hidPlayerId" value="2165" />
+                    </td>
+                    <td>
+                        92.82219
+                    </td>
+                    <td>
+                        0.99917
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.28182
+                    </td>
+                    <td>
+                        71.60727
+                    </td>
+                    <td>
+                        73.98926
+                    </td>
+                    <td>
+                        24.84
+                    </td>
+                    <td>
+                        弘苏期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=2165&bid=98328&type=1&mt=1',{title:'明哥的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        19
+                    </td>
+                    <td>
+                        郭卫红
+                    </td>
+                    <td style="color:#ff0000;">
+                        69547.56
+                    </td>
+                    <td>
+                        20014.14
+                    </td>
+                    <td>
+                        69.41217
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl19_lblWithdrawRateC" style="color:Red;">25.85</span>
+                        <input type="hidden" name="rptTRRank1$ctl19$hidPlayerId" id="rptTRRank1_ctl19_hidPlayerId" value="1008" />
+                    </td>
+                    <td>
+                        81.72920
+                    </td>
+                    <td>
+                        0.99646
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.39831
+                    </td>
+                    <td>
+                        73.22730
+                    </td>
+                    <td>
+                        73.54880
+                    </td>
+                    <td>
+                        32.58
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商肖熠
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1008&bid=98455&type=1&mt=1',{title:'郭卫红的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        20
+                    </td>
+                    <td>
+                        董春明
+                    </td>
+                    <td style="color:#ff0000;">
+                        28680.61
+                    </td>
+                    <td>
+                        14863.00
+                    </td>
+                    <td>
+                        68.26111
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl20_lblWithdrawRateC" style="color:Red;">45.14</span>
+                        <input type="hidden" name="rptTRRank1$ctl20$hidPlayerId" id="rptTRRank1_ctl20_hidPlayerId" value="449" />
+                    </td>
+                    <td>
+                        69.16803
+                    </td>
+                    <td>
+                        0.97794
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.73509
+                    </td>
+                    <td>
+                        76.65258
+                    </td>
+                    <td>
+                        73.43203
+                    </td>
+                    <td>
+                        50.16
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商肖熠
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=449&bid=98452&type=1&mt=1',{title:'董春明的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        21
+                    </td>
+                    <td>
+                        独行dx
+                    </td>
+                    <td style="color:#ff0000;">
+                        25997.11
+                    </td>
+                    <td>
+                        18895.55
+                    </td>
+                    <td>
+                        69.19680
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl21_lblWithdrawRateC" style="color:Red;">38.88</span>
+                        <input type="hidden" name="rptTRRank1$ctl21$hidPlayerId" id="rptTRRank1_ctl21_hidPlayerId" value="383" />
+                    </td>
+                    <td>
+                        72.92007
+                    </td>
+                    <td>
+                        1.07772
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.56038
+                    </td>
+                    <td>
+                        75.19329
+                    </td>
+                    <td>
+                        73.35318
+                    </td>
+                    <td>
+                        60.11
+                    </td>
+                    <td>
+                        美国盈透证券
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=383&bid=98924&type=1&mt=1',{title:'独行dx的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        22
+                    </td>
+                    <td>
+                        张瑶
+                    </td>
+                    <td style="color:#ff0000;">
+                        110180.92
+                    </td>
+                    <td>
+                        29129.96
+                    </td>
+                    <td>
+                        71.37859
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl22_lblWithdrawRateC" style="color:Red;">30.03</span>
+                        <input type="hidden" name="rptTRRank1$ctl22$hidPlayerId" id="rptTRRank1_ctl22_hidPlayerId" value="1182" />
+                    </td>
+                    <td>
+                        78.62969
+                    </td>
+                    <td>
+                        1.03025
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.35948
+                    </td>
+                    <td>
+                        72.68729
+                    </td>
+                    <td>
+                        73.25147
+                    </td>
+                    <td>
+                        29.40
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商肖熠
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1182&bid=98448&type=1&mt=1',{title:'张瑶的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        23
+                    </td>
+                    <td>
+                        程晓莉
+                    </td>
+                    <td style="color:#ff0000;">
+                        65255.12
+                    </td>
+                    <td>
+                        30806.37
+                    </td>
+                    <td>
+                        71.64440
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl23_lblWithdrawRateC" style="color:Red;">34.23</span>
+                        <input type="hidden" name="rptTRRank1$ctl23$hidPlayerId" id="rptTRRank1_ctl23_hidPlayerId" value="1183" />
+                    </td>
+                    <td>
+                        75.85644
+                    </td>
+                    <td>
+                        1.00134
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.36551
+                    </td>
+                    <td>
+                        72.83214
+                    </td>
+                    <td>
+                        72.98885
+                    </td>
+                    <td>
+                        30.98
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商肖熠
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1183&bid=98456&type=1&mt=1',{title:'程晓莉的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        24
+                    </td>
+                    <td>
+                        通琨全球股指量化专户-积极
+                    </td>
+                    <td style="color:#ff0000;">
+                        82059.44
+                    </td>
+                    <td>
+                        15775.74
+                    </td>
+                    <td>
+                        68.68624
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl24_lblWithdrawRateC" style="color:Red;">12.88</span>
+                        <input type="hidden" name="rptTRRank1$ctl24$hidPlayerId" id="rptTRRank1_ctl24_hidPlayerId" value="1280" />
+                    </td>
+                    <td>
+                        90.04894
+                    </td>
+                    <td>
+                        1.00435
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.23805
+                    </td>
+                    <td>
+                        70.47117
+                    </td>
+                    <td>
+                        72.96160
+                    </td>
+                    <td>
+                        22.08
+                    </td>
+                    <td>
+                        美国盈透证券
+                    </td>
+                    <td>
+                        通琨投资
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1280&bid=98949&type=1&mt=1',{title:'通琨全球股指量化专户-积极的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        25
+                    </td>
+                    <td>
+                        静静地套
+                    </td>
+                    <td style="color:#ff0000;">
+                        87651.77
+                    </td>
+                    <td>
+                        36159.85
+                    </td>
+                    <td>
+                        72.47119
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl25_lblWithdrawRateC" style="color:Red;">63.69</span>
+                        <input type="hidden" name="rptTRRank1$ctl25$hidPlayerId" id="rptTRRank1_ctl25_hidPlayerId" value="2194" />
+                    </td>
+                    <td>
+                        57.25938
+                    </td>
+                    <td>
+                        1.42038
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.75800
+                    </td>
+                    <td>
+                        76.99745
+                    </td>
+                    <td>
+                        72.90517
+                    </td>
+                    <td>
+                        59.59
+                    </td>
+                    <td>
+                        香港金山期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=2194&bid=98300&type=1&mt=1',{title:'静静地套的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        26
+                    </td>
+                    <td>
+                        神东
+                    </td>
+                    <td style="color:#ff0000;">
+                        5254.49
+                    </td>
+                    <td>
+                        2402.38
+                    </td>
+                    <td>
+                        62.56639
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl26_lblWithdrawRateC" style="color:Red;">28.37</span>
+                        <input type="hidden" name="rptTRRank1$ctl26$hidPlayerId" id="rptTRRank1_ctl26_hidPlayerId" value="2129" />
+                    </td>
+                    <td>
+                        79.60848
+                    </td>
+                    <td>
+                        1.03040
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.56616
+                    </td>
+                    <td>
+                        75.33687
+                    </td>
+                    <td>
+                        72.78499
+                    </td>
+                    <td>
+                        50.00
+                    </td>
+                    <td>
+                        中国国际期货(香港)
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=2129&bid=98969&type=1&mt=1',{title:'神东的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        27
+                    </td>
+                    <td>
+                        云海山庄
+                    </td>
+                    <td style="color:#ff0000;">
+                        26367.90
+                    </td>
+                    <td>
+                        6374.90
+                    </td>
+                    <td>
+                        65.66631
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl27_lblWithdrawRateC" style="color:Red;">17.45</span>
+                        <input type="hidden" name="rptTRRank1$ctl27$hidPlayerId" id="rptTRRank1_ctl27_hidPlayerId" value="1533" />
+                    </td>
+                    <td>
+                        86.94943
+                    </td>
+                    <td>
+                        1.04690
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.31885
+                    </td>
+                    <td>
+                        72.13812
+                    </td>
+                    <td>
+                        72.74187
+                    </td>
+                    <td>
+                        25.44
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1533&bid=98434&type=1&mt=1',{title:'云海山庄的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        28
+                    </td>
+                    <td>
+                        尚水9号
+                    </td>
+                    <td style="color:#ff0000;">
+                        0.00
+                    </td>
+                    <td>
+                        4662.64
+                    </td>
+                    <td>
+                        64.25532
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl28_lblWithdrawRateC" style="color:Red;">65.77</span>
+                        <input type="hidden" name="rptTRRank1$ctl28$hidPlayerId" id="rptTRRank1_ctl28_hidPlayerId" value="1537" />
+                    </td>
+                    <td>
+                        55.95432
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.28009
+                    </td>
+                    <td>
+                        80.22303
+                    </td>
+                    <td>
+                        72.59080
+                    </td>
+                    <td>
+                        40.14
+                    </td>
+                    <td>
+                        直达国际金融
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1537&bid=98698&type=1&mt=1',{title:'尚水9号的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        29
+                    </td>
+                    <td>
+                        期权8号
+                    </td>
+                    <td style="color:#ff0000;">
+                        12597.97
+                    </td>
+                    <td>
+                        2488.13
+                    </td>
+                    <td>
+                        62.68834
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl29_lblWithdrawRateC" style="color:Red;">3.79</span>
+                        <input type="hidden" name="rptTRRank1$ctl29$hidPlayerId" id="rptTRRank1_ctl29_hidPlayerId" value="1046" />
+                    </td>
+                    <td>
+                        96.24796
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.24617
+                    </td>
+                    <td>
+                        70.74085
+                    </td>
+                    <td>
+                        72.55379
+                    </td>
+                    <td>
+                        20.71
+                    </td>
+                    <td>
+                        美国盈透证券
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1046&bid=98851&type=1&mt=1',{title:'期权8号的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        30
+                    </td>
+                    <td>
+                        那年梨花正纷飞
+                    </td>
+                    <td style="color:#ff0000;">
+                        13194.81
+                    </td>
+                    <td>
+                        4142.67
+                    </td>
+                    <td>
+                        63.97991
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl30_lblWithdrawRateC" style="color:Red;">27.83</span>
+                        <input type="hidden" name="rptTRRank1$ctl30$hidPlayerId" id="rptTRRank1_ctl30_hidPlayerId" value="1768" />
+                    </td>
+                    <td>
+                        80.26101
+                    </td>
+                    <td>
+                        1.01652
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.45725
+                    </td>
+                    <td>
+                        74.09795
+                    </td>
+                    <td>
+                        72.49290
+                    </td>
+                    <td>
+                        32.75
+                    </td>
+                    <td>
+                        直达国际金融
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1768&bid=98794&type=1&mt=1',{title:'那年梨花正纷飞的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        31
+                    </td>
+                    <td>
+                        高处风云
+                    </td>
+                    <td style="color:#ff0000;">
+                        56020.63
+                    </td>
+                    <td>
+                        14816.32
+                    </td>
+                    <td>
+                        68.14269
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl31_lblWithdrawRateC" style="color:Red;">28.84</span>
+                        <input type="hidden" name="rptTRRank1$ctl31$hidPlayerId" id="rptTRRank1_ctl31_hidPlayerId" value="415" />
+                    </td>
+                    <td>
+                        79.28222
+                    </td>
+                    <td>
+                        1.06328
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.35701
+                    </td>
+                    <td>
+                        72.44635
+                    </td>
+                    <td>
+                        72.39581
+                    </td>
+                    <td>
+                        29.48
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商国际研究中心
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=415&bid=98422&type=1&mt=1',{title:'高处风云的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        32
+                    </td>
+                    <td>
+                        simon
+                    </td>
+                    <td style="color:#ff0000;">
+                        446740.78
+                    </td>
+                    <td>
+                        5545.52
+                    </td>
+                    <td>
+                        65.13453
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl32_lblWithdrawRateC" style="color:Red;">16.26</span>
+                        <input type="hidden" name="rptTRRank1$ctl32$hidPlayerId" id="rptTRRank1_ctl32_hidPlayerId" value="1532" />
+                    </td>
+                    <td>
+                        87.60196
+                    </td>
+                    <td>
+                        1.01193
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.27001
+                    </td>
+                    <td>
+                        71.09044
+                    </td>
+                    <td>
+                        72.07819
+                    </td>
+                    <td>
+                        2.43
+                    </td>
+                    <td>
+                        美国盈透证券
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1532&bid=98919&type=1&mt=1',{title:'simon的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        33
+                    </td>
+                    <td>
+                        小强还活着
+                    </td>
+                    <td style="color:#ff0000;">
+                        4312.30
+                    </td>
+                    <td>
+                        1343.00
+                    </td>
+                    <td>
+                        61.21445
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl33_lblWithdrawRateC" style="color:Red;">24.02</span>
+                        <input type="hidden" name="rptTRRank1$ctl33$hidPlayerId" id="rptTRRank1_ctl33_hidPlayerId" value="43" />
+                    </td>
+                    <td>
+                        82.54486
+                    </td>
+                    <td>
+                        1.00748
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.45563
+                    </td>
+                    <td>
+                        73.97552
+                    </td>
+                    <td>
+                        72.07066
+                    </td>
+                    <td>
+                        39.20
+                    </td>
+                    <td>
+                        横华国际
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=43&bid=98336&type=1&mt=1',{title:'小强还活着的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        34
+                    </td>
+                    <td>
+                        糖棠
+                    </td>
+                    <td style="color:#ff0000;">
+                        4734.30
+                    </td>
+                    <td>
+                        1424.96
+                    </td>
+                    <td>
+                        61.45026
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl34_lblWithdrawRateC" style="color:Red;">23.57</span>
+                        <input type="hidden" name="rptTRRank1$ctl34$hidPlayerId" id="rptTRRank1_ctl34_hidPlayerId" value="1592" />
+                    </td>
+                    <td>
+                        82.70799
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.43059
+                    </td>
+                    <td>
+                        73.61982
+                    </td>
+                    <td>
+                        71.94065
+                    </td>
+                    <td>
+                        32.85
+                    </td>
+                    <td>
+                        老虎期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1592&bid=98401&type=1&mt=1',{title:'糖棠的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        35
+                    </td>
+                    <td>
+                        winters
+                    </td>
+                    <td style="color:#ff0000;">
+                        16870.73
+                    </td>
+                    <td>
+                        10140.23
+                    </td>
+                    <td>
+                        66.69203
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl35_lblWithdrawRateC" style="color:Red;">88.08</span>
+                        <input type="hidden" name="rptTRRank1$ctl35$hidPlayerId" id="rptTRRank1_ctl35_hidPlayerId" value="1604" />
+                    </td>
+                    <td>
+                        41.76183
+                    </td>
+                    <td>
+                        1.00367
+                    </td>
+                    <td style="color:#ff0000;">
+                        2.50665
+                    </td>
+                    <td>
+                        81.60339
+                    </td>
+                    <td>
+                        71.89931
+                    </td>
+                    <td>
+                        129.39
+                    </td>
+                    <td>
+                        老虎期货
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1604&bid=98403&type=1&mt=1',{title:'winters的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        36
+                    </td>
+                    <td>
+                        杨清
+                    </td>
+                    <td style="color:#ff0000;">
+                        100.00
+                    </td>
+                    <td>
+                        1706.00
+                    </td>
+                    <td>
+                        62.04664
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl36_lblWithdrawRateC" style="color:Red;">15.98</span>
+                        <input type="hidden" name="rptTRRank1$ctl36$hidPlayerId" id="rptTRRank1_ctl36_hidPlayerId" value="720" />
+                    </td>
+                    <td>
+                        87.92822
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.30071
+                    </td>
+                    <td>
+                        71.93170
+                    </td>
+                    <td>
+                        71.85991
+                    </td>
+                    <td>
+                        26.11
+                    </td>
+                    <td>
+                        国王金融
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=720&bid=98412&type=1&mt=1',{title:'杨清的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        37
+                    </td>
+                    <td>
+                        王素芹
+                    </td>
+                    <td style="color:#ff0000;">
+                        44243.69
+                    </td>
+                    <td>
+                        12566.38
+                    </td>
+                    <td>
+                        67.25404
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl37_lblWithdrawRateC" style="color:Red;">38.04</span>
+                        <input type="hidden" name="rptTRRank1$ctl37$hidPlayerId" id="rptTRRank1_ctl37_hidPlayerId" value="448" />
+                    </td>
+                    <td>
+                        73.08320
+                    </td>
+                    <td>
+                        0.97409
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.39651
+                    </td>
+                    <td>
+                        73.10396
+                    </td>
+                    <td>
+                        71.63837
+                    </td>
+                    <td>
+                        30.48
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商肖熠
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=448&bid=98450&type=1&mt=1',{title:'王素芹的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        38
+                    </td>
+                    <td>
+                        朱艳
+                    </td>
+                    <td style="color:#ff0000;">
+                        53595.25
+                    </td>
+                    <td>
+                        9728.41
+                    </td>
+                    <td>
+                        66.54059
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl38_lblWithdrawRateC" style="color:Red;">17.81</span>
+                        <input type="hidden" name="rptTRRank1$ctl38$hidPlayerId" id="rptTRRank1_ctl38_hidPlayerId" value="425" />
+                    </td>
+                    <td>
+                        86.46003
+                    </td>
+                    <td>
+                        1.02081
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.22138
+                    </td>
+                    <td>
+                        70.04383
+                    </td>
+                    <td>
+                        71.63045
+                    </td>
+                    <td>
+                        21.38
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商肖熠
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=425&bid=98424&type=1&mt=1',{title:'朱艳的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        39
+                    </td>
+                    <td>
+                        祁瑞芝
+                    </td>
+                    <td style="color:#ff0000;">
+                        95281.60
+                    </td>
+                    <td>
+                        21103.05
+                    </td>
+                    <td>
+                        70.19581
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl39_lblWithdrawRateC" style="color:Red;">37.23</span>
+                        <input type="hidden" name="rptTRRank1$ctl39$hidPlayerId" id="rptTRRank1_ctl39_hidPlayerId" value="431" />
+                    </td>
+                    <td>
+                        73.57259
+                    </td>
+                    <td>
+                        0.99664
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.28498
+                    </td>
+                    <td>
+                        71.73752
+                    </td>
+                    <td>
+                        71.62735
+                    </td>
+                    <td>
+                        24.48
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商肖熠
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=431&bid=98464&type=1&mt=1',{title:'祁瑞芝的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        40
+                    </td>
+                    <td>
+                        心态决定命运
+                    </td>
+                    <td style="color:#ff0000;">
+                        0.00
+                    </td>
+                    <td>
+                        20898.24
+                    </td>
+                    <td>
+                        69.72051
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl40_lblWithdrawRateC" style="color:Red;">48.11</span>
+                        <input type="hidden" name="rptTRRank1$ctl40$hidPlayerId" id="rptTRRank1_ctl40_hidPlayerId" value="942" />
+                    </td>
+                    <td>
+                        67.37357
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.42519
+                    </td>
+                    <td>
+                        73.47817
+                    </td>
+                    <td>
+                        71.62307
+                    </td>
+                    <td>
+                        39.78
+                    </td>
+                    <td>
+                        中国新永安期货
+                    </td>
+                    <td>
+                        /
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=942&bid=98266&type=1&mt=1',{title:'心态决定命运的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        41
+                    </td>
+                    <td>
+                        嘿嘿朱小涛
+                    </td>
+                    <td style="color:#ff0000;">
+                        6660.68
+                    </td>
+                    <td>
+                        2711.80
+                    </td>
+                    <td>
+                        63.05115
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl41_lblWithdrawRateC" style="color:Red;">50.35</span>
+                        <input type="hidden" name="rptTRRank1$ctl41$hidPlayerId" id="rptTRRank1_ctl41_hidPlayerId" value="2210" />
+                    </td>
+                    <td>
+                        66.23165
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.68672
+                    </td>
+                    <td>
+                        76.17826
+                    </td>
+                    <td>
+                        71.40449
+                    </td>
+                    <td>
+                        37.07
+                    </td>
+                    <td>
+                        狮子金融
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=2210&bid=99010&type=1&mt=1',{title:'嘿嘿朱小涛的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        42
+                    </td>
+                    <td>
+                        陈玉荣
+                    </td>
+                    <td style="color:#ff0000;">
+                        36804.89
+                    </td>
+                    <td>
+                        12834.97
+                    </td>
+                    <td>
+                        67.50672
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl42_lblWithdrawRateC" style="color:Red;">53.17</span>
+                        <input type="hidden" name="rptTRRank1$ctl42$hidPlayerId" id="rptTRRank1_ctl42_hidPlayerId" value="446" />
+                    </td>
+                    <td>
+                        64.27406
+                    </td>
+                    <td>
+                        1.00363
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.52847
+                    </td>
+                    <td>
+                        74.80265
+                    </td>
+                    <td>
+                        71.39938
+                    </td>
+                    <td>
+                        43.96
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商肖熠
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=446&bid=98451&type=1&mt=1',{title:'陈玉荣的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        43
+                    </td>
+                    <td>
+                        祁瑞刚
+                    </td>
+                    <td style="color:#ff0000;">
+                        104609.44
+                    </td>
+                    <td>
+                        20902.03
+                    </td>
+                    <td>
+                        69.83505
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl43_lblWithdrawRateC" style="color:Red;">32.20</span>
+                        <input type="hidden" name="rptTRRank1$ctl43$hidPlayerId" id="rptTRRank1_ctl43_hidPlayerId" value="1184" />
+                    </td>
+                    <td>
+                        77.65090
+                    </td>
+                    <td>
+                        0.99957
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.23567
+                    </td>
+                    <td>
+                        70.34488
+                    </td>
+                    <td>
+                        71.31332
+                    </td>
+                    <td>
+                        20.61
+                    </td>
+                    <td>
+                        浙商香港
+                    </td>
+                    <td>
+                        浙商肖熠
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1184&bid=98466&type=1&mt=1',{title:'祁瑞刚的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        44
+                    </td>
+                    <td>
+                        应
+                    </td>
+                    <td style="color:#ff0000;">
+                        11490.92
+                    </td>
+                    <td>
+                        3501.67
+                    </td>
+                    <td>
+                        63.57935
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl44_lblWithdrawRateC" style="color:Red;">42.91</span>
+                        <input type="hidden" name="rptTRRank1$ctl44$hidPlayerId" id="rptTRRank1_ctl44_hidPlayerId" value="826" />
+                    </td>
+                    <td>
+                        70.47308
+                    </td>
+                    <td>
+                        1.05815
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.43627
+                    </td>
+                    <td>
+                        73.76289
+                    </td>
+                    <td>
+                        70.72353
+                    </td>
+                    <td>
+                        27.36
+                    </td>
+                    <td>
+                        横华国际
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=826&bid=98340&type=1&mt=1',{title:'应的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        45
+                    </td>
+                    <td>
+                        三娃儿
+                    </td>
+                    <td style="color:#ff0000;">
+                        2612.54
+                    </td>
+                    <td>
+                        572.55
+                    </td>
+                    <td>
+                        59.20350
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl45_lblWithdrawRateC" style="color:Red;">19.22</span>
+                        <input type="hidden" name="rptTRRank1$ctl45$hidPlayerId" id="rptTRRank1_ctl45_hidPlayerId" value="679" />
+                    </td>
+                    <td>
+                        85.64437
+                    </td>
+                    <td>
+                        0.99524
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.28063
+                    </td>
+                    <td>
+                        71.48702
+                    </td>
+                    <td>
+                        70.53975
+                    </td>
+                    <td>
+                        24.92
+                    </td>
+                    <td>
+                        横华国际
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=679&bid=98338&type=1&mt=1',{title:'三娃儿的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        46
+                    </td>
+                    <td>
+                        KevinYD
+                    </td>
+                    <td style="color:#ff0000;">
+                        72256.57
+                    </td>
+                    <td>
+                        6281.04
+                    </td>
+                    <td>
+                        65.54363
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl46_lblWithdrawRateC" style="color:Red;">26.18</span>
+                        <input type="hidden" name="rptTRRank1$ctl46$hidPlayerId" id="rptTRRank1_ctl46_hidPlayerId" value="1656" />
+                    </td>
+                    <td>
+                        81.40294
+                    </td>
+                    <td>
+                        0.99996
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.21097
+                    </td>
+                    <td>
+                        69.64833
+                    </td>
+                    <td>
+                        70.38534
+                    </td>
+                    <td>
+                        10.59
+                    </td>
+                    <td>
+                        美国盈透证券
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=1656&bid=98910&type=1&mt=1',{title:'KevinYD的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        47
+                    </td>
+                    <td>
+                        grant
+                    </td>
+                    <td style="color:#ff0000;">
+                        7139.00
+                    </td>
+                    <td>
+                        761.00
+                    </td>
+                    <td>
+                        59.79151
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl47_lblWithdrawRateC" style="color:Red;">3.20</span>
+                        <input type="hidden" name="rptTRRank1$ctl47$hidPlayerId" id="rptTRRank1_ctl47_hidPlayerId" value="647" />
+                    </td>
+                    <td>
+                        96.73736
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.11931
+                    </td>
+                    <td>
+                        68.15454
+                    </td>
+                    <td>
+                        70.35120
+                    </td>
+                    <td>
+                        11.48
+                    </td>
+                    <td>
+                        直达国际金融
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=647&bid=98776&type=1&mt=1',{title:'grant的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        48
+                    </td>
+                    <td>
+                        抱朴守拙
+                    </td>
+                    <td style="color:#ff0000;">
+                        2334.44
+                    </td>
+                    <td>
+                        1389.06
+                    </td>
+                    <td>
+                        61.33282
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl48_lblWithdrawRateC" style="color:Red;">8.60</span>
+                        <input type="hidden" name="rptTRRank1$ctl48$hidPlayerId" id="rptTRRank1_ctl48_hidPlayerId" value="2201" />
+                    </td>
+                    <td>
+                        92.16966
+                    </td>
+                    <td>
+                        1.00000
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.12690
+                    </td>
+                    <td>
+                        68.64990
+                    </td>
+                    <td>
+                        70.34859
+                    </td>
+                    <td>
+                        12.12
+                    </td>
+                    <td>
+                        美国盈透证券
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=2201&bid=98923&type=1&mt=1',{title:'抱朴守拙的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        49
+                    </td>
+                    <td>
+                        归来游子
+                    </td>
+                    <td style="color:#ff0000;">
+                        41011.92
+                    </td>
+                    <td>
+                        3175.81
+                    </td>
+                    <td>
+                        63.32150
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl49_lblWithdrawRateC" style="color:Red;">6.25</span>
+                        <input type="hidden" name="rptTRRank1$ctl49$hidPlayerId" id="rptTRRank1_ctl49_hidPlayerId" value="944" />
+                    </td>
+                    <td>
+                        94.61664
+                    </td>
+                    <td>
+                        0.99952
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.08395
+                    </td>
+                    <td>
+                        67.17540
+                    </td>
+                    <td>
+                        70.32811
+                    </td>
+                    <td>
+                        8.16
+                    </td>
+                    <td>
+                        横华国际
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=944&bid=98352&type=1&mt=1',{title:'归来游子的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                <tr align="center" style="background: #fff;">
+                    <td height="30">
+                        50
+                    </td>
+                    <td>
+                        宁代旭
+                    </td>
+                    <td style="color:#ff0000;">
+                        28529.30
+                    </td>
+                    <td>
+                        5009.60
+                    </td>
+                    <td>
+                        64.74348
+                    </td>
+                    <td style="color:#ff0000;">
+                        <span id="rptTRRank1_ctl50_lblWithdrawRateC" style="color:Red;">25.99</span>
+                        <input type="hidden" name="rptTRRank1$ctl50$hidPlayerId" id="rptTRRank1_ctl50_hidPlayerId" value="464" />
+                    </td>
+                    <td>
+                        81.56607
+                    </td>
+                    <td>
+                        1.00266
+                    </td>
+                    <td style="color:#ff0000;">
+                        1.21298
+                    </td>
+                    <td>
+                        69.77274
+                    </td>
+                    <td>
+                        70.28442
+                    </td>
+                    <td>
+                        18.94
+                    </td>
+                    <td>
+                        中国新永安期货
+                    </td>
+                    <td>
+                        陈熙宁
+                    </td>
+                    <td>
+                        <a href="javascript:(function(){$.dialog.open('Chart2.aspx?pid=464&bid=98269&type=1&mt=1',{title:'宁代旭的账户总评估',width:'800px',height:'550px',drag:true,lock:true,yesFn:true});})();" title="账户评估">账户评估</a>
+                    </td>
+                </tr>
+            
+                </table>
+            
+        
+        
+        <div style="line-height: 30px; height: 30px;">
+            <div class="right flickr">
+                
+<!-- AspNetPager V7.0.2 for VS2005 & VS2008  Copyright:2003-2007 Webdiyer (www.webdiyer.com) -->
+<div id="AspNetPager1" class="Pager">
+<a disabled="disabled" style="margin-right:5px;">&lt;&lt;</a><a disabled="disabled" style="margin-right:5px;">&lt;</a><span class="CurrentPager" style="margin-right:5px;">[1]</span><a href="javascript:__doPostBack('AspNetPager1','2')" class="Pager" title="转到第2页" style="margin-right:5px;">[2]</a><a href="javascript:__doPostBack('AspNetPager1','3')" class="Pager" title="转到第3页" style="margin-right:5px;">[3]</a><a href="javascript:__doPostBack('AspNetPager1','4')" class="Pager" title="转到第4页" style="margin-right:5px;">[4]</a><a href="javascript:__doPostBack('AspNetPager1','5')" class="Pager" title="转到第5页" style="margin-right:5px;">[5]</a><a href="javascript:__doPostBack('AspNetPager1','6')" class="Pager" title="转到第6页" style="margin-right:5px;">[6]</a><a href="javascript:__doPostBack('AspNetPager1','7')" class="Pager" title="转到第7页" style="margin-right:5px;">[7]</a><a href="javascript:__doPostBack('AspNetPager1','8')" class="Pager" title="转到第8页" style="margin-right:5px;">[8]</a><a href="javascript:__doPostBack('AspNetPager1','9')" class="Pager" title="转到第9页" style="margin-right:5px;">[9]</a><a href="javascript:__doPostBack('AspNetPager1','10')" class="Pager" title="转到第10页" style="margin-right:5px;">[10]</a><span style="margin-right:5px;"><a class="Pager" href="javascript:__doPostBack('AspNetPager1','11')" title="转到第11页">...</a></span><a class="Pager" title="转到第2页" href="javascript:__doPostBack('AspNetPager1','2')" style="margin-right:5px;">&gt;</a><a class="Pager" title="转到第13页" href="javascript:__doPostBack('AspNetPager1','13')" style="margin-right:5px;">&gt;&gt;</a>&nbsp;&nbsp;跳转到第<select name="AspNetPager1_input" id="AspNetPager1_input" onchange="__doPostBack('AspNetPager1','')">
+	<option value="1" selected="true">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option>
+</select>页
+</div>
+<!-- AspNetPager V7.0.2 for VS2005 & VS2008 End -->
+
+
+            </div>
+        </div>
+    </div>
+    <!--main样式结束-->
+    
+<!--footer样式开始-->
+<div id="footer" class="clear">
+    <div class="bot1">
+        <p>
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">报社简介</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">广告业务</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">发行业务</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">联系我们</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">在线客服</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">友情链接</a>&nbsp; |&nbsp;
+            <a href="http://www.qhrb.com.cn/contactus/index.html" style="color:Blue;" target="_blank">版权声明</a>
+        </p>
+    </div>
+    <div class="bot2">
+        <p> 
+        期货日报网QQ交流群：&nbsp;141896004（能源化工一）&nbsp;162392246（能源化工二）&nbsp;140824088（农产品）
+        
+        161652943 (农产品2)&nbsp;90977191（金属）&nbsp; 108718876（分析师群）<br>&nbsp;69511486（股指期货群）
+       
+        158968638（黄金群） &nbsp;145930167（钢铁群）&nbsp;42941643（铜-铝1） 186750572（铜-铝2）&nbsp;81840197(豆类棕榈油)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        期货日报 期货日报网 版权所有&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41010702002005" style="color:Blue;"><img src="/Images/beian.png" />豫公网安备 41010702002005号</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://beian.miit.gov.cn/" target="_blank" style="color:Blue;">豫ICP备13022189号</a>
+        </p>
+    </div>
+</div>
+<style>
+/*下面是漂浮广告的css代码*/
+.floadAd { position: absolute;z-index: 999900; display: none; }  
+.floadAd .item { display: block; }  
+.floadAd .item{ vertical-align: bottom; }/* a img 的组合浏览器默认下边会有几个像素的空白，这里可以消除空白*/ 
+</style>
+<div id="floadAD" class="floadAd">  
+    <a class="close" href="javascript:void();" style="color: red">×关闭</a> 
+    <img class="item" src="http://upload.qhrb.com.cn/2017/0120/1484894996328.jpg" />  
+</div>
+<script type="text/javascript">
+    //广告漂浮窗口
+    function FloatAd(selector) {
+        var obj = $(selector);
+        if (obj.find(".item").length == 0) return; //如果没有内容，不执行
+        var windowHeight = $(document).height(); //浏览器高度
+        var windowWidth = $(document).width(); //浏览器宽度  
+        var dirX = -1.5; //每次水平漂浮方向及距离(单位：px)，正数向右，负数向左，如果越大的话就会看起来越不流畅，但在某些需求下你可能会需要这种效果  
+        var dirY = -1; //每次垂直漂浮方向及距离(单位：px)，正数向下，负数向上，如果越大的话就会看起来越不流畅，但在某些需求下你可能会需要这种效果  
+
+        var delay = 20; //定期执行的时间间隔，单位毫秒  
+        obj.css({ left: windowWidth / 2 - obj.width() / 2 + "px", top: windowHeight / 2 - obj.height() / 2 + "px" }); //把元素设置成在页面中间  
+        obj.show(); //元素默认是隐藏的，避免上一句代码改变位置视觉突兀，改变位置后再显示出来  
+        var handler = setInterval(move, delay); //定期执行，返回一个值，这个值可以用来取消定期执行  
+
+        obj.hover(function() {//鼠标经过时暂停，离开时继续  
+            clearInterval(handler); //取消定期执行  
+        }, function() {
+            handler = setInterval(move, delay);
+        });
+
+        obj.find(".close").click(function() {//绑定关闭按钮事件  
+            close();
+        });
+//        $(window).resize(function() {//当改变窗口大小时，重新获取浏览器大小，以保证不会过界（飘出浏览器可视范围）或漂的范围小于新的大小  
+//            windowHeight = $(window).height(); //浏览器高度  
+//            windowWidth = $(window).width(); //浏览器宽度  
+//        });
+        function move() {//定期执行的函数，使元素移动  
+            var currentPos = obj.position(); //获取当前位置，这是JQuery的函数，具体见：http://hemin.cn/jq/position.html  
+            var nextPosX = currentPos.left + dirX; //下一个水平位置  
+            var nextPosY = currentPos.top + dirY; //下一个垂直位置  
+
+            if (nextPosX <= 0 || nextPosX >= windowWidth - obj.width()) {//如果达到左边，或者达到右边，则改变为相反方向  
+                dirX = dirX * -1; //改变方向  
+                nextPosX = currentPos.left + dirX; //为了不过界，重新获取下一个位置  
+            }
+            if (nextPosY <= 0 || nextPosY >= windowHeight - obj.height() - 5) {//如果达到上边，或者达到下边，则改变为相反方向。              
+                dirY = dirY * -1; //改变方向  
+                nextPosY = currentPos.top + dirY; //为了不过界，重新获取下一个位置  
+            }
+            obj.css({ left: nextPosX + "px", top: nextPosY + "px" }); //移动到下一个位置  
+        }
+
+        function close() {//停止漂浮，并销毁漂浮窗口  
+            clearInterval(handler);
+            obj.remove();
+        }
+    }
+    //FloatAd("#floadAD"); //调用
+</script>
+<!--footer样式结束-->
+    
+<script type="text/javascript">
+//<![CDATA[
+var Page_Validators =  new Array(document.getElementById("RequiredFieldValidator1"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var RequiredFieldValidator1 = document.all ? document.all["RequiredFieldValidator1"] : document.getElementById("RequiredFieldValidator1");
+RequiredFieldValidator1.controltovalidate = "txtTradeDate";
+RequiredFieldValidator1.errormessage = "*必填";
+RequiredFieldValidator1.display = "Dynamic";
+RequiredFieldValidator1.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+RequiredFieldValidator1.initialvalue = "";
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        //]]>
+</script>
+</form>
+</body>
+</html>
