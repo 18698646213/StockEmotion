@@ -251,6 +251,7 @@ export interface QuantPosition {
   long_avg_price: number
   short_avg_price: number
   float_profit: number
+  last_price: number
 }
 
 export interface QuantDecision {
@@ -262,7 +263,49 @@ export interface QuantDecision {
   reason: string
   signal: string
   composite_score: number
+  atr: number
+  stop_loss: number
+  take_profit: number
   order_result: Record<string, unknown> | null
+  entry_price: number
+  pnl_points: number
+  pnl_pct: number
+  holding_seconds: number
+}
+
+export interface QuantPnlSummary {
+  total_trades: number
+  wins: number
+  losses: number
+  win_rate: number
+  total_pnl_points: number
+  avg_pnl_points: number
+  max_win_points: number
+  max_loss_points: number
+  total_pnl_pct: number
+  avg_holding_seconds: number
+}
+
+export interface QuantManagedPosition {
+  direction: string
+  entry_price: number
+  atr: number
+  stop_loss: number
+  take_profit: number
+  lots: number
+  current_price: number
+  float_pnl: number
+  float_pnl_pct: number
+}
+
+export interface QuantAccountPnl {
+  close_profit: number
+  float_profit: number
+  commission: number
+  net_pnl: number
+  balance: number
+  static_balance: number
+  daily_pnl: number
 }
 
 export interface QuantAutoStatus {
@@ -277,15 +320,14 @@ export interface QuantAutoStatus {
     atr_tp_multiplier: number
     trail_step_atr: number
     trail_move_atr: number
+    max_risk_per_trade: number
+    max_risk_ratio: number
+    close_before_market_close: boolean
   }
-  managed_positions: Record<string, {
-    direction: string
-    entry_price: number
-    atr: number
-    stop_loss: number
-    take_profit: number
-    lots: number
-  }>
+  managed_positions: Record<string, QuantManagedPosition>
+  pnl_summary: QuantPnlSummary
+  account_pnl: QuantAccountPnl
+  unrealized_pnl: number
   decisions_count: number
   decisions: QuantDecision[]
 }

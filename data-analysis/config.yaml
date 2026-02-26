@@ -1,0 +1,23 @@
+scraper:
+  user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  request_delay: 2.0
+  max_retries: 3
+  retry_delay: 5.0
+  timeout: 30
+  use_playwright: true
+
+sources:
+  niumoney:
+    base_url: "https://www.niumoney.com"
+    ranking_path: "/cccps/1"
+    enabled: true
+  qihuo7hcn:
+    base_url: "https://trader.7hcn.com"
+    enabled: true
+  qhrb:
+    base_url: "http://spds.qhrb.com.cn:8888"
+    enabled: true
+
+storage:
+  data_dir: "data"
+  format: "csv"

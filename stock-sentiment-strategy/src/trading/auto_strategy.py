@@ -40,6 +40,8 @@ ATR_SL_MULTIPLIER = 1.5        # 止损 = 1.5 × ATR
 ATR_TP_MULTIPLIER = 3.0        # 初始止盈 = 3 × ATR（2:1 风险回报比）
 TRAIL_STEP_ATR = 0.5           # 价格每有利移动 0.5 ATR
 TRAIL_MOVE_ATR = 0.25          # 止损跟进 0.25 ATR
+MAX_RISK_PER_TRADE = 0.02      # 单笔最大亏损占权益比例 (2%)
+MAX_RISK_RATIO = 0.80          # 最大仓位风险度 (保证金/权益, 80%)
 
 
 @dataclass
@@ -53,6 +55,9 @@ class TradeConfig:
     atr_tp_multiplier: float = ATR_TP_MULTIPLIER
     trail_step_atr: float = TRAIL_STEP_ATR
     trail_move_atr: float = TRAIL_MOVE_ATR
+    max_risk_per_trade: float = MAX_RISK_PER_TRADE
+    max_risk_ratio: float = MAX_RISK_RATIO
+    close_before_market_close: bool = True
     enabled: bool = False
 
 
@@ -86,6 +91,10 @@ class TradeDecision:
     stop_loss: float = 0.0
     take_profit: float = 0.0
     order_result: Optional[dict] = None
+    entry_price: float = 0.0
+    pnl_points: float = 0.0       # 每手盈亏点数
+    pnl_pct: float = 0.0          # 盈亏百分比 (基于入场价)
+    holding_seconds: int = 0       # 持仓时长(秒)
 
 
 class AutoTrader:
@@ -97,6 +106,7 @@ class AutoTrader:
         self._thread: Optional[threading.Thread] = None
         self._decisions: list[TradeDecision] = []
         self._lock = threading.Lock()
+        self._cycle_lock = threading.Lock()   # prevents concurrent analysis cycles
         self._contracts: list[str] = []
         self._positions: dict[str, PositionState] = {}
         self._load_state()
@@ -109,10 +119,15 @@ class AutoTrader:
         if self._running:
             logger.warning("自动交易已在运行中")
             return
-        # 确保旧线程已完全退出
-        if self._thread is not None and self._thread.is_alive():
+
+        # Force-stop any lingering thread before starting a new one
+        old = self._thread
+        if old is not None and old.is_alive():
             logger.info("等待旧交易线程退出...")
-            self._thread.join(timeout=5)
+            self._running = False
+            old.join(timeout=30)
+            if old.is_alive():
+                logger.warning("旧线程仍在运行，将被新线程取代（cycle_lock 防止并发）")
 
         if config:
             self.config = config
@@ -134,23 +149,65 @@ class AutoTrader:
     def stop(self):
         self._running = False
         self.config.enabled = False
-        if self._thread is not None and self._thread.is_alive():
-            self._thread.join(timeout=10)
-            self._thread = None
+        t = self._thread
+        if t is not None and t.is_alive():
+            t.join(timeout=30)
+        self._thread = None
         logger.info("自动交易已停止")
+
+    @staticmethod
+    def _safe_round(val, ndigits: int = 2) -> float:
+        import math
+        if val is None:
+            return 0.0
+        try:
+            f = float(val)
+            if math.isnan(f) or math.isinf(f):
+                return 0.0
+            return round(f, ndigits)
+        except (TypeError, ValueError):
+            return 0.0
+
+    @classmethod
+    def _sanitize(cls, obj):
+        """Recursively replace NaN/Inf with 0 in a dict/list for JSON safety."""
+        import math
+        if isinstance(obj, dict):
+            return {k: cls._sanitize(v) for k, v in obj.items()}
+        if isinstance(obj, list):
+            return [cls._sanitize(v) for v in obj]
+        if isinstance(obj, float):
+            if math.isnan(obj) or math.isinf(obj):
+                return 0.0
+        return obj
 
     def get_status(self) -> dict:
         managed = {}
+        unrealized_pnl = 0.0
         for sym, ps in self._positions.items():
+            cur_price = self._get_current_price(sym)
+            if ps.direction == "LONG":
+                float_pnl = (cur_price - ps.entry_price) * ps.lots if cur_price else 0.0
+            else:
+                float_pnl = (ps.entry_price - cur_price) * ps.lots if cur_price else 0.0
+            float_pct = (float_pnl / ps.entry_price * 100) if ps.entry_price > 0 else 0.0
+            unrealized_pnl += float_pnl
             managed[sym] = {
                 "direction": ps.direction,
                 "entry_price": ps.entry_price,
-                "atr": round(ps.atr, 2),
-                "stop_loss": round(ps.stop_loss, 2),
-                "take_profit": round(ps.take_profit, 2),
+                "atr": self._safe_round(ps.atr),
+                "stop_loss": self._safe_round(ps.stop_loss),
+                "take_profit": self._safe_round(ps.take_profit),
                 "lots": ps.lots,
+                "current_price": cur_price,
+                "float_pnl": self._safe_round(float_pnl),
+                "float_pnl_pct": self._safe_round(float_pct),
             }
-        return {
+
+        pnl_summary = self._calc_pnl_summary()
+        account_pnl = self._get_account_pnl()
+
+        result = {
             "running": self._running,
             "contracts": self._contracts,
             "config": {
@@ -162,16 +219,93 @@ class AutoTrader:
                 "atr_tp_multiplier": self.config.atr_tp_multiplier,
                 "trail_step_atr": self.config.trail_step_atr,
                 "trail_move_atr": self.config.trail_move_atr,
+                "max_risk_per_trade": self.config.max_risk_per_trade,
+                "max_risk_ratio": self.config.max_risk_ratio,
+                "close_before_market_close": self.config.close_before_market_close,
             },
             "managed_positions": managed,
+            "pnl_summary": pnl_summary,
+            "account_pnl": account_pnl,
+            "unrealized_pnl": self._safe_round(unrealized_pnl),
             "decisions_count": len(self._decisions),
             "trading_hours": self._is_trading_hours(),
+        }
+        return self._sanitize(result)
+
+    def _get_account_pnl(self) -> dict:
+        """Get account-level P&L from TqSdk (total since account inception)."""
+        try:
+            from src.data.tqsdk_service import get_tq_service
+            svc = get_tq_service()
+            if not svc.is_ready:
+                return {}
+            acct = svc.get_account_info()
+            if not acct:
+                return {}
+            close_profit = float(acct.get("close_profit", 0))
+            float_profit = float(acct.get("float_profit", 0))
+            commission = float(acct.get("commission", 0))
+            balance = float(acct.get("balance", 0))
+            static_balance = float(acct.get("static_balance", 0))
+            return {
+                "close_profit": self._safe_round(close_profit),
+                "float_profit": self._safe_round(float_profit),
+                "commission": self._safe_round(commission),
+                "net_pnl": self._safe_round(close_profit + float_profit - commission),
+                "balance": self._safe_round(balance),
+                "static_balance": self._safe_round(static_balance),
+                "daily_pnl": self._safe_round(balance - static_balance),
+            }
+        except Exception:
+            return {}
+
+    def _get_current_price(self, symbol: str) -> float:
+        try:
+            from src.data.tqsdk_service import get_tq_service
+            svc = get_tq_service()
+            if svc.is_ready:
+                q = svc.get_quote(symbol)
+                if q and q.get("price", 0) > 0:
+                    return q["price"]
+        except Exception:
+            pass
+        return 0.0
+
+    def _calc_pnl_summary(self) -> dict:
+        """Aggregate realized P&L from all closed trades."""
+        closed = [d for d in self._decisions
+                  if d.action in ("CLOSE_LONG", "CLOSE_SHORT") and d.entry_price > 0]
+        if not closed:
+            return {
+                "total_trades": 0, "wins": 0, "losses": 0, "win_rate": 0,
+                "total_pnl_points": 0, "avg_pnl_points": 0,
+                "max_win_points": 0, "max_loss_points": 0,
+                "total_pnl_pct": 0, "avg_holding_seconds": 0,
+            }
+        wins = [d for d in closed if d.pnl_points > 0]
+        losses = [d for d in closed if d.pnl_points < 0]
+        total_pts = sum(d.pnl_points for d in closed)
+        max_win = max((d.pnl_points for d in closed), default=0)
+        max_loss = min((d.pnl_points for d in closed), default=0)
+        avg_hold = sum(d.holding_seconds for d in closed) / len(closed)
+        sr = self._safe_round
+        return {
+            "total_trades": len(closed),
+            "wins": len(wins),
+            "losses": len(losses),
+            "win_rate": sr(len(wins) / len(closed) * 100, 1),
+            "total_pnl_points": sr(total_pts),
+            "avg_pnl_points": sr(total_pts / len(closed)),
+            "max_win_points": sr(max_win),
+            "max_loss_points": sr(max_loss),
+            "total_pnl_pct": sr(sum(d.pnl_pct for d in closed)),
+            "avg_holding_seconds": int(avg_hold),
         }
 
     def get_decisions(self, limit: int = 50) -> list[dict]:
         with self._lock:
             items = self._decisions[-limit:]
-        return [
+        rows = [
             {
                 "timestamp": d.timestamp,
                 "symbol": d.symbol,
@@ -185,9 +319,14 @@ class AutoTrader:
                 "stop_loss": d.stop_loss,
                 "take_profit": d.take_profit,
                 "order_result": d.order_result,
+                "entry_price": d.entry_price,
+                "pnl_points": d.pnl_points,
+                "pnl_pct": d.pnl_pct,
+                "holding_seconds": d.holding_seconds,
             }
             for d in reversed(items)
         ]
+        return self._sanitize(rows)
 
     # ------------------------------------------------------------------
     # Core loop
@@ -197,7 +336,7 @@ class AutoTrader:
     _SESSION_OPENS = [(9, 0), (13, 30), (21, 0)]
 
     def _trading_loop(self):
-        logger.info("自动交易循环启动")
+        logger.info("自动交易循环启动 (thread=%s)", threading.current_thread().name)
         was_trading = self._is_trading_hours()
         while self._running:
             now_trading = self._is_trading_hours()
@@ -213,11 +352,91 @@ class AutoTrader:
                 logger.error("自动交易循环异常: %s", e)
 
             sleep_secs = self._seconds_until_next_event()
-            for _ in range(sleep_secs):
+            for tick in range(sleep_secs):
                 if not self._running:
                     break
                 time.sleep(1)
-        logger.info("自动交易循环结束")
+                if tick % 2 == 0 and self._positions:
+                    try:
+                        self._monitor_stop_levels()
+                    except Exception as e:
+                        logger.debug("SL/TP 监控异常: %s", e)
+        logger.info("自动交易循环结束 (thread=%s)", threading.current_thread().name)
+
+    def _monitor_stop_levels(self):
+        """High-frequency SL/TP check — runs every ~2s between analysis cycles."""
+        if not self._cycle_lock.acquire(blocking=False):
+            return
+        try:
+            self._do_monitor_stop_levels()
+        finally:
+            self._cycle_lock.release()
+
+    @staticmethod
+    def _is_near_market_close() -> bool:
+        """Check if we're within 5 minutes of day-session close (14:55-15:00)."""
+        now = datetime.now()
+        t = now.hour * 60 + now.minute
+        return 14 * 60 + 55 <= t < 15 * 60
+
+    def _do_monitor_stop_levels(self):
+        if not self._is_trading_hours():
+            return
+        from src.data.tqsdk_service import get_tq_service
+        svc = get_tq_service()
+        if not svc.is_ready:
+            return
+
+        near_close = self.config.close_before_market_close and self._is_near_market_close()
+
+        for symbol in list(self._positions.keys()):
+            ps = self._positions.get(symbol)
+            if ps is None:
+                continue
+
+            quote = svc.get_quote(symbol)
+            if not quote or quote.get("price", 0) <= 0:
+                continue
+            price = quote["price"]
+
+            pos = svc.get_position_info(symbol)
+            long_vol = pos.get("long_volume", 0) if pos else 0
+            short_vol = pos.get("short_volume", 0) if pos else 0
+            if long_vol == 0 and short_vol == 0:
+                continue
+
+            # Near market close: force close all positions
+            if near_close:
+                pnl_pts, pnl_pct, hold_sec = self._calc_pnl(ps, price)
+                action = "CLOSE_LONG" if long_vol > 0 else "CLOSE_SHORT"
+                lots = long_vol if long_vol > 0 else short_vol
+                close_decision = TradeDecision(
+                    timestamp=datetime.now().isoformat(),
+                    symbol=symbol, action=action, lots=lots, price=price,
+                    reason=f"收盘前平仓 (14:55规则, 现价{price:.1f}, "
+                           f"入场{ps.entry_price:.1f}, 盈亏={pnl_pts:+.1f}点/{pnl_pct:+.2f}%)",
+                    signal="MARKET_CLOSE", composite_score=0,
+                    atr=ps.atr, stop_loss=ps.stop_loss, take_profit=ps.take_profit,
+                    entry_price=ps.entry_price, pnl_points=pnl_pts,
+                    pnl_pct=pnl_pct, holding_seconds=hold_sec)
+                logger.info("收盘前自动平仓: %s %s 现价=%.1f 盈亏=%+.1f点",
+                            symbol, action, price, pnl_pts)
+                close_decision.order_result = self._execute(close_decision, svc)
+                self._record(close_decision)
+                if close_decision.action in ("CLOSE_LONG", "CLOSE_SHORT"):
+                    self._positions.pop(symbol, None)
+                    self._save_state()
+                continue
+
+            atr = ps.atr
+            exit_decision = self._check_exit(symbol, price, atr, long_vol, short_vol)
+            if exit_decision:
+                logger.info("实时止盈止损触发: %s 现价=%.1f", symbol, price)
+                exit_decision.order_result = self._execute(exit_decision, svc)
+                self._record(exit_decision)
+                if exit_decision.action in ("CLOSE_LONG", "CLOSE_SHORT"):
+                    self._positions.pop(symbol, None)
+                    self._save_state()
 
     def _seconds_until_next_event(self) -> int:
         """Return seconds to sleep: either the normal interval or until the
@@ -263,6 +482,15 @@ class AutoTrader:
         return False
 
     def _run_one_cycle(self):
+        if not self._cycle_lock.acquire(blocking=False):
+            logger.warning("上一轮分析仍在进行，跳过本轮")
+            return
+        try:
+            self._do_run_one_cycle()
+        finally:
+            self._cycle_lock.release()
+
+    def _do_run_one_cycle(self):
         from src.data.tqsdk_service import get_tq_service
 
         if not self._is_trading_hours():
@@ -275,6 +503,8 @@ class AutoTrader:
             return
 
         for symbol in self._contracts:
+            if not self._running:
+                break
             try:
                 self._analyze_and_trade(symbol, svc)
             except Exception as e:
@@ -298,19 +528,27 @@ class AutoTrader:
         long_avg = pos.get("long_avg_price", 0) if pos else 0
         short_avg = pos.get("short_avg_price", 0) if pos else 0
 
-        # 2. Real-time quote
+        # 2. Sync managed position state FIRST (before quote/ATR checks)
+        #    so stale positions get cleaned even when market data is unavailable
+        has_actual = long_vol > 0 or short_vol > 0
+        if not has_actual and symbol in self._positions:
+            logger.info("同步清除无实盘持仓: %s", symbol)
+            self._positions.pop(symbol)
+            self._save_state()
+
+        # 3. Real-time quote
         quote = svc.get_quote(symbol)
         if not quote or quote.get("price", 0) <= 0:
             return
         price = quote["price"]
 
-        # 3. ATR(14) from 15-min K-lines
+        # 4. ATR(14) from 15-min K-lines
         atr = svc.get_atr(symbol, ATR_PERIOD, ATR_KLINE_DURATION)
         if atr <= 0:
             logger.debug("%s ATR 不可用，跳过", symbol)
             return
 
-        # 4. Sync managed position state with actual TqSdk position
+        # 5. Full sync (restore tracking for positions found in TqSdk but not managed)
         self._sync_position_state(symbol, long_vol, short_vol, long_avg, short_avg, atr)
 
         # 5. Check trailing stop / stop-loss / take-profit for existing positions
@@ -419,6 +657,25 @@ class AutoTrader:
     # Exit checks (stop-loss, take-profit, trailing stop)
     # ------------------------------------------------------------------
 
+    def _calc_pnl(self, ps: PositionState, exit_price: float) -> tuple[float, float, int]:
+        """Calculate P&L for a closing trade.
+
+        Returns (pnl_points, pnl_pct, holding_seconds).
+        """
+        if ps.direction == "LONG":
+            pnl_pts = exit_price - ps.entry_price
+        else:
+            pnl_pts = ps.entry_price - exit_price
+        pnl_pct = (pnl_pts / ps.entry_price * 100) if ps.entry_price > 0 else 0.0
+        hold_sec = 0
+        if ps.opened_at:
+            try:
+                opened = datetime.fromisoformat(ps.opened_at)
+                hold_sec = int((datetime.now() - opened).total_seconds())
+            except (ValueError, TypeError):
+                pass
+        return round(pnl_pts, 4), round(pnl_pct, 4), hold_sec
+
     def _check_exit(self, symbol: str, price: float, atr: float,
                     long_vol: int, short_vol: int) -> Optional[TradeDecision]:
         ps = self._positions.get(symbol)
@@ -447,22 +704,30 @@ class AutoTrader:
                             self._save_state()
 
             if price <= ps.stop_loss:
+                pnl_pts, pnl_pct, hold_sec = self._calc_pnl(ps, price)
                 return TradeDecision(
                     timestamp=now, symbol=symbol, action="CLOSE_LONG",
                     lots=long_vol, price=price,
                     reason=f"ATR止损 (现价{price:.1f} <= 止损{ps.stop_loss:.1f}, "
-                           f"入场{ps.entry_price:.1f}, ATR={ps.atr:.1f})",
+                           f"入场{ps.entry_price:.1f}, ATR={ps.atr:.1f}, "
+                           f"盈亏={pnl_pts:+.1f}点/{pnl_pct:+.2f}%)",
                     signal="STOP_LOSS", composite_score=0,
-                    atr=atr, stop_loss=ps.stop_loss, take_profit=ps.take_profit)
+                    atr=atr, stop_loss=ps.stop_loss, take_profit=ps.take_profit,
+                    entry_price=ps.entry_price, pnl_points=pnl_pts,
+                    pnl_pct=pnl_pct, holding_seconds=hold_sec)
 
             if price >= ps.take_profit:
+                pnl_pts, pnl_pct, hold_sec = self._calc_pnl(ps, price)
                 return TradeDecision(
                     timestamp=now, symbol=symbol, action="CLOSE_LONG",
                     lots=long_vol, price=price,
                     reason=f"ATR止盈 (现价{price:.1f} >= 目标{ps.take_profit:.1f}, "
-                           f"入场{ps.entry_price:.1f}, ATR={ps.atr:.1f})",
+                           f"入场{ps.entry_price:.1f}, ATR={ps.atr:.1f}, "
+                           f"盈亏={pnl_pts:+.1f}点/{pnl_pct:+.2f}%)",
                     signal="TAKE_PROFIT", composite_score=0,
-                    atr=atr, stop_loss=ps.stop_loss, take_profit=ps.take_profit)
+                    atr=atr, stop_loss=ps.stop_loss, take_profit=ps.take_profit,
+                    entry_price=ps.entry_price, pnl_points=pnl_pts,
+                    pnl_pct=pnl_pct, holding_seconds=hold_sec)
 
         # Update trailing for SHORT
         if ps.direction == "SHORT" and short_vol > 0:
@@ -483,28 +748,99 @@ class AutoTrader:
                             self._save_state()
 
             if price >= ps.stop_loss:
+                pnl_pts, pnl_pct, hold_sec = self._calc_pnl(ps, price)
                 return TradeDecision(
                     timestamp=now, symbol=symbol, action="CLOSE_SHORT",
                     lots=short_vol, price=price,
                     reason=f"ATR止损 (现价{price:.1f} >= 止损{ps.stop_loss:.1f}, "
-                           f"入场{ps.entry_price:.1f}, ATR={ps.atr:.1f})",
+                           f"入场{ps.entry_price:.1f}, ATR={ps.atr:.1f}, "
+                           f"盈亏={pnl_pts:+.1f}点/{pnl_pct:+.2f}%)",
                     signal="STOP_LOSS", composite_score=0,
-                    atr=atr, stop_loss=ps.stop_loss, take_profit=ps.take_profit)
+                    atr=atr, stop_loss=ps.stop_loss, take_profit=ps.take_profit,
+                    entry_price=ps.entry_price, pnl_points=pnl_pts,
+                    pnl_pct=pnl_pct, holding_seconds=hold_sec)
 
             if price <= ps.take_profit:
+                pnl_pts, pnl_pct, hold_sec = self._calc_pnl(ps, price)
                 return TradeDecision(
                     timestamp=now, symbol=symbol, action="CLOSE_SHORT",
                     lots=short_vol, price=price,
                     reason=f"ATR止盈 (现价{price:.1f} <= 目标{ps.take_profit:.1f}, "
-                           f"入场{ps.entry_price:.1f}, ATR={ps.atr:.1f})",
+                           f"入场{ps.entry_price:.1f}, ATR={ps.atr:.1f}, "
+                           f"盈亏={pnl_pts:+.1f}点/{pnl_pct:+.2f}%)",
                     signal="TAKE_PROFIT", composite_score=0,
-                    atr=atr, stop_loss=ps.stop_loss, take_profit=ps.take_profit)
+                    atr=atr, stop_loss=ps.stop_loss, take_profit=ps.take_profit,
+                    entry_price=ps.entry_price, pnl_points=pnl_pts,
+                    pnl_pct=pnl_pct, holding_seconds=hold_sec)
 
         return None
 
     # ------------------------------------------------------------------
     # Entry checks (AI signal-based)
     # ------------------------------------------------------------------
+
+    def _calc_dynamic_lots(self, symbol: str, price: float, atr: float) -> int:
+        """Calculate position size so max loss per trade <= max_risk_per_trade × equity.
+
+        Formula: lots = (equity × risk%) / (ATR × sl_multiplier × volume_multiple)
+        Falls back to config.max_lots if account/quote data is unavailable.
+        """
+        try:
+            from src.data.tqsdk_service import get_tq_service
+            svc = get_tq_service()
+            if not svc.is_ready:
+                return self.config.max_lots
+            acct = svc.get_account_info()
+            if not acct:
+                return self.config.max_lots
+            equity = float(acct.get("balance", 0))
+            if equity <= 0:
+                return self.config.max_lots
+
+            quote = svc.get_quote(symbol)
+            vol_mult = float(quote.get("volume_multiple", 0)) if quote else 0
+            if vol_mult <= 0:
+                logger.warning("合约 %s 无法获取合约乘数，回退为 max_lots=%d",
+                               symbol, self.config.max_lots)
+                return self.config.max_lots
+        except Exception:
+            return self.config.max_lots
+
+        sl_distance = atr * self.config.atr_sl_multiplier
+        if sl_distance <= 0:
+            return self.config.max_lots
+
+        max_loss = equity * self.config.max_risk_per_trade
+        loss_per_lot = sl_distance * vol_mult
+        lots = int(max_loss / loss_per_lot)
+        lots = max(1, min(lots, self.config.max_lots))
+        logger.debug("动态仓位: 权益=%.0f, 单笔最大亏损=%.0f (%.0f%%), "
+                     "SL距离=%.1f, 合约乘数=%.0f, 每手亏损=%.0f, 计算手数=%d",
+                     equity, max_loss, self.config.max_risk_per_trade * 100,
+                     sl_distance, vol_mult, loss_per_lot, lots)
+        return lots
+
+    def _check_risk_ratio(self) -> tuple[bool, float]:
+        """Check if current risk ratio (margin/equity) is below max threshold.
+
+        Returns (can_open, current_ratio).
+        """
+        try:
+            from src.data.tqsdk_service import get_tq_service
+            svc = get_tq_service()
+            if not svc.is_ready:
+                return True, 0.0
+            acct = svc.get_account_info()
+            if not acct:
+                return True, 0.0
+            risk_ratio = float(acct.get("risk_ratio", 0))
+            can_open = risk_ratio < self.config.max_risk_ratio
+            if not can_open:
+                logger.warning("风险度过高 %.1f%% >= %.1f%%，禁止开仓",
+                               risk_ratio * 100, self.config.max_risk_ratio * 100)
+            return can_open, risk_ratio
+        except Exception:
+            return True, 0.0
 
     def _check_entry(self, symbol: str, signal: str, composite: float,
                      price: float, atr: float) -> TradeDecision:
@@ -514,26 +850,44 @@ class AutoTrader:
         tp_mult = self.config.atr_tp_multiplier
 
         if signal in ("STRONG_BUY", "BUY") and composite >= threshold:
-            lots = min(self.config.max_lots, 2 if signal == "STRONG_BUY" else 1)
+            can_open, risk_ratio = self._check_risk_ratio()
+            if not can_open:
+                return TradeDecision(
+                    timestamp=now, symbol=symbol, action="HOLD",
+                    lots=0, price=price,
+                    reason=f"AI做多 {signal} 得分{composite:.2f}，"
+                           f"但风险度 {risk_ratio:.0%} >= {self.config.max_risk_ratio:.0%}，禁止开仓",
+                    signal=signal, composite_score=composite, atr=atr)
+            lots = self._calc_dynamic_lots(symbol, price, atr)
             sl = price - sl_mult * atr
             tp = price + tp_mult * atr
             return TradeDecision(
                 timestamp=now, symbol=symbol, action="BUY",
                 lots=lots, price=price,
                 reason=f"AI做多 {signal} 得分{composite:.2f} | "
-                       f"ATR={atr:.1f} SL={sl:.1f} TP={tp:.1f}",
+                       f"ATR={atr:.1f} SL={sl:.1f} TP={tp:.1f} "
+                       f"手数={lots}(风控{self.config.max_risk_per_trade:.0%})",
                 signal=signal, composite_score=composite,
                 atr=atr, stop_loss=sl, take_profit=tp)
 
         if signal in ("STRONG_SELL", "SELL") and composite <= -threshold:
-            lots = min(self.config.max_lots, 2 if signal == "STRONG_SELL" else 1)
+            can_open, risk_ratio = self._check_risk_ratio()
+            if not can_open:
+                return TradeDecision(
+                    timestamp=now, symbol=symbol, action="HOLD",
+                    lots=0, price=price,
+                    reason=f"AI做空 {signal} 得分{composite:.2f}，"
+                           f"但风险度 {risk_ratio:.0%} >= {self.config.max_risk_ratio:.0%}，禁止开仓",
+                    signal=signal, composite_score=composite, atr=atr)
+            lots = self._calc_dynamic_lots(symbol, price, atr)
             sl = price + sl_mult * atr
             tp = price - tp_mult * atr
             return TradeDecision(
                 timestamp=now, symbol=symbol, action="SELL",
                 lots=lots, price=price,
                 reason=f"AI做空 {signal} 得分{composite:.2f} | "
-                       f"ATR={atr:.1f} SL={sl:.1f} TP={tp:.1f}",
+                       f"ATR={atr:.1f} SL={sl:.1f} TP={tp:.1f} "
+                       f"手数={lots}(风控{self.config.max_risk_per_trade:.0%})",
                 signal=signal, composite_score=composite,
                 atr=atr, stop_loss=sl, take_profit=tp)
 
@@ -600,9 +954,13 @@ class AutoTrader:
             if len(self._decisions) > 500:
                 self._decisions = self._decisions[-300:]
         if d.action != "HOLD":
-            logger.info("交易决策: %s %s %s %d手 @ %.1f | ATR=%.1f SL=%.1f TP=%.1f | %s",
-                         d.symbol, d.action, d.reason, d.lots, d.price,
-                         d.atr, d.stop_loss, d.take_profit, d.order_result or "")
+            pnl_str = ""
+            if d.action in ("CLOSE_LONG", "CLOSE_SHORT") and d.entry_price > 0:
+                pnl_str = f" | 盈亏={d.pnl_points:+.1f}点({d.pnl_pct:+.2f}%) 持仓{d.holding_seconds}s"
+            logger.info("交易决策: %s %s %d手 @ %.1f | ATR=%.1f SL=%.1f TP=%.1f%s | %s",
+                         d.symbol, d.action, d.lots, d.price,
+                         d.atr, d.stop_loss, d.take_profit, pnl_str,
+                         d.order_result or "")
         self._save_state()
 
     # ------------------------------------------------------------------
@@ -615,8 +973,15 @@ class AutoTrader:
             PERSIST_DIR.mkdir(parents=True, exist_ok=True)
 
             with self._lock:
-                decisions_data = [
-                    {
+                decisions_data = []
+                for d in self._decisions:
+                    odr = d.order_result
+                    if odr and not isinstance(odr, (dict, list, str)):
+                        odr = {"raw": str(odr)}
+                    elif isinstance(odr, dict):
+                        odr = {k: v for k, v in odr.items()
+                               if isinstance(v, (str, int, float, bool, type(None)))}
+                    decisions_data.append({
                         "timestamp": d.timestamp,
                         "symbol": d.symbol,
                         "action": d.action,
@@ -628,11 +993,14 @@ class AutoTrader:
                         "atr": d.atr,
                         "stop_loss": d.stop_loss,
                         "take_profit": d.take_profit,
-                        "order_result": d.order_result,
-                    }
-                    for d in self._decisions
-                ]
+                        "order_result": odr,
+                        "entry_price": d.entry_price,
+                        "pnl_points": d.pnl_points,
+                        "pnl_pct": d.pnl_pct,
+                        "holding_seconds": d.holding_seconds,
+                    })
 
+            decisions_data = self._sanitize(decisions_data)
             with open(DECISIONS_FILE, "w", encoding="utf-8") as f:
                 json.dump(decisions_data, f, ensure_ascii=False, indent=2)
 
@@ -658,6 +1026,9 @@ class AutoTrader:
                 "atr_tp_multiplier": self.config.atr_tp_multiplier,
                 "trail_step_atr": self.config.trail_step_atr,
                 "trail_move_atr": self.config.trail_move_atr,
+                "max_risk_per_trade": self.config.max_risk_per_trade,
+                "max_risk_ratio": self.config.max_risk_ratio,
+                "close_before_market_close": self.config.close_before_market_close,
             }
             with open(CONFIG_FILE, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
@@ -680,8 +1051,12 @@ class AutoTrader:
                 self.config.atr_tp_multiplier = data.get("atr_tp_multiplier", self.config.atr_tp_multiplier)
                 self.config.trail_step_atr = data.get("trail_step_atr", self.config.trail_step_atr)
                 self.config.trail_move_atr = data.get("trail_move_atr", self.config.trail_move_atr)
+                self.config.max_risk_per_trade = data.get("max_risk_per_trade", self.config.max_risk_per_trade)
+                self.config.max_risk_ratio = data.get("max_risk_ratio", self.config.max_risk_ratio)
+                self.config.close_before_market_close = data.get("close_before_market_close", self.config.close_before_market_close)
                 logger.info("已加载自动交易配置: 合约=%s, 间隔=%ds",
                             self._contracts, self.config.analysis_interval)
+                self._save_config()
             except Exception as e:
                 logger.warning("加载自动交易配置失败: %s", e)
 
@@ -703,6 +1078,10 @@ class AutoTrader:
                         stop_loss=item.get("stop_loss", 0),
                         take_profit=item.get("take_profit", 0),
                         order_result=item.get("order_result"),
+                        entry_price=item.get("entry_price", 0),
+                        pnl_points=item.get("pnl_points", 0),
+                        pnl_pct=item.get("pnl_pct", 0),
+                        holding_seconds=item.get("holding_seconds", 0),
                     ))
                 logger.info("已加载 %d 条自动交易决策记录", len(self._decisions))
             except Exception as e:

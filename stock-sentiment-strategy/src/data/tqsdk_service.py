@@ -100,11 +100,21 @@ def to_tq_symbol(our_symbol: str) -> Optional[str]:
 
 
 def from_tq_symbol(tq_symbol: str) -> str:
-    """Convert TqSdk symbol (e.g. 'DCE.c2605') back to our format ('C2605')."""
+    """Convert TqSdk symbol (e.g. 'DCE.c2605') back to our format ('C2605').
+
+    CZCE uses 3-digit month codes (e.g. SA605) while our format uses 4-digit
+    (SA2605), so we prepend '2' for the decade.
+    """
     if "." not in tq_symbol:
         return tq_symbol.upper()
-    _, code = tq_symbol.split(".", 1)
-    return code.upper()
+    exchange, code = tq_symbol.split(".", 1)
+    code_upper = code.upper()
+    if exchange == "CZCE":
+        import re
+        m = re.match(r"^([A-Z]+)(\d{3})$", code_upper)
+        if m:
+            return f"{m.group(1)}2{m.group(2)}"
+    return code_upper
 
 
 # ---------------------------------------------------------------------------
@@ -340,6 +350,11 @@ class TqDataService:
                     logger.debug("天勤订阅行情: %s", tq_sym)
                 except Exception as e:
                     logger.warning("天勤订阅 %s 失败: %s", tq_sym, e)
+            if tq_sym not in self._positions:
+                try:
+                    self._positions[tq_sym] = self._api.get_position(tq_sym)
+                except Exception as e:
+                    logger.warning("天勤订阅持仓 %s 失败: %s", tq_sym, e)
 
         for tq_sym, duration, count, cache_key in klines:
             try:
@@ -588,34 +603,58 @@ class TqDataService:
         if pos is None:
             return {"symbol": our_symbol, "long_volume": 0, "short_volume": 0,
                     "long_avg_price": 0, "short_avg_price": 0, "float_profit": 0}
+        fp_long = pos.float_profit_long if _is_valid(pos.float_profit_long) else 0
+        fp_short = pos.float_profit_short if _is_valid(pos.float_profit_short) else 0
         return {
             "symbol": our_symbol,
             "long_volume": int(pos.pos_long) if _is_valid(pos.pos_long) else 0,
             "short_volume": int(pos.pos_short) if _is_valid(pos.pos_short) else 0,
             "long_avg_price": pos.open_price_long if _is_valid(pos.open_price_long) else 0,
             "short_avg_price": pos.open_price_short if _is_valid(pos.open_price_short) else 0,
-            "float_profit": pos.float_profit_long + pos.float_profit_short
-                if _is_valid(pos.float_profit_long) and _is_valid(pos.float_profit_short) else 0,
+            "float_profit": fp_long + fp_short,
         }
 
     def get_all_positions(self) -> list[dict]:
-        """Get all positions with non-zero volume."""
+        """Get all positions with non-zero volume.
+
+        Proactively subscribes positions for all contracts that have quotes
+        subscribed, so we never miss positions opened via other channels.
+        """
         if not self.is_ready:
             return []
+
+        need_sub = [s for s in self._quotes if s not in self._positions]
+        if need_sub:
+            with self._lock:
+                self._pending_quotes.extend(need_sub)
+            import time
+            time.sleep(0.3)
+
         result = []
         for tq_sym, pos in self._positions.items():
             long_vol = int(pos.pos_long) if _is_valid(pos.pos_long) else 0
             short_vol = int(pos.pos_short) if _is_valid(pos.pos_short) else 0
             if long_vol == 0 and short_vol == 0:
                 continue
+
+            our_sym = from_tq_symbol(tq_sym)
+            last_price = 0.0
+            q = self._quotes.get(tq_sym)
+            if q is not None:
+                lp = getattr(q, "last_price", None)
+                if lp is not None and _is_valid(lp):
+                    last_price = float(lp)
+
+            fp_long = pos.float_profit_long if _is_valid(pos.float_profit_long) else 0
+            fp_short = pos.float_profit_short if _is_valid(pos.float_profit_short) else 0
             result.append({
-                "symbol": from_tq_symbol(tq_sym),
+                "symbol": our_sym,
                 "long_volume": long_vol,
                 "short_volume": short_vol,
                 "long_avg_price": pos.open_price_long if _is_valid(pos.open_price_long) else 0,
                 "short_avg_price": pos.open_price_short if _is_valid(pos.open_price_short) else 0,
-                "float_profit": (pos.float_profit_long + pos.float_profit_short)
-                    if _is_valid(pos.float_profit_long) and _is_valid(pos.float_profit_short) else 0,
+                "float_profit": fp_long + fp_short,
+                "last_price": last_price,
             })
         return result
 

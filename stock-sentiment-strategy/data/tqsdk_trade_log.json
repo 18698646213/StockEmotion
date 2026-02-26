@@ -1,0 +1,62 @@
+[
+  {
+    "id": "0775b2e3",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "BUY",
+    "offset": "CLOSE",
+    "volume": 1,
+    "price": 1176,
+    "time": "2026-02-26T13:38:18.196947"
+  },
+  {
+    "id": "dd2dc182",
+    "status": "SUBMITTED",
+    "symbol": "JM2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1086.0,
+    "time": "2026-02-26T14:06:28.676376"
+  },
+  {
+    "id": "47a0b31c",
+    "status": "SUBMITTED",
+    "symbol": "JM2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1086.0,
+    "time": "2026-02-26T14:13:43.828415"
+  },
+  {
+    "id": "441fac9d",
+    "status": "SUBMITTED",
+    "symbol": "JM2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1084.5,
+    "time": "2026-02-26T14:18:50.016237"
+  },
+  {
+    "id": "a6528a06",
+    "status": "SUBMITTED",
+    "symbol": "JM2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1085.5,
+    "time": "2026-02-26T14:22:54.564855"
+  },
+  {
+    "id": "511b7d9b",
+    "status": "SUBMITTED",
+    "symbol": "JM2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1087.0,
+    "time": "2026-02-26T14:27:57.950073"
+  }
+]

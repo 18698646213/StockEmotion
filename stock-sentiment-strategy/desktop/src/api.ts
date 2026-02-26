@@ -331,12 +331,16 @@ export async function closeQuantPosition(
 export async function startAutoTrade(params: {
   contracts: string[]
   max_lots?: number
+  max_positions?: number
   signal_threshold?: number
   analysis_interval?: number
   atr_sl_multiplier?: number
   atr_tp_multiplier?: number
   trail_step_atr?: number
   trail_move_atr?: number
+  max_risk_per_trade?: number
+  max_risk_ratio?: number
+  close_before_market_close?: boolean
 }): Promise<Record<string, unknown>> {
   return request('/api/quant/auto/start', {
     method: 'POST',

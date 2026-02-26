@@ -1254,6 +1254,9 @@ class AutoTradeStartRequest(BaseModel):
     trail_move_atr: float = 0.25
     signal_threshold: float = 0.3
     analysis_interval: int = 300
+    max_risk_per_trade: float = 0.02
+    max_risk_ratio: float = 0.80
+    close_before_market_close: bool = True
 
 class ManualOrderRequest(BaseModel):
     symbol: str
@@ -1272,6 +1275,13 @@ def quant_account():
         configured_mode = _config.tqsdk.trade_mode or "sim"
         if not svc.is_ready:
             return {"connected": False, "trade_mode": configured_mode, "account": None, "positions": []}
+
+        # Ensure positions are subscribed for auto-trader contracts
+        from src.trading.auto_strategy import get_auto_trader
+        trader = get_auto_trader()
+        for sym in (trader._contracts or []):
+            svc.get_quote(sym)
+
         acct = svc.get_account_info()
         positions = svc.get_all_positions()
         return {
@@ -1357,6 +1367,9 @@ def quant_auto_start(req: AutoTradeStartRequest):
         trail_move_atr=req.trail_move_atr,
         signal_threshold=req.signal_threshold,
         analysis_interval=req.analysis_interval,
+        max_risk_per_trade=req.max_risk_per_trade,
+        max_risk_ratio=req.max_risk_ratio,
+        close_before_market_close=req.close_before_market_close,
         enabled=True,
     )
     trader.start(req.contracts, config)

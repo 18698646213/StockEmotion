@@ -17,6 +17,8 @@ watchlist:
   futures_contracts:
   - C2605
   - SA2605
+  - JD2604
+  - M2605
 strategy:
   sentiment_weight: 0.3263973888208894
   technical_weight: 0.3263973888208894
@@ -25,9 +27,9 @@ strategy:
   stop_loss: -0.08
   news_lookback_days: 7
 futures_strategy:
-  sentiment_weight: 0.16155088852988694
-  technical_weight: 0.4846526655896607
-  volume_weight: 0.35379644588045234
-  max_position: 0.3
-  stop_loss: -0.05
+  sentiment_weight: 0.15
+  technical_weight: 0.5
+  volume_weight: 0.35
+  max_position: 0.25
+  stop_loss: -0.03
   news_lookback_days: 10

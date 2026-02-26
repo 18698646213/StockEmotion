@@ -68,12 +68,16 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
 
   // Auto-trade config
   const [maxLots, setMaxLots] = useState(1)
+  const [maxPositions, setMaxPositions] = useState(3)
   const [threshold, setThreshold] = useState(0.3)
   const [interval, setInterval_] = useState(300)
   const [atrSlMult, setAtrSlMult] = useState(1.5)
   const [atrTpMult, setAtrTpMult] = useState(3.0)
   const [trailStep, setTrailStep] = useState(0.5)
   const [trailMove, setTrailMove] = useState(0.25)
+  const [maxRiskPerTrade, setMaxRiskPerTrade] = useState(0.02)
+  const [maxRiskRatio, setMaxRiskRatio] = useState(0.80)
+  const [closeBeforeClose, setCloseBeforeClose] = useState(true)
 
   // Manual order
   const [manualSymbol, setManualSymbol] = useState('')
@@ -99,13 +103,17 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
 
       if (!configLoaded.current && statusData?.config) {
         const c = statusData.config
-        if (c.max_lots) setMaxLots(c.max_lots)
-        if (c.signal_threshold) setThreshold(c.signal_threshold)
-        if (c.analysis_interval) setInterval_(c.analysis_interval)
-        if (c.atr_sl_multiplier) setAtrSlMult(c.atr_sl_multiplier)
-        if (c.atr_tp_multiplier) setAtrTpMult(c.atr_tp_multiplier)
-        if (c.trail_step_atr) setTrailStep(c.trail_step_atr)
-        if (c.trail_move_atr) setTrailMove(c.trail_move_atr)
+        if (c.max_lots != null) setMaxLots(c.max_lots)
+        if (c.max_positions != null) setMaxPositions(c.max_positions)
+        if (c.signal_threshold != null) setThreshold(c.signal_threshold)
+        if (c.analysis_interval != null) setInterval_(c.analysis_interval)
+        if (c.atr_sl_multiplier != null) setAtrSlMult(c.atr_sl_multiplier)
+        if (c.atr_tp_multiplier != null) setAtrTpMult(c.atr_tp_multiplier)
+        if (c.trail_step_atr != null) setTrailStep(c.trail_step_atr)
+        if (c.trail_move_atr != null) setTrailMove(c.trail_move_atr)
+        if (c.max_risk_per_trade != null) setMaxRiskPerTrade(c.max_risk_per_trade)
+        if (c.max_risk_ratio != null) setMaxRiskRatio(c.max_risk_ratio)
+        if (c.close_before_market_close != null) setCloseBeforeClose(c.close_before_market_close)
         configLoaded.current = true
       }
     } catch (e: any) {
@@ -134,12 +142,16 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
       await startAutoTrade({
         contracts: futuresContracts,
         max_lots: maxLots,
+        max_positions: maxPositions,
         signal_threshold: threshold,
         analysis_interval: interval,
         atr_sl_multiplier: atrSlMult,
         atr_tp_multiplier: atrTpMult,
         trail_step_atr: trailStep,
         trail_move_atr: trailMove,
+        max_risk_per_trade: maxRiskPerTrade,
+        max_risk_ratio: maxRiskRatio,
+        close_before_market_close: closeBeforeClose,
       })
       await refresh()
       // 启动后短时间密集轮询，快速捕获第一轮分析结果
@@ -275,6 +287,44 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
         </div>
       )}
 
+      {/* Account PnL Summary */}
+      {autoStatus?.account_pnl && autoStatus.account_pnl.balance > 0 && (
+        <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
+          <h3 className="text-xs font-semibold text-gray-400 mb-3">账户总盈亏</h3>
+          <div className="grid grid-cols-5 gap-3">
+            <div>
+              <p className="text-[10px] text-gray-500 mb-1">已实现盈亏</p>
+              <p className="text-sm font-semibold"><PnlText value={autoStatus.account_pnl.close_profit} /></p>
+            </div>
+            <div>
+              <p className="text-[10px] text-gray-500 mb-1">持仓浮盈</p>
+              <p className="text-sm font-semibold"><PnlText value={autoStatus.account_pnl.float_profit} /></p>
+            </div>
+            <div>
+              <p className="text-[10px] text-gray-500 mb-1">手续费</p>
+              <p className="text-sm font-semibold text-yellow-400">{formatMoney(autoStatus.account_pnl.commission)}</p>
+            </div>
+            <div>
+              <p className="text-[10px] text-gray-500 mb-1">净盈亏</p>
+              <p className="text-sm font-semibold"><PnlText value={autoStatus.account_pnl.net_pnl} /></p>
+            </div>
+            <div>
+              <p className="text-[10px] text-gray-500 mb-1">今日盈亏</p>
+              <p className="text-sm font-semibold"><PnlText value={autoStatus.account_pnl.daily_pnl} /></p>
+            </div>
+          </div>
+          {autoStatus.pnl_summary && autoStatus.pnl_summary.total_trades > 0 && (
+            <div className="mt-3 pt-3 border-t border-gray-800 flex gap-6 text-[11px]">
+              <span className="text-gray-500">AI交易 <span className="text-white">{autoStatus.pnl_summary.total_trades}笔</span></span>
+              <span className="text-gray-500">胜率 <span className={autoStatus.pnl_summary.win_rate >= 50 ? 'text-red-400' : 'text-green-400'}>{autoStatus.pnl_summary.win_rate}%</span></span>
+              <span className="text-gray-500">{autoStatus.pnl_summary.wins}胜 {autoStatus.pnl_summary.losses}负</span>
+              <span className="text-gray-500">最大盈利 <span className="text-red-400">+{autoStatus.pnl_summary.max_win_points}</span></span>
+              <span className="text-gray-500">最大亏损 <span className="text-green-400">{autoStatus.pnl_summary.max_loss_points}</span></span>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="grid grid-cols-2 gap-6">
         {/* Left: Auto Trading Control */}
         <div className="space-y-4">
@@ -284,11 +334,19 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
 
           {/* Config */}
           <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-3 gap-3">
               <div>
                 <label className="block text-[10px] text-gray-500 mb-1">每次手数</label>
                 <input type="number" min={1} max={10} value={maxLots}
                   onChange={e => setMaxLots(Number(e.target.value))}
+                  disabled={isAutoRunning}
+                  className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-gray-200
+                    disabled:opacity-50 focus:outline-none focus:ring-1 focus:ring-cyan-500" />
+              </div>
+              <div>
+                <label className="block text-[10px] text-gray-500 mb-1">最大持仓</label>
+                <input type="number" min={1} max={10} value={maxPositions}
+                  onChange={e => setMaxPositions(Number(e.target.value))}
                   disabled={isAutoRunning}
                   className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-gray-200
                     disabled:opacity-50 focus:outline-none focus:ring-1 focus:ring-cyan-500" />
@@ -363,6 +421,45 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
               <p className="text-[9px] text-gray-600 leading-snug">
                 止损 = 入场价 ∓ {atrSlMult}×ATR | 止盈 = 入场价 ± {atrTpMult}×ATR（{(atrTpMult / atrSlMult).toFixed(1)}:1 盈亏比）
                 <br />跟踪止盈：价格每有利移动 {trailStep}×ATR，止损跟进 {trailMove}×ATR
+              </p>
+            </div>
+
+            {/* Position Risk Management */}
+            <div className="bg-gray-900/50 rounded-lg p-3 space-y-2">
+              <p className="text-[10px] text-yellow-400 font-medium">仓位风控（大赛策略）</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[10px] text-gray-500 mb-1">
+                    单笔风险 <span className="text-gray-600">({(maxRiskPerTrade * 100).toFixed(0)}%权益)</span>
+                  </label>
+                  <input type="number" min={0.005} max={0.05} step={0.005} value={maxRiskPerTrade}
+                    onChange={e => setMaxRiskPerTrade(Number(e.target.value))}
+                    disabled={isAutoRunning}
+                    className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-gray-200
+                      disabled:opacity-50 focus:outline-none focus:ring-1 focus:ring-cyan-500" />
+                </div>
+                <div>
+                  <label className="block text-[10px] text-gray-500 mb-1">
+                    最大风险度 <span className="text-gray-600">({(maxRiskRatio * 100).toFixed(0)}%)</span>
+                  </label>
+                  <input type="number" min={0.3} max={0.9} step={0.05} value={maxRiskRatio}
+                    onChange={e => setMaxRiskRatio(Number(e.target.value))}
+                    disabled={isAutoRunning}
+                    className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-gray-200
+                      disabled:opacity-50 focus:outline-none focus:ring-1 focus:ring-cyan-500" />
+                </div>
+              </div>
+              <div className="flex items-center gap-2 mt-1">
+                <input type="checkbox" checked={closeBeforeClose}
+                  onChange={e => setCloseBeforeClose(e.target.checked)}
+                  disabled={isAutoRunning}
+                  className="accent-cyan-500 w-3 h-3" />
+                <label className="text-[10px] text-gray-400">
+                  收盘前自动平仓（14:55 日盘平仓）
+                </label>
+              </div>
+              <p className="text-[9px] text-gray-600 leading-snug">
+                动态仓位：手数 = 权益×{(maxRiskPerTrade * 100).toFixed(0)}% / (ATR×{atrSlMult}×合约乘数) | 保证金/权益 {'>'} {(maxRiskRatio * 100).toFixed(0)}% 禁止开仓
               </p>
             </div>
 
@@ -470,11 +567,21 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
       </div>
 
       {/* Positions */}
-      {positions.length > 0 && (
+      {tqsdkConnected && (
         <div>
           <h3 className="text-sm font-semibold text-gray-300 border-b border-gray-800 pb-2 mb-3">
             当前持仓
+            {positions.length > 0 && (
+              <span className="text-[10px] text-gray-600 ml-2 font-normal">
+                ({positions.length} 个合约)
+              </span>
+            )}
           </h3>
+          {positions.length === 0 ? (
+            <div className="text-center py-6 bg-gray-900/30 rounded-lg border border-gray-800/50">
+              <p className="text-gray-500 text-xs">暂无持仓</p>
+            </div>
+          ) : (
           <div className="overflow-auto rounded-lg border border-gray-800">
             <table className="w-full text-sm">
               <thead className="bg-gray-900">
@@ -482,8 +589,8 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
                   <th className="text-left px-3 py-2">合约</th>
                   <th className="text-center px-3 py-2">方向</th>
                   <th className="text-right px-3 py-2">手数</th>
-                  <th className="text-right px-3 py-2">入场价</th>
-                  <th className="text-right px-3 py-2">ATR</th>
+                  <th className="text-right px-3 py-2">开仓价</th>
+                  <th className="text-right px-3 py-2">最新价</th>
                   <th className="text-right px-3 py-2">止损</th>
                   <th className="text-right px-3 py-2">止盈</th>
                   <th className="text-right px-3 py-2">浮动盈亏</th>
@@ -495,29 +602,41 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
                   const mp = (autoStatus as any)?.managed_positions?.[p.symbol]
                   const isLong = p.long_volume > 0
                   const isShort = p.short_volume > 0
+                  const entryPrice = isLong ? p.long_avg_price : p.short_avg_price
+                  const vol = isLong ? p.long_volume : p.short_volume
+                  const pnlPct = entryPrice > 0 && p.last_price > 0
+                    ? ((isLong ? 1 : -1) * (p.last_price - entryPrice) / entryPrice * 100)
+                    : 0
                   return (
                     <tr key={p.symbol} className="border-b border-gray-800/50 hover:bg-gray-800/30">
-                      <td className="px-3 py-2 font-mono text-gray-200">{p.symbol}</td>
+                      <td className="px-3 py-2 font-mono text-gray-200 font-medium">{p.symbol}</td>
                       <td className="px-3 py-2 text-center">
-                        {isLong && <span className="text-[10px] px-1.5 py-0.5 rounded bg-red-900/30 text-red-400">多</span>}
-                        {isShort && <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-900/30 text-green-400">空</span>}
+                        {isLong && <span className="text-[10px] px-1.5 py-0.5 rounded bg-red-900/30 text-red-400 font-medium">多</span>}
+                        {isShort && <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-900/30 text-green-400 font-medium">空</span>}
                       </td>
+                      <td className="px-3 py-2 text-right text-gray-300">{vol}</td>
                       <td className="px-3 py-2 text-right text-gray-300">
-                        {isLong ? p.long_volume : p.short_volume}
+                        {entryPrice > 0 ? entryPrice.toFixed(1) : '-'}
                       </td>
-                      <td className="px-3 py-2 text-right text-gray-300">
-                        {isLong ? (p.long_avg_price?.toFixed(1) || '-') : (p.short_avg_price?.toFixed(1) || '-')}
-                      </td>
-                      <td className="px-3 py-2 text-right text-cyan-500/70">
-                        {mp?.atr?.toFixed(1) || '-'}
+                      <td className="px-3 py-2 text-right text-white font-medium">
+                        {p.last_price > 0 ? p.last_price.toFixed(1) : '-'}
                       </td>
                       <td className="px-3 py-2 text-right text-red-400/70">
-                        {mp?.stop_loss?.toFixed(1) || '-'}
+                        {mp?.stop_loss ? mp.stop_loss.toFixed(1) : '-'}
                       </td>
                       <td className="px-3 py-2 text-right text-green-400/70">
-                        {mp?.take_profit?.toFixed(1) || '-'}
+                        {mp?.take_profit ? mp.take_profit.toFixed(1) : '-'}
                       </td>
-                      <td className="px-3 py-2 text-right"><PnlText value={p.float_profit} /></td>
+                      <td className="px-3 py-2 text-right">
+                        <div className="flex flex-col items-end">
+                          <PnlText value={p.float_profit} />
+                          {pnlPct !== 0 && (
+                            <span className={`text-[9px] ${pnlPct > 0 ? 'text-red-500/70' : 'text-green-500/70'}`}>
+                              {pnlPct > 0 ? '+' : ''}{pnlPct.toFixed(2)}%
+                            </span>
+                          )}
+                        </div>
+                      </td>
                       <td className="px-3 py-2 text-center">
                         <button onClick={() => handleClose(p.symbol)}
                           className="text-[10px] px-2 py-0.5 rounded bg-yellow-900/30 text-yellow-400
@@ -531,6 +650,55 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
               </tbody>
             </table>
           </div>
+          )}
+
+          {/* Managed positions from auto-trader (strategy SL/TP tracking) */}
+          {autoStatus?.managed_positions && Object.keys(autoStatus.managed_positions).length > 0 && (
+            <div className="mt-3 bg-gray-900/30 rounded-lg border border-gray-800/50 p-3">
+              <p className="text-[10px] text-cyan-400 font-medium mb-2">AI 策略持仓管理</p>
+              <div className="grid gap-2">
+                {Object.entries(autoStatus.managed_positions).map(([sym, mp]) => {
+                  const pos = positions.find(p => p.symbol === sym)
+                  const lastPrice = mp.current_price || pos?.last_price || 0
+                  return (
+                    <div key={sym} className="flex items-center gap-3 text-xs bg-gray-800/40 rounded px-3 py-2">
+                      <span className="font-mono text-gray-200 font-medium w-16">{sym}</span>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${
+                        mp.direction === 'LONG' ? 'bg-red-900/30 text-red-400' : 'bg-green-900/30 text-green-400'
+                      }`}>
+                        {mp.direction === 'LONG' ? '多' : '空'}×{mp.lots}
+                      </span>
+                      <span className="text-gray-500">
+                        入场 <span className="text-gray-300">{mp.entry_price.toFixed(1)}</span>
+                      </span>
+                      {lastPrice > 0 && (
+                        <span className="text-gray-500">
+                          现价 <span className="text-white">{lastPrice.toFixed(1)}</span>
+                        </span>
+                      )}
+                      <span className="text-gray-500">
+                        止损 <span className="text-red-400/80">{mp.stop_loss.toFixed(1)}</span>
+                      </span>
+                      <span className="text-gray-500">
+                        止盈 <span className="text-green-400/80">{mp.take_profit.toFixed(1)}</span>
+                      </span>
+                      <span className="text-gray-500">
+                        ATR <span className="text-cyan-400/80">{mp.atr.toFixed(1)}</span>
+                      </span>
+                      {mp.float_pnl !== undefined && mp.float_pnl !== 0 && (
+                        <span className="text-gray-500">
+                          浮盈 <PnlText value={mp.float_pnl} />
+                          <span className={`text-[9px] ml-0.5 ${mp.float_pnl_pct > 0 ? 'text-red-500/60' : 'text-green-500/60'}`}>
+                            ({mp.float_pnl_pct > 0 ? '+' : ''}{mp.float_pnl_pct.toFixed(2)}%)
+                          </span>
+                        </span>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -570,12 +738,19 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
                   <th className="text-right px-3 py-2">ATR</th>
                   <th className="text-right px-3 py-2">止损</th>
                   <th className="text-right px-3 py-2">止盈</th>
+                  <th className="text-right px-3 py-2">盈亏</th>
                   <th className="text-left px-3 py-2">原因</th>
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((d: any, i: number) => (
-                  <tr key={i} className={`border-b border-gray-800/30 ${d.action !== 'HOLD' ? 'bg-cyan-900/5' : ''}`}>
+                {filtered.map((d: any, i: number) => {
+                  const isClose = d.action === 'CLOSE_LONG' || d.action === 'CLOSE_SHORT'
+                  const hasPnl = isClose && d.entry_price > 0
+                  const holdMin = d.holding_seconds > 0 ? Math.floor(d.holding_seconds / 60) : 0
+                  return (
+                  <tr key={i} className={`border-b border-gray-800/30 ${
+                    isClose ? (d.pnl_points > 0 ? 'bg-red-900/10' : 'bg-green-900/10')
+                    : d.action !== 'HOLD' ? 'bg-cyan-900/5' : ''}`}>
                     <td className="px-3 py-1.5 text-gray-500 whitespace-nowrap">
                       {d.timestamp.slice(11, 19)}
                     </td>
@@ -588,7 +763,10 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
                     </td>
                     <td className="px-3 py-1.5 text-center"><ActionBadge action={d.action} /></td>
                     <td className="px-3 py-1.5 text-right text-gray-400">{d.lots || '-'}</td>
-                    <td className="px-3 py-1.5 text-right text-gray-400">{d.price?.toFixed(1)}</td>
+                    <td className="px-3 py-1.5 text-right text-gray-400">
+                      {d.price?.toFixed(1)}
+                      {hasPnl && <span className="text-[9px] text-gray-600 block">入{d.entry_price.toFixed(1)}</span>}
+                    </td>
                     <td className="px-3 py-1.5 text-right text-cyan-500/70">
                       {d.atr ? d.atr.toFixed(1) : '-'}
                     </td>
@@ -598,11 +776,27 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
                     <td className="px-3 py-1.5 text-right text-green-400/70">
                       {d.take_profit ? d.take_profit.toFixed(1) : '-'}
                     </td>
-                    <td className="px-3 py-1.5 text-gray-500 max-w-[300px] truncate" title={d.reason}>
+                    <td className="px-3 py-1.5 text-right">
+                      {hasPnl ? (
+                        <div className="flex flex-col items-end">
+                          <span className={`font-mono font-medium ${d.pnl_points > 0 ? 'text-red-400' : 'text-green-400'}`}>
+                            {d.pnl_points > 0 ? '+' : ''}{d.pnl_points.toFixed(1)}
+                          </span>
+                          <span className={`text-[9px] ${d.pnl_pct > 0 ? 'text-red-500/60' : 'text-green-500/60'}`}>
+                            {d.pnl_pct > 0 ? '+' : ''}{d.pnl_pct.toFixed(2)}%
+                            {holdMin > 0 && <span className="text-gray-600 ml-1">{holdMin}分钟</span>}
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="text-gray-700">-</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-1.5 text-gray-500 max-w-[260px] truncate" title={d.reason}>
                       {d.reason}
                     </td>
                   </tr>
-                ))}
+                  )
+                })}
               </tbody>
             </table>
           </div>
