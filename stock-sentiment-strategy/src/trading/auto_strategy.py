@@ -149,11 +149,25 @@ class AutoTrader:
     def stop(self):
         self._running = False
         self.config.enabled = False
+        self._save_config()
         t = self._thread
         if t is not None and t.is_alive():
             t.join(timeout=30)
         self._thread = None
         logger.info("自动交易已停止")
+
+    def auto_resume(self) -> bool:
+        """Resume auto-trading if previously enabled. Returns True if resumed."""
+        if self._running:
+            return False
+        if not self.config.enabled:
+            return False
+        if not self._contracts:
+            logger.info("自动恢复跳过：没有保存的交易合约")
+            return False
+        logger.info("检测到上次退出前自动交易处于启用状态，正在恢复: %s", self._contracts)
+        self.start(self._contracts)
+        return True
 
     @staticmethod
     def _safe_round(val, ndigits: int = 2) -> float:
@@ -1018,6 +1032,7 @@ class AutoTrader:
             PERSIST_DIR.mkdir(parents=True, exist_ok=True)
             data = {
                 "contracts": self._contracts,
+                "enabled": self.config.enabled,
                 "max_lots": self.config.max_lots,
                 "max_positions": self.config.max_positions,
                 "signal_threshold": self.config.signal_threshold,
@@ -1054,9 +1069,9 @@ class AutoTrader:
                 self.config.max_risk_per_trade = data.get("max_risk_per_trade", self.config.max_risk_per_trade)
                 self.config.max_risk_ratio = data.get("max_risk_ratio", self.config.max_risk_ratio)
                 self.config.close_before_market_close = data.get("close_before_market_close", self.config.close_before_market_close)
-                logger.info("已加载自动交易配置: 合约=%s, 间隔=%ds",
-                            self._contracts, self.config.analysis_interval)
-                self._save_config()
+                self.config.enabled = data.get("enabled", False)
+                logger.info("已加载自动交易配置: 合约=%s, 间隔=%ds, enabled=%s",
+                            self._contracts, self.config.analysis_interval, self.config.enabled)
             except Exception as e:
                 logger.warning("加载自动交易配置失败: %s", e)
 

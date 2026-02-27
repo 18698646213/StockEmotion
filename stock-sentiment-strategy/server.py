@@ -354,6 +354,25 @@ def on_startup():
                 )
             except Exception as e:
                 logger.warning("天勤量化启动失败: %s", e)
+                return
+
+            # Wait for TqSdk to become ready, then auto-resume auto-trading
+            import time
+            for _ in range(60):
+                if svc.is_ready:
+                    break
+                time.sleep(1)
+            if svc.is_ready:
+                try:
+                    from src.trading.auto_strategy import get_auto_trader
+                    trader = get_auto_trader()
+                    if trader.auto_resume():
+                        logger.info("自动交易已自动恢复")
+                except Exception as e:
+                    logger.warning("自动恢复交易失败: %s", e)
+            else:
+                logger.warning("天勤服务 60 秒内未就绪，跳过自动恢复交易")
+
         threading.Thread(target=_start_tq, daemon=True).start()
     else:
         logger.info("天勤量化未配置，期货行情使用 akshare")
