@@ -458,7 +458,7 @@ export default function App() {
 
         {/* Backtest view */}
         {activeView === 'backtest' && (
-          <BacktestPanel />
+          <BacktestPanel futuresContracts={config?.futures_contracts || []} />
         )}
 
         {activeView === 'quant' && (

@@ -323,6 +323,11 @@ export interface QuantAutoStatus {
     max_risk_per_trade: number
     max_risk_ratio: number
     close_before_market_close: boolean
+    strategy_mode: string
+    intraday_kline_duration: number
+    intraday_scan_interval: number
+    max_daily_loss: number
+    max_consecutive_losses: number
   }
   managed_positions: Record<string, QuantManagedPosition>
   pnl_summary: QuantPnlSummary
@@ -330,6 +335,9 @@ export interface QuantAutoStatus {
   unrealized_pnl: number
   decisions_count: number
   decisions: QuantDecision[]
+  ai_bias?: Record<string, string>
+  daily_pnl?: number
+  daily_loss_count?: number
 }
 
 export type ActiveView = 'analysis' | 'portfolio' | 'backtest' | 'quant'

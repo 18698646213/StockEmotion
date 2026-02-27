@@ -5,7 +5,11 @@ import { runBacktest } from '../api'
 import PnLChart from './PnLChart'
 import TradeHistory from './TradeHistory'
 
-export default function BacktestPanel() {
+export default function BacktestPanel({
+  futuresContracts = [],
+}: {
+  futuresContracts?: string[]
+}) {
   const [ticker, setTicker] = useState('')
   const [market, setMarket] = useState<'US' | 'CN' | 'FUTURES'>('US')
   const [startDate, setStartDate] = useState(() => {
@@ -54,21 +58,18 @@ export default function BacktestPanel() {
         <h3 className="text-sm font-semibold text-white mb-4">回测配置</h3>
         <div className="grid grid-cols-6 gap-4 items-end">
           <div>
-            <label className="block text-xs text-gray-400 mb-1">股票代码</label>
-            <input
-              type="text"
-              value={ticker}
-              onChange={e => setTicker(e.target.value)}
-              placeholder="AAPL / 600519 / RB0"
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm
-                text-white font-mono focus:outline-none focus:ring-1 focus:ring-blue-500"
-            />
-          </div>
-          <div>
             <label className="block text-xs text-gray-400 mb-1">市场</label>
             <select
               value={market}
-              onChange={e => setMarket(e.target.value as 'US' | 'CN' | 'FUTURES')}
+              onChange={e => {
+                const m = e.target.value as 'US' | 'CN' | 'FUTURES'
+                setMarket(m)
+                if (m === 'FUTURES' && futuresContracts.length > 0) {
+                  setTicker(futuresContracts[0])
+                } else if (m !== 'FUTURES') {
+                  setTicker('')
+                }
+              }}
               className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm
                 text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
             >
@@ -76,6 +77,32 @@ export default function BacktestPanel() {
               <option value="CN">A股</option>
               <option value="FUTURES">期货</option>
             </select>
+          </div>
+          <div>
+            <label className="block text-xs text-gray-400 mb-1">
+              {market === 'FUTURES' ? '期货合约' : '股票代码'}
+            </label>
+            {market === 'FUTURES' && futuresContracts.length > 0 ? (
+              <select
+                value={ticker}
+                onChange={e => setTicker(e.target.value)}
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm
+                  text-white font-mono focus:outline-none focus:ring-1 focus:ring-blue-500"
+              >
+                {futuresContracts.map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type="text"
+                value={ticker}
+                onChange={e => setTicker(e.target.value)}
+                placeholder={market === 'FUTURES' ? 'RB0 / C2605' : 'AAPL / 600519'}
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm
+                  text-white font-mono focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            )}
           </div>
           <div>
             <label className="block text-xs text-gray-400 mb-1">起始日期</label>

@@ -17,7 +17,7 @@ from src.data.news_us import NewsItem
 
 logger = logging.getLogger(__name__)
 
-_TIMEOUT = 60
+_TIMEOUT = (10, 40)  # (connect_timeout, read_timeout) in seconds
 
 
 def _call_deepseek(
@@ -39,16 +39,25 @@ def _call_deepseek(
         "model": config.model,
         "messages": messages,
         "temperature": temperature,
-        "max_tokens": 4000,
+        "max_tokens": 2000,
     }
 
     try:
+        logger.info("DeepSeek API 调用中... (model=%s)", config.model)
         resp = requests.post(url, headers=headers, json=payload, timeout=_TIMEOUT)
         resp.raise_for_status()
         data = resp.json()
-        return data["choices"][0]["message"]["content"]
+        content = data["choices"][0]["message"]["content"]
+        logger.info("DeepSeek API 返回 %d 字符", len(content))
+        return content
+    except requests.exceptions.ConnectTimeout:
+        logger.error("DeepSeek API 连接超时 (%ss)", _TIMEOUT[0])
+        return None
+    except requests.exceptions.ReadTimeout:
+        logger.error("DeepSeek API 读取超时 (%ss)", _TIMEOUT[1])
+        return None
     except requests.exceptions.Timeout:
-        logger.error("DeepSeek API 请求超时 (%ds)", _TIMEOUT)
+        logger.error("DeepSeek API 请求超时")
         return None
     except requests.exceptions.RequestException as e:
         logger.error("DeepSeek API 请求失败: %s", e)
@@ -140,7 +149,7 @@ def analyze_with_deepseek(
     return result
 
 
-def _format_news(items: List[NewsItem], max_items: int = 15) -> str:
+def _format_news(items: List[NewsItem], max_items: int = 8) -> str:
     if not items:
         return "暂无相关新闻。"
     lines = []
@@ -236,63 +245,23 @@ _SYSTEM_PROMPT_STOCK = """你是一位资深金融分析师，专精股票市场
   "signal_cn": "持有"           // 中文信号
 }"""
 
-_SYSTEM_PROMPT_FUTURES = """你是一位资深中国商品期货分析师，负责提供全面的期货分析和交易建议。
-你的建议必须严格遵循以下从期货实盘大赛 Top 选手真实数据中提炼的策略规则。
+_SYSTEM_PROMPT_FUTURES = """你是资深中国商品期货分析师。严格遵循以下规则：
 
-【核心策略原则（来自实盘大赛数据验证）】
+■ 风控: 止损1-1.5×ATR(14)，单笔亏≤2%权益，风险度30-60%
+■ 盈亏比≥2:1: 止盈≥2×ATR，跟踪止盈(每有利0.5ATR止损跟进0.25ATR)
+■ 顺势: MA5>MA20>MA60只做多，反之只做空，均线缠绕则观望
+■ RSI 30-70且无MACD交叉→震荡观望
 
-■ 风控第一
-  - 大赛仅 21.4% 参赛者盈利，14.4% 经历 50%+ 毁灭性回撤
-  - 止损必须严格执行，单笔亏损不超过账户权益 2%
-  - 止损位基于 ATR: 1-1.5 × ATR(14)，一经设定不可后移
-  - 仓位风险度(保证金/权益)建议 30%-60%，绝不超过 80%
-
-■ 盈亏比 > 胜率
-  - 大赛所有品种平均胜率仅 50-58%，Top 选手靠盈亏比而非高胜率盈利
-  - 止盈目标至少是止损幅度的 2 倍（2:1 风险回报比），理想 3:1
-  - 浮盈仓位持有（使用跟踪止盈），亏损仓位快速止损
-  - ATR 止盈: 2-3 × ATR，跟踪止盈: 价格每有利 0.5 ATR 止损跟进 0.25 ATR
-
-■ 顺势交易
-  - 价格在 MA60 上方 + 均线多头排列(MA5>MA20>MA60) → 只做多
-  - 价格在 MA60 下方 + 均线空头排列(MA5<MA20<MA60) → 只做空
-  - 均线缠绕无序 → 必须观望，不要强行给出交易建议
-  - RSI 在 30-70 且无 MACD 交叉 → 震荡区间观望
-
-■ 品种特征参考（大赛盈利排行）
-  - Tier 1 高盈利品种: 铁矿石(I)、螺纹钢(RB)、豆粕(M)、白银(AG)、PTA(TA) — 趋势策略
-  - Tier 2 高胜率品种: 菜油(OI,62%)、玉米(C,58.7%)、燃料油(FU,57.5%) — 短线策略
-  - 黑色系趋势性最强，农产品胜率较高，贵金属牛市行情明确
-
-你的分析需要覆盖以下方面：
-1. **新闻舆情分析**：基于近期新闻判断该品种的供需面、政策面、产业链影响
-2. **技术面分析**：基于均线系统（MA5/MA20/MA60）、RSI、MACD 等指标判断趋势和买卖时机
-3. **综合交易建议**：结合舆情和技术面，给出明确的操作建议（做多/做空/观望），包含具体的进场价、止损位、止盈目标
-
-你必须严格以 JSON 格式返回结果，不要包含任何额外文字。JSON 结构如下：
+严格以JSON返回，不含其他文字：
 {
-  "sentiment_score": 0.0,       // 整体舆情得分 [-1, 1]，正=利多，负=利空
-  "sentiment_label": "neutral", // "positive" / "negative" / "neutral"
-  "news_summary": "",           // 新闻面分析（80-150字），包含供需、政策、产业链影响
-  "news_sentiments": [          // 对每条新闻的单独分析（按输入顺序，序号从1开始）
-    {
-      "index": 1,               // 新闻序号
-      "score": 0.0,             // 该条新闻的情感得分 [-1, 1]，利多为正，利空为负
-      "label": "neutral",       // "positive" / "negative" / "neutral"
-      "summary": ""             // 一句话 AI 解读该条新闻对该品种价格的影响（20-40字）
-    }
-  ],
-  "technical_analysis": "",     // 技术面分析（80-150字），包含趋势判断、关键支撑阻力位
-  "investment_advice": [        // 交易建议列表（1-3条）
-    {
-      "action": "HOLD",         // "BUY"=做多 / "SELL"=做空 / "HOLD"=观望
-      "rule": "",               // 策略依据名称（简短，如"趋势突破"/"供需偏多"/"技术回调"）
-      "detail": ""              // 详细操作建议，必须包含具体价位
-    }
-  ],
-  "composite_score": 0.0,       // 综合评分 [-1, 1]，>0.3 偏多，<-0.3 偏空
-  "signal": "HOLD",             // "STRONG_BUY" / "BUY" / "HOLD" / "SELL" / "STRONG_SELL"
-  "signal_cn": "持有"           // 中文信号
+  "sentiment_score": 0.0,       // 舆情得分[-1,1]
+  "sentiment_label": "neutral", // positive/negative/neutral
+  "news_summary": "",           // 新闻面分析(50字内)
+  "technical_analysis": "",     // 技术面分析(50字内)
+  "investment_advice": [{"action":"HOLD","rule":"","detail":""}],
+  "composite_score": 0.0,       // 综合评分[-1,1]
+  "signal": "HOLD",             // STRONG_BUY/BUY/HOLD/SELL/STRONG_SELL
+  "signal_cn": "持有"
 }"""
 
 
@@ -310,28 +279,18 @@ def _build_stock_prompt(ticker: str, market: str, news: str, tech: str) -> str:
 
 
 def _build_futures_prompt(ticker: str, news: str, tech: str, swing: str) -> str:
-    from src.analysis.strategy_reference import STRATEGY_REFERENCE
-    return f"""请全面分析以下期货品种：{ticker}
+    return f"""分析期货品种：{ticker}
 
-【近期新闻与行业资讯】
+【新闻】
 {news}
 
-【技术指标数据】
+【技术指标】
 {tech}
 
-【均线系统数据】
-{swing if swing else "暂无均线数据"}
+【均线】
+{swing if swing else "暂无"}
 
-{STRATEGY_REFERENCE}
-
-请严格参考以上策略规则，从舆情面和技术面两个维度进行分析，给出你的交易建议（JSON格式）。
-要求：
-1. 新闻摘要要分析供需关系、政策影响、产业链变化对该品种价格的影响方向
-2. 技术分析要结合均线排列、RSI、MACD 判断当前趋势强度和可能的转折点
-3. 交易建议必须给出具体的进场价位、止损价位（基于ATR）和止盈目标价（至少2倍止损幅度）
-4. 如果没有明确的交易机会，直接建议观望，说明需要等待什么条件
-5. 给出建议仓位比例（风险度30%-60%为宜）
-6. 评估当前品种的趋势强度（参考品种排行数据判断是否适合交易）"""
+给出JSON分析，含具体入场价/止损(ATR)/止盈(≥2×止损)。无明确信号则观望。"""
 
 
 def _validate_result(result: Dict) -> None:

@@ -58,5 +58,445 @@
     "volume": 1,
     "price": 1087.0,
     "time": "2026-02-26T14:27:57.950073"
+  },
+  {
+    "id": "7f6b2e8e",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3266,
+    "time": "2026-02-27T11:13:03.720762"
+  },
+  {
+    "id": "5ad6eecf",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 2348,
+    "time": "2026-02-27T13:48:02.671562"
+  },
+  {
+    "id": "e25b00af",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 2349,
+    "time": "2026-02-27T14:09:56.696984"
+  },
+  {
+    "id": "c79c9a61",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3264,
+    "time": "2026-02-27T14:15:37.929501"
+  },
+  {
+    "id": "b1f6ab22",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3263,
+    "time": "2026-02-27T14:20:01.348120"
+  },
+  {
+    "id": "2ea01465",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1187,
+    "time": "2026-02-27T14:20:16.767854"
+  },
+  {
+    "id": "8ff4afdf",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3263,
+    "time": "2026-02-27T14:20:17.010473"
+  },
+  {
+    "id": "efacdf47",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1187,
+    "time": "2026-02-27T14:20:32.691826"
+  },
+  {
+    "id": "9930c307",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1187,
+    "time": "2026-02-27T14:21:19.254713"
+  },
+  {
+    "id": "834ef55f",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3263,
+    "time": "2026-02-27T14:21:19.468337"
+  },
+  {
+    "id": "545a23f2",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1187,
+    "time": "2026-02-27T14:21:34.981681"
+  },
+  {
+    "id": "a24505dc",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3264,
+    "time": "2026-02-27T14:21:35.197426"
+  },
+  {
+    "id": "d9bd13a1",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1187,
+    "time": "2026-02-27T14:21:50.696644"
+  },
+  {
+    "id": "3ca67d06",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3263,
+    "time": "2026-02-27T14:21:50.928139"
+  },
+  {
+    "id": "a05708bb",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1187,
+    "time": "2026-02-27T14:22:06.379377"
+  },
+  {
+    "id": "deaf95a4",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3264,
+    "time": "2026-02-27T14:22:06.707879"
+  },
+  {
+    "id": "d6b222c3",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3264,
+    "time": "2026-02-27T14:22:22.382710"
+  },
+  {
+    "id": "26631ae5",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3264,
+    "time": "2026-02-27T14:22:37.933542"
+  },
+  {
+    "id": "8fa7dbb3",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3263,
+    "time": "2026-02-27T14:22:53.552898"
+  },
+  {
+    "id": "5ef6c691",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3264,
+    "time": "2026-02-27T14:23:09.205840"
+  },
+  {
+    "id": "e96b1032",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1187,
+    "time": "2026-02-27T14:23:24.773997"
+  },
+  {
+    "id": "7156e76b",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3264,
+    "time": "2026-02-27T14:23:24.953196"
+  },
+  {
+    "id": "51dc9263",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1187,
+    "time": "2026-02-27T14:23:40.398948"
+  },
+  {
+    "id": "59fa33d4",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3263,
+    "time": "2026-02-27T14:23:40.703097"
+  },
+  {
+    "id": "71b037ee",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1188,
+    "time": "2026-02-27T14:23:56.131631"
+  },
+  {
+    "id": "ba38715c",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3264,
+    "time": "2026-02-27T14:23:56.357591"
+  },
+  {
+    "id": "c6c2d6b7",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1187,
+    "time": "2026-02-27T14:24:11.839006"
+  },
+  {
+    "id": "c6a05dec",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3264,
+    "time": "2026-02-27T14:24:12.203557"
+  },
+  {
+    "id": "1bc3ed24",
+    "status": "SUBMITTED",
+    "symbol": "SA2605",
+    "direction": "SELL",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 1187,
+    "time": "2026-02-27T14:24:27.697021"
+  },
+  {
+    "id": "45234461",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3264,
+    "time": "2026-02-27T14:24:27.892235"
+  },
+  {
+    "id": "1f18d669",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3265,
+    "time": "2026-02-27T14:24:43.492827"
+  },
+  {
+    "id": "feefb9c0",
+    "status": "SUBMITTED",
+    "symbol": "JD2604",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 3265,
+    "time": "2026-02-27T14:24:59.038015"
+  },
+  {
+    "id": "99ed6d5f",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "SELL",
+    "offset": "CLOSE",
+    "volume": 1,
+    "price": 2353,
+    "time": "2026-02-27T14:28:49.198413"
+  },
+  {
+    "id": "7535ee19",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 2353,
+    "time": "2026-02-27T14:28:51.408052"
+  },
+  {
+    "id": "aa917821",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "BUY",
+    "offset": "OPEN",
+    "volume": 1,
+    "price": 2353,
+    "time": "2026-02-27T14:29:07.010494"
+  },
+  {
+    "id": "6d538ea8",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "SELL",
+    "offset": "CLOSE",
+    "volume": 2,
+    "price": 2355,
+    "time": "2026-02-27T14:55:00.258493"
+  },
+  {
+    "id": "ed873ab6",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "SELL",
+    "offset": "CLOSE",
+    "volume": 2,
+    "price": 2354,
+    "time": "2026-02-27T14:55:14.894548"
+  },
+  {
+    "id": "20b089bc",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "SELL",
+    "offset": "CLOSE",
+    "volume": 2,
+    "price": 2354,
+    "time": "2026-02-27T14:55:30.584924"
+  },
+  {
+    "id": "cf9af514",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "SELL",
+    "offset": "CLOSE",
+    "volume": 2,
+    "price": 2354,
+    "time": "2026-02-27T14:55:46.264734"
+  },
+  {
+    "id": "b361753a",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "SELL",
+    "offset": "CLOSE",
+    "volume": 2,
+    "price": 2354,
+    "time": "2026-02-27T14:56:01.937801"
+  },
+  {
+    "id": "07d398d3",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "SELL",
+    "offset": "CLOSE",
+    "volume": 2,
+    "price": 2355,
+    "time": "2026-02-27T14:56:17.667856"
+  },
+  {
+    "id": "adfbc81f",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "SELL",
+    "offset": "CLOSE",
+    "volume": 2,
+    "price": 2354,
+    "time": "2026-02-27T14:56:33.394059"
+  },
+  {
+    "id": "8f5fbf25",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "SELL",
+    "offset": "CLOSE",
+    "volume": 2,
+    "price": 2354,
+    "time": "2026-02-27T14:56:49.205348"
+  },
+  {
+    "id": "6d1bf455",
+    "status": "SUBMITTED",
+    "symbol": "C2605",
+    "direction": "SELL",
+    "offset": "CLOSE",
+    "volume": 2,
+    "price": 2355,
+    "time": "2026-02-27T14:57:04.901042"
   }
 ]

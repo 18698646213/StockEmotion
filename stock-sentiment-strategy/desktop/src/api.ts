@@ -341,6 +341,11 @@ export async function startAutoTrade(params: {
   max_risk_per_trade?: number
   max_risk_ratio?: number
   close_before_market_close?: boolean
+  strategy_mode?: string
+  intraday_kline_duration?: number
+  intraday_scan_interval?: number
+  max_daily_loss?: number
+  max_consecutive_losses?: number
 }): Promise<Record<string, unknown>> {
   return request('/api/quant/auto/start', {
     method: 'POST',
@@ -351,6 +356,16 @@ export async function startAutoTrade(params: {
 
 export async function stopAutoTrade(): Promise<Record<string, unknown>> {
   return request('/api/quant/auto/stop', { method: 'POST', timeout: 10_000 })
+}
+
+export async function updateAutoContracts(action: 'add' | 'remove', symbol: string): Promise<{
+  status: string; message: string; contracts: string[]
+}> {
+  return request('/api/quant/auto/contracts', {
+    method: 'POST',
+    body: JSON.stringify({ action, symbol }),
+    timeout: 10_000,
+  })
 }
 
 export async function getAutoTradeStatus(): Promise<QuantAutoStatus> {

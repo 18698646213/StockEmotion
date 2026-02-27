@@ -7,6 +7,7 @@ produces a comprehensive report with metrics and equity curve.
 
 import logging
 import math
+import re
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional
@@ -22,6 +23,8 @@ from src.trading.fees import FeeCalculator, CommissionDetail
 from src.trading.portfolio import Portfolio, Trade
 
 logger = logging.getLogger(__name__)
+
+_MONTH_CONTRACT_RE = re.compile(r"^([A-Z]{1,3})\d{4}$")
 
 
 # ---------------------------------------------------------------------------
@@ -107,7 +110,13 @@ class BacktestEngine:
         if market.upper() == "CN":
             df = fetch_cn_price(ticker, period_days=total_days, interval="daily")
         elif market.upper() == "FUTURES":
-            df = fetch_futures_price(ticker, period_days=total_days, interval="daily")
+            fetch_symbol = ticker
+            m = _MONTH_CONTRACT_RE.match(ticker.upper())
+            if m:
+                fetch_symbol = m.group(1) + "0"
+                logger.info("回测: 月份合约 %s → 主力连续合约 %s 以获取完整历史数据",
+                            ticker, fetch_symbol)
+            df = fetch_futures_price(fetch_symbol, period_days=total_days, interval="daily")
         else:
             df = fetch_us_price(ticker, period_days=total_days, interval="daily")
 
@@ -180,47 +189,55 @@ class BacktestEngine:
             pos = portfolio.get_position(ticker)
             current_shares = pos.shares if pos else 0
 
+            is_futures = market.upper() == "FUTURES"
+            bt_ts = f"{date_str}T15:00:00"
+
             if primary_advice == "BUY" and not holding:
-                # Calculate shares to buy
                 target_amount = portfolio.cash * (self.position_pct / 100.0)
                 shares = int(target_amount / close_price)
                 if market.upper() == "CN":
                     shares = (shares // 100) * 100
+                if is_futures:
+                    shares = max(shares, 1)
                 if shares > 0:
                     fee = FeeCalculator.calc_commission(market, "BUY", shares, close_price)
                     total_cost = shares * close_price + fee.total
                     if total_cost <= portfolio.cash:
-                        trade = portfolio.buy(ticker, market, shares, close_price, fee, "backtest")
+                        trade = portfolio.buy(ticker, market, shares, close_price, fee,
+                                              "backtest", timestamp=bt_ts)
                         trades_list.append(trade)
                         buy_sell_points.append(BuySellPoint(date=date_str, action="BUY", price=close_price).__dict__)
                         holding = True
 
             elif primary_advice == "SELL" and holding and current_shares > 0:
                 fee = FeeCalculator.calc_commission(market, "SELL", current_shares, close_price)
-                trade = portfolio.sell(ticker, market, current_shares, close_price, fee, "backtest")
+                trade = portfolio.sell(ticker, market, current_shares, close_price, fee,
+                                       "backtest", timestamp=bt_ts)
                 trades_list.append(trade)
                 buy_sell_points.append(BuySellPoint(date=date_str, action="SELL", price=close_price).__dict__)
                 holding = False
 
             elif composite > 0.5 and not holding:
-                # Strong technical bullish — buy
                 target_amount = portfolio.cash * (self.position_pct / 100.0)
                 shares = int(target_amount / close_price)
                 if market.upper() == "CN":
                     shares = (shares // 100) * 100
+                if is_futures:
+                    shares = max(shares, 1)
                 if shares > 0:
                     fee = FeeCalculator.calc_commission(market, "BUY", shares, close_price)
                     total_cost = shares * close_price + fee.total
                     if total_cost <= portfolio.cash:
-                        trade = portfolio.buy(ticker, market, shares, close_price, fee, "backtest")
+                        trade = portfolio.buy(ticker, market, shares, close_price, fee,
+                                              "backtest", timestamp=bt_ts)
                         trades_list.append(trade)
                         buy_sell_points.append(BuySellPoint(date=date_str, action="BUY", price=close_price).__dict__)
                         holding = True
 
             elif composite < -0.5 and holding and current_shares > 0:
-                # Strong technical bearish — sell
                 fee = FeeCalculator.calc_commission(market, "SELL", current_shares, close_price)
-                trade = portfolio.sell(ticker, market, current_shares, close_price, fee, "backtest")
+                trade = portfolio.sell(ticker, market, current_shares, close_price, fee,
+                                       "backtest", timestamp=bt_ts)
                 trades_list.append(trade)
                 buy_sell_points.append(BuySellPoint(date=date_str, action="SELL", price=close_price).__dict__)
                 holding = False
@@ -237,7 +254,8 @@ class BacktestEngine:
             last_price = float(trade_df.iloc[-1]["close"])
             last_date = trade_df.index[-1].strftime("%Y-%m-%d")
             fee = FeeCalculator.calc_commission(market, "SELL", final_pos.shares, last_price)
-            trade = portfolio.sell(ticker, market, final_pos.shares, last_price, fee, "backtest")
+            trade = portfolio.sell(ticker, market, final_pos.shares, last_price, fee,
+                                   "backtest", timestamp=f"{last_date}T15:00:00")
             trades_list.append(trade)
             buy_sell_points.append(BuySellPoint(date=last_date, action="SELL", price=last_price).__dict__)
             # Update last equity point

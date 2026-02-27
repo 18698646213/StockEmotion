@@ -10,11 +10,16 @@
   "max_positions": 3,
   "signal_threshold": 0.3,
   "analysis_interval": 300,
-  "atr_sl_multiplier": 1.5,
-  "atr_tp_multiplier": 3.0,
-  "trail_step_atr": 0.5,
-  "trail_move_atr": 0.25,
-  "max_risk_per_trade": 0.02,
+  "atr_sl_multiplier": 1.0,
+  "atr_tp_multiplier": 2.0,
+  "trail_step_atr": 0.3,
+  "trail_move_atr": 0.15,
+  "max_risk_per_trade": 0.01,
   "max_risk_ratio": 0.8,
-  "close_before_market_close": true
+  "close_before_market_close": true,
+  "strategy_mode": "intraday",
+  "intraday_kline_duration": 300,
+  "intraday_scan_interval": 15,
+  "max_daily_loss": 0.03,
+  "max_consecutive_losses": 3
 }

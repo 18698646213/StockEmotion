@@ -1,0 +1,16 @@
+{
+  "analysis_date": "2026-02-27 13:39:31",
+  "backtest_files_found": 32,
+  "strategies_compared": [
+    "主回测引擎",
+    "ATR波段",
+    "ATR日内v1",
+    "ATR日内v2"
+  ],
+  "recommendations": {
+    "conservative": "主回测引擎",
+    "balanced": "ATR波段或ATR日内v2",
+    "aggressive": "ATR日内v1",
+    "beginner": "主回测引擎"
+  }
+}

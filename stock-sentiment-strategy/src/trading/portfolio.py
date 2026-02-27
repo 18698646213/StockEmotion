@@ -86,6 +86,7 @@ class Portfolio:
         price: float,
         fee: CommissionDetail,
         signal_source: str = "manual",
+        timestamp: str = "",
     ) -> Trade:
         """Execute a BUY trade. Assumes checks already passed (balance, limits)."""
         amount = shares * price
@@ -107,6 +108,7 @@ class Portfolio:
         pos.avg_cost = round(new_total / pos.shares, 4) if pos.shares > 0 else 0
         pos.buy_date = datetime.now().strftime("%Y-%m-%d")
 
+        ts = timestamp or datetime.now().isoformat()
         trade = Trade(
             id=str(uuid.uuid4())[:8],
             ticker=ticker,
@@ -119,7 +121,7 @@ class Portfolio:
             stamp_tax=fee.stamp_tax,
             transfer_fee=fee.transfer_fee,
             total_fee=fee.total,
-            timestamp=datetime.now().isoformat(),
+            timestamp=ts,
             signal_source=signal_source,
         )
         self.trades.append(trade)
@@ -133,6 +135,7 @@ class Portfolio:
         price: float,
         fee: CommissionDetail,
         signal_source: str = "manual",
+        timestamp: str = "",
     ) -> Trade:
         """Execute a SELL trade. Assumes checks already passed (holdings, T+1)."""
         amount = shares * price
@@ -157,6 +160,7 @@ class Portfolio:
             pos.shares = 0
             pos.avg_cost = 0.0
 
+        ts = timestamp or datetime.now().isoformat()
         trade = Trade(
             id=str(uuid.uuid4())[:8],
             ticker=ticker,
@@ -169,7 +173,7 @@ class Portfolio:
             stamp_tax=fee.stamp_tax,
             transfer_fee=fee.transfer_fee,
             total_fee=fee.total,
-            timestamp=datetime.now().isoformat(),
+            timestamp=ts,
             signal_source=signal_source,
         )
         self.trades.append(trade)

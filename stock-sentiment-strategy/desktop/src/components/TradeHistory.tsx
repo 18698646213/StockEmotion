@@ -76,7 +76,7 @@ export default function TradeHistory({ trades }: Props) {
               <th className="text-left py-2 px-3 font-medium">时间</th>
               <th className="text-left py-2 px-2 font-medium">股票</th>
               <th className="text-center py-2 px-2 font-medium">方向</th>
-              <th className="text-right py-2 px-2 font-medium">股数</th>
+              <th className="text-right py-2 px-2 font-medium">数量</th>
               <th className="text-right py-2 px-2 font-medium">价格</th>
               <th className="text-right py-2 px-2 font-medium">金额</th>
               <th className="text-right py-2 px-2 font-medium">手续费</th>
@@ -115,7 +115,12 @@ export default function TradeHistory({ trades }: Props) {
                       {trade.action === 'BUY' ? '买' : '卖'}
                     </span>
                   </td>
-                  <td className="py-1.5 px-2 text-right font-mono">{trade.shares}</td>
+                  <td className="py-1.5 px-2 text-right font-mono">
+                    {trade.shares}
+                    <span className="text-[10px] text-gray-500 ml-0.5">
+                      {trade.market === 'FUTURES' ? '手' : '股'}
+                    </span>
+                  </td>
                   <td className="py-1.5 px-2 text-right font-mono">{trade.price.toFixed(2)}</td>
                   <td className="py-1.5 px-2 text-right font-mono">{trade.amount.toFixed(2)}</td>
                   <td className="py-1.5 px-2 text-right font-mono text-gray-500">{trade.total_fee.toFixed(2)}</td>

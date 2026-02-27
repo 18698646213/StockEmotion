@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import List, Optional
 
 import pandas as pd
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
@@ -1276,6 +1276,11 @@ class AutoTradeStartRequest(BaseModel):
     max_risk_per_trade: float = 0.02
     max_risk_ratio: float = 0.80
     close_before_market_close: bool = True
+    strategy_mode: str = "swing"
+    intraday_kline_duration: int = 300
+    intraday_scan_interval: int = 15
+    max_daily_loss: float = 0.03
+    max_consecutive_losses: int = 3
 
 class ManualOrderRequest(BaseModel):
     symbol: str
@@ -1312,6 +1317,32 @@ def quant_account():
     except Exception as e:
         logger.warning("获取量化账户失败: %s", e)
         return {"connected": False, "trade_mode": "sim", "account": None, "positions": [], "error": str(e)}
+
+
+@app.get("/api/quant/klines/{symbol}")
+def quant_klines(symbol: str, duration: int = 900, count: int = 200):
+    """Get K-line data for a futures contract."""
+    from src.data.tqsdk_service import get_tq_service
+    svc = get_tq_service()
+    if not svc.is_ready:
+        raise HTTPException(503, "TqSdk 未连接")
+    df = svc.get_klines(symbol, duration_seconds=duration, count=count)
+    if df is None or df.empty:
+        raise HTTPException(404, f"无法获取 {symbol} K线数据")
+    records = []
+    for idx, row in df.iterrows():
+        rec = {
+            "datetime": idx.isoformat() if hasattr(idx, 'isoformat') else str(idx),
+            "open": round(float(row["open"]), 2),
+            "high": round(float(row["high"]), 2),
+            "low": round(float(row["low"]), 2),
+            "close": round(float(row["close"]), 2),
+            "volume": int(row.get("volume", 0)),
+        }
+        if "open_interest" in row.index:
+            rec["open_interest"] = int(row["open_interest"])
+        records.append(rec)
+    return {"symbol": symbol, "duration": duration, "count": len(records), "klines": records}
 
 
 @app.get("/api/quant/positions")
@@ -1389,6 +1420,11 @@ def quant_auto_start(req: AutoTradeStartRequest):
         max_risk_per_trade=req.max_risk_per_trade,
         max_risk_ratio=req.max_risk_ratio,
         close_before_market_close=req.close_before_market_close,
+        strategy_mode=req.strategy_mode,
+        intraday_kline_duration=req.intraday_kline_duration,
+        intraday_scan_interval=req.intraday_scan_interval,
+        max_daily_loss=req.max_daily_loss,
+        max_consecutive_losses=req.max_consecutive_losses,
         enabled=True,
     )
     trader.start(req.contracts, config)
@@ -1402,6 +1438,26 @@ def quant_auto_stop():
     trader = get_auto_trader()
     trader.stop()
     return {"status": "OK", "message": "自动交易已停止"}
+
+
+class ContractUpdateRequest(BaseModel):
+    action: str      # "add" / "remove"
+    symbol: str
+
+
+@app.post("/api/quant/auto/contracts")
+def quant_auto_contracts(req: ContractUpdateRequest):
+    """Add or remove a contract from the auto-trading list (works while running)."""
+    from src.trading.auto_strategy import get_auto_trader
+    trader = get_auto_trader()
+    if req.action == "add":
+        ok, msg = trader.add_contract(req.symbol)
+    elif req.action == "remove":
+        ok, msg = trader.remove_contract(req.symbol)
+    else:
+        return {"status": "ERROR", "message": f"未知操作: {req.action}"}
+    return {"status": "OK" if ok else "ERROR", "message": msg,
+            "contracts": trader._contracts}
 
 
 @app.get("/api/quant/auto/status")

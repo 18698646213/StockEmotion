@@ -3,6 +3,7 @@ import type { QuantAccount, QuantPosition, QuantDecision, QuantAutoStatus } from
 import {
   getQuantAccount, startAutoTrade, stopAutoTrade,
   getAutoTradeStatus, placeQuantOrder, closeQuantPosition,
+  updateAutoContracts,
 } from '../api'
 
 function formatMoney(n: number): string {
@@ -78,6 +79,45 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
   const [maxRiskPerTrade, setMaxRiskPerTrade] = useState(0.02)
   const [maxRiskRatio, setMaxRiskRatio] = useState(0.80)
   const [closeBeforeClose, setCloseBeforeClose] = useState(true)
+  const [strategyMode, setStrategyMode] = useState<'swing' | 'intraday'>('swing')
+  const [maxDailyLoss, setMaxDailyLoss] = useState(0.03)
+  const [maxConsecLosses, setMaxConsecLosses] = useState(3)
+
+  // 保存波段模式的用户自定义值，切回时恢复
+  const swingParamsRef = useRef({
+    sl: 1.5, tp: 3.0, trailStep: 0.5, trailMove: 0.25,
+    risk: 0.02, interval: 300, threshold: 0.3,
+  })
+  const INTRADAY_PRESETS = {
+    sl: 1.2, tp: 2.0, trailStep: 0.3, trailMove: 0.15,
+    risk: 0.01, interval: 15, threshold: 0.55,
+  } as const
+
+  const handleModeSwitch = (mode: 'swing' | 'intraday') => {
+    if (isAutoRunning) return
+    if (mode === 'intraday' && strategyMode === 'swing') {
+      swingParamsRef.current = {
+        sl: atrSlMult, tp: atrTpMult, trailStep, trailMove,
+        risk: maxRiskPerTrade, interval, threshold,
+      }
+      setAtrSlMult(INTRADAY_PRESETS.sl)
+      setAtrTpMult(INTRADAY_PRESETS.tp)
+      setTrailStep(INTRADAY_PRESETS.trailStep)
+      setTrailMove(INTRADAY_PRESETS.trailMove)
+      setMaxRiskPerTrade(INTRADAY_PRESETS.risk)
+      setInterval_(INTRADAY_PRESETS.interval)
+      setCloseBeforeClose(true)
+    } else if (mode === 'swing' && strategyMode === 'intraday') {
+      const s = swingParamsRef.current
+      setAtrSlMult(s.sl)
+      setAtrTpMult(s.tp)
+      setTrailStep(s.trailStep)
+      setTrailMove(s.trailMove)
+      setMaxRiskPerTrade(s.risk)
+      setInterval_(s.interval)
+    }
+    setStrategyMode(mode)
+  }
 
   // Manual order
   const [manualSymbol, setManualSymbol] = useState('')
@@ -86,6 +126,7 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
   const [manualVol, setManualVol] = useState(1)
   const [manualPrice, setManualPrice] = useState(0)
   const [orderMsg, setOrderMsg] = useState('')
+  const [addContractInput, setAddContractInput] = useState('')
 
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
@@ -105,15 +146,38 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
         const c = statusData.config
         if (c.max_lots != null) setMaxLots(c.max_lots)
         if (c.max_positions != null) setMaxPositions(c.max_positions)
-        if (c.signal_threshold != null) setThreshold(c.signal_threshold)
-        if (c.analysis_interval != null) setInterval_(c.analysis_interval)
-        if (c.atr_sl_multiplier != null) setAtrSlMult(c.atr_sl_multiplier)
-        if (c.atr_tp_multiplier != null) setAtrTpMult(c.atr_tp_multiplier)
-        if (c.trail_step_atr != null) setTrailStep(c.trail_step_atr)
-        if (c.trail_move_atr != null) setTrailMove(c.trail_move_atr)
-        if (c.max_risk_per_trade != null) setMaxRiskPerTrade(c.max_risk_per_trade)
         if (c.max_risk_ratio != null) setMaxRiskRatio(c.max_risk_ratio)
+        if (c.max_daily_loss != null) setMaxDailyLoss(c.max_daily_loss)
+        if (c.max_consecutive_losses != null) setMaxConsecLosses(c.max_consecutive_losses)
         if (c.close_before_market_close != null) setCloseBeforeClose(c.close_before_market_close)
+
+        const mode = (c.strategy_mode || 'swing') as 'swing' | 'intraday'
+        setStrategyMode(mode)
+
+        if (mode === 'intraday') {
+          // 日内模式：保存波段原值到 ref，使用 API 返回的实际生效值
+          swingParamsRef.current = {
+            sl: 1.5, tp: 3.0, trailStep: 0.5, trailMove: 0.25,
+            risk: 0.02, interval: c.analysis_interval ?? 300,
+            threshold: 0.3,
+          }
+          setAtrSlMult(c.atr_sl_multiplier ?? INTRADAY_PRESETS.sl)
+          setAtrTpMult(c.atr_tp_multiplier ?? INTRADAY_PRESETS.tp)
+          setTrailStep(c.trail_step_atr ?? INTRADAY_PRESETS.trailStep)
+          setTrailMove(c.trail_move_atr ?? INTRADAY_PRESETS.trailMove)
+          setMaxRiskPerTrade(c.max_risk_per_trade ?? INTRADAY_PRESETS.risk)
+          setInterval_(c.intraday_scan_interval ?? INTRADAY_PRESETS.interval)
+          setThreshold(c.signal_threshold ?? INTRADAY_PRESETS.threshold)
+        } else {
+          // 波段模式：直接加载配置值
+          if (c.atr_sl_multiplier != null) setAtrSlMult(c.atr_sl_multiplier)
+          if (c.atr_tp_multiplier != null) setAtrTpMult(c.atr_tp_multiplier)
+          if (c.trail_step_atr != null) setTrailStep(c.trail_step_atr)
+          if (c.trail_move_atr != null) setTrailMove(c.trail_move_atr)
+          if (c.max_risk_per_trade != null) setMaxRiskPerTrade(c.max_risk_per_trade)
+          if (c.signal_threshold != null) setThreshold(c.signal_threshold)
+          if (c.analysis_interval != null) setInterval_(c.analysis_interval)
+        }
         configLoaded.current = true
       }
     } catch (e: any) {
@@ -144,7 +208,7 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
         max_lots: maxLots,
         max_positions: maxPositions,
         signal_threshold: threshold,
-        analysis_interval: interval,
+        analysis_interval: strategyMode === 'intraday' ? 300 : interval,
         atr_sl_multiplier: atrSlMult,
         atr_tp_multiplier: atrTpMult,
         trail_step_atr: trailStep,
@@ -152,6 +216,10 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
         max_risk_per_trade: maxRiskPerTrade,
         max_risk_ratio: maxRiskRatio,
         close_before_market_close: closeBeforeClose,
+        strategy_mode: strategyMode,
+        intraday_scan_interval: strategyMode === 'intraday' ? interval : 15,
+        max_daily_loss: maxDailyLoss,
+        max_consecutive_losses: maxConsecLosses,
       })
       await refresh()
       // 启动后短时间密集轮询，快速捕获第一轮分析结果
@@ -332,6 +400,34 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
             AI 自动交易
           </h3>
 
+          {/* Strategy Mode Toggle */}
+          <div className="flex items-center gap-2 bg-gray-900/50 rounded-lg p-2">
+            <span className="text-[10px] text-gray-400">策略模式:</span>
+            <button
+              onClick={() => handleModeSwitch('swing')}
+              disabled={isAutoRunning}
+              className={`px-3 py-1 text-[10px] rounded transition-colors ${
+                strategyMode === 'swing'
+                  ? 'bg-cyan-600 text-white'
+                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+              } disabled:opacity-50`}
+            >波段</button>
+            <button
+              onClick={() => handleModeSwitch('intraday')}
+              disabled={isAutoRunning}
+              className={`px-3 py-1 text-[10px] rounded transition-colors ${
+                strategyMode === 'intraday'
+                  ? 'bg-orange-600 text-white'
+                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+              } disabled:opacity-50`}
+            >日内</button>
+            <span className="text-[9px] text-gray-600 ml-auto">
+              {strategyMode === 'intraday'
+                ? 'SL=1.0×ATR TP=2.0×ATR 5min K线'
+                : `SL=${atrSlMult}×ATR TP=${atrTpMult}×ATR 15min K线`}
+            </span>
+          </div>
+
           {/* Config */}
           <div className="space-y-3">
             <div className="grid grid-cols-3 gap-3">
@@ -364,7 +460,10 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
             {/* ATR Risk Management */}
             <div className="bg-gray-900/50 rounded-lg p-3 space-y-2">
               <div className="flex items-center justify-between">
-                <p className="text-[10px] text-cyan-400 font-medium">ATR 风控（基于15分钟K线 ATR(14)）</p>
+                <p className="text-[10px] text-cyan-400 font-medium">
+                  ATR 风控（基于{strategyMode === 'intraday' ? '5' : '15'}分钟K线 ATR(14)）
+                  {strategyMode === 'intraday' && <span className="text-orange-400 ml-1">日内预设</span>}
+                </p>
               </div>
               {(autoStatus as any)?.atr_values && Object.keys((autoStatus as any).atr_values).length > 0 && (
                 <div className="flex flex-wrap gap-2">
@@ -463,30 +562,127 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
               </p>
             </div>
 
+            {/* Intraday-specific settings */}
+            {strategyMode === 'intraday' && (
+              <div className="bg-gray-900/50 rounded-lg p-3 space-y-2">
+                <p className="text-[10px] text-orange-400 font-medium">日内风控</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[10px] text-gray-500 mb-1">
+                      日亏损上限 <span className="text-gray-600">({(maxDailyLoss * 100).toFixed(0)}%权益)</span>
+                    </label>
+                    <input type="number" min={0.01} max={0.10} step={0.01} value={maxDailyLoss}
+                      onChange={e => setMaxDailyLoss(Number(e.target.value))}
+                      disabled={isAutoRunning}
+                      className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-gray-200
+                        disabled:opacity-50 focus:outline-none focus:ring-1 focus:ring-orange-500" />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] text-gray-500 mb-1">连续止损暂停</label>
+                    <input type="number" min={1} max={10} value={maxConsecLosses}
+                      onChange={e => setMaxConsecLosses(Number(e.target.value))}
+                      disabled={isAutoRunning}
+                      className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-gray-200
+                        disabled:opacity-50 focus:outline-none focus:ring-1 focus:ring-orange-500" />
+                  </div>
+                </div>
+                <p className="text-[9px] text-gray-600 leading-snug">
+                  日亏损 {'>'} {(maxDailyLoss * 100).toFixed(0)}% 停止交易 | 连续{maxConsecLosses}次止损暂停30分钟 | 14:30后不新开仓 | SL={atrSlMult}×ATR TP={atrTpMult}×ATR
+                </p>
+                {autoStatus?.daily_pnl != null && (
+                  <div className="flex gap-4 text-[10px]">
+                    <span className={autoStatus.daily_pnl >= 0 ? 'text-green-400' : 'text-red-400'}>
+                      今日盈亏: {autoStatus.daily_pnl >= 0 ? '+' : ''}{autoStatus.daily_pnl.toFixed(1)}点
+                    </span>
+                    <span className="text-gray-500">连续止损: {autoStatus.daily_loss_count ?? 0}次</span>
+                    {autoStatus.ai_bias && Object.keys(autoStatus.ai_bias).length > 0 && (
+                      <span className="text-gray-500">
+                        AI方向: {Object.entries(autoStatus.ai_bias).map(([s, b]) => `${s}=${b}`).join(' ')}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
             <div>
               <label className="block text-[10px] text-gray-500 mb-1">
-                分析周期: <span className="text-gray-300">{interval}秒 ({(interval / 60).toFixed(0)}分钟)</span>
+                {strategyMode === 'intraday' ? '扫描间隔' : '分析周期'}:
+                <span className="text-gray-300 ml-1">
+                  {interval}秒 {interval >= 60 ? `(${(interval / 60).toFixed(0)}分钟)` : ''}
+                </span>
               </label>
-              <input type="range" min={60} max={1800} step={60} value={interval}
+              <input type="range"
+                min={strategyMode === 'intraday' ? 5 : 60}
+                max={strategyMode === 'intraday' ? 120 : 1800}
+                step={strategyMode === 'intraday' ? 5 : 60}
+                value={interval}
                 onChange={e => setInterval_(Number(e.target.value))}
                 disabled={isAutoRunning}
-                className="w-full accent-cyan-500" />
+                className={`w-full ${strategyMode === 'intraday' ? 'accent-orange-500' : 'accent-cyan-500'}`} />
             </div>
           </div>
 
-          {/* Contracts info */}
-          <div className="bg-gray-900/50 rounded-lg p-3">
-            <p className="text-[10px] text-gray-500 mb-1.5">交易合约</p>
-            <div className="flex flex-wrap gap-1">
+          {/* Contracts management */}
+          <div className="bg-gray-900/50 rounded-lg p-3 space-y-2">
+            <p className="text-[10px] text-gray-500">交易合约</p>
+            <div className="flex flex-wrap gap-1.5">
               {(isAutoRunning ? (autoStatus?.contracts || []) : futuresContracts).map(c => (
-                <span key={c} className="text-xs font-mono px-2 py-0.5 rounded bg-orange-900/30 text-orange-300">
+                <span key={c} className="inline-flex items-center gap-1 text-xs font-mono px-2 py-0.5 rounded bg-orange-900/30 text-orange-300">
                   {c}
+                  <button
+                    onClick={async () => {
+                      if (isAutoRunning) {
+                        try {
+                          const res = await updateAutoContracts('remove', c)
+                          if (res.status !== 'OK') setError(res.message)
+                          else await refresh()
+                        } catch (e: any) { setError(e.message) }
+                      }
+                    }}
+                    className={`ml-0.5 text-gray-500 hover:text-red-400 transition-colors ${
+                      !isAutoRunning ? 'hidden' : ''
+                    }`}
+                    title={`移除 ${c}`}
+                  >×</button>
                 </span>
               ))}
               {futuresContracts.length === 0 && !isAutoRunning && (
                 <p className="text-[10px] text-gray-600">请先在左侧搜索并添加期货合约</p>
               )}
             </div>
+            {isAutoRunning && (
+              <div className="flex gap-1.5">
+                <input
+                  type="text"
+                  value={addContractInput}
+                  onChange={e => setAddContractInput(e.target.value.toUpperCase())}
+                  onKeyDown={async e => {
+                    if (e.key === 'Enter' && addContractInput.trim()) {
+                      try {
+                        const res = await updateAutoContracts('add', addContractInput.trim())
+                        if (res.status === 'OK') { setAddContractInput(''); await refresh() }
+                        else setError(res.message)
+                      } catch (err: any) { setError(err.message) }
+                    }
+                  }}
+                  placeholder="输入合约代码，回车添加"
+                  className="flex-1 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs text-gray-200
+                    placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                />
+                <button
+                  onClick={async () => {
+                    if (!addContractInput.trim()) return
+                    try {
+                      const res = await updateAutoContracts('add', addContractInput.trim())
+                      if (res.status === 'OK') { setAddContractInput(''); await refresh() }
+                      else setError(res.message)
+                    } catch (err: any) { setError(err.message) }
+                  }}
+                  className="px-3 py-1 text-xs bg-orange-700 hover:bg-orange-600 text-white rounded transition-colors"
+                >添加</button>
+              </div>
+            )}
           </div>
 
           {/* Start / Stop */}
