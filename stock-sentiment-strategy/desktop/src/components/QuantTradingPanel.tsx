@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import type { QuantAccount, QuantPosition, QuantDecision, QuantAutoStatus } from '../types'
+import type { QuantAccount, QuantPosition, QuantDecision, QuantAutoStatus, QuantTradeLogEntry, PaginatedResult } from '../types'
 import {
   getQuantAccount, startAutoTrade, stopAutoTrade,
-  getAutoTradeStatus, placeQuantOrder, closeQuantPosition,
-  updateAutoContracts,
+  getAutoTradeStatus, getAutoDecisions, placeQuantOrder, closeQuantPosition,
+  updateAutoContracts, clearAutoDecisions, getQuantTradeLog,
 } from '../api'
 
 function formatMoney(n: number): string {
@@ -128,6 +128,20 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
   const [orderMsg, setOrderMsg] = useState('')
   const [addContractInput, setAddContractInput] = useState('')
 
+  // Decision log pagination
+  const [decPage, setDecPage] = useState(1)
+  const [decPageSize, setDecPageSize] = useState(() => {
+    const saved = localStorage.getItem('quant_decPageSize')
+    return saved ? Number(saved) : 20
+  })
+  const [decTotal, setDecTotal] = useState(0)
+
+  // Trade log (open/close records)
+  const [tradeLog, setTradeLog] = useState<QuantTradeLogEntry[]>([])
+  const [tradeLogTotal, setTradeLogTotal] = useState(0)
+  const [tradeLogPage, setTradeLogPage] = useState(1)
+  const [showTradeLog, setShowTradeLog] = useState(false)
+
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const configLoaded = useRef(false)
@@ -155,7 +169,6 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
         setStrategyMode(mode)
 
         if (mode === 'intraday') {
-          // 日内模式：保存波段原值到 ref，使用 API 返回的实际生效值
           swingParamsRef.current = {
             sl: 1.5, tp: 3.0, trailStep: 0.5, trailMove: 0.25,
             risk: 0.02, interval: c.analysis_interval ?? 300,
@@ -169,7 +182,6 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
           setInterval_(c.intraday_scan_interval ?? INTRADAY_PRESETS.interval)
           setThreshold(c.signal_threshold ?? INTRADAY_PRESETS.threshold)
         } else {
-          // 波段模式：直接加载配置值
           if (c.atr_sl_multiplier != null) setAtrSlMult(c.atr_sl_multiplier)
           if (c.atr_tp_multiplier != null) setAtrTpMult(c.atr_tp_multiplier)
           if (c.trail_step_atr != null) setTrailStep(c.trail_step_atr)
@@ -185,11 +197,64 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
     }
   }, [])
 
+  // Decisions fetching — independent from status polling
+  const [decisionsData, setDecisionsData] = useState<QuantDecision[]>([])
+  const decisionsPollRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const usesDedicatedEndpoint = useRef(true)
+
+  const fetchDecisions = useCallback(async (page: number, pageSize: number) => {
+    if (usesDedicatedEndpoint.current) {
+      try {
+        const res = await getAutoDecisions(page, pageSize)
+        setDecisionsData(res.items || [])
+        setDecTotal(res.total ?? 0)
+        return
+      } catch {
+        usesDedicatedEndpoint.current = false
+      }
+    }
+    // Fallback: read from status endpoint (no pagination, always page 1 data)
+    try {
+      const status = await getAutoTradeStatus()
+      const all = status.decisions || []
+      setDecisionsData(all)
+      setDecTotal(status.decisions_count ?? all.length)
+    } catch { /* ignore */ }
+  }, [])
+
   useEffect(() => {
     refresh()
-    pollRef.current = setInterval(refresh, 5000)
+    pollRef.current = setInterval(refresh, 500)
     return () => { if (pollRef.current) clearInterval(pollRef.current) }
   }, [refresh])
+
+  useEffect(() => {
+    fetchDecisions(decPage, decPageSize)
+    decisionsPollRef.current = setInterval(() => fetchDecisions(decPage, decPageSize), 3000)
+    return () => { if (decisionsPollRef.current) clearInterval(decisionsPollRef.current) }
+  }, [decPage, decPageSize, fetchDecisions])
+
+  const fetchTradeLog = useCallback(async (p?: number) => {
+    try {
+      const res = await getQuantTradeLog({ page: p ?? tradeLogPage, page_size: 50 })
+      setTradeLog(res.items)
+      setTradeLogTotal(res.total)
+    } catch { /* ignore */ }
+  }, [tradeLogPage])
+
+  useEffect(() => {
+    if (showTradeLog) fetchTradeLog()
+  }, [showTradeLog, fetchTradeLog])
+
+  const handleClearDecisions = async () => {
+    if (!confirm('确定要清除所有 AI 决策日志吗？此操作不可撤销。')) return
+    try {
+      await clearAutoDecisions()
+      setDecPage(1)
+    } catch (e: any) {
+      setError(`清除日志失败: ${e.message}`)
+    }
+  }
 
   const handleStartAuto = async () => {
     if (!tqsdkConnected) {
@@ -272,7 +337,7 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
   }
 
   const isAutoRunning = autoStatus?.running || false
-  const decisions = autoStatus?.decisions || []
+  const decisions = decisionsData
 
   return (
     <div className="space-y-6">
@@ -898,28 +963,161 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
         </div>
       )}
 
+      {/* Trade Log (open / close records) */}
+      <div>
+        <div className="flex items-center justify-between border-b border-gray-800 pb-2 mb-3">
+          <h3 className="text-sm font-semibold text-gray-300">
+            持仓交易记录
+            {tradeLogTotal > 0 && (
+              <span className="text-[10px] text-gray-600 ml-2 font-normal">(共 {tradeLogTotal} 条)</span>
+            )}
+          </h3>
+          <button
+            onClick={() => { setShowTradeLog(v => !v) }}
+            className={`text-[10px] px-2 py-0.5 rounded transition-colors ${
+              showTradeLog ? 'bg-blue-900/40 text-blue-300' : 'bg-gray-800 text-gray-500 hover:text-gray-300'
+            }`}
+          >
+            {showTradeLog ? '收起' : '展开'}
+          </button>
+        </div>
+        {showTradeLog && (
+          tradeLog.length === 0 ? (
+            <p className="text-xs text-gray-600 text-center py-4">暂无开仓/平仓记录</p>
+          ) : (
+            <>
+              <div className="overflow-auto rounded-lg border border-gray-800 max-h-[320px]">
+                <table className="w-full text-xs">
+                  <thead className="bg-gray-900 sticky top-0 z-10">
+                    <tr className="text-gray-500 border-b border-gray-800">
+                      <th className="text-left px-3 py-2">时间</th>
+                      <th className="text-left px-3 py-2">合约</th>
+                      <th className="text-center px-3 py-2">类型</th>
+                      <th className="text-center px-3 py-2">方向</th>
+                      <th className="text-center px-3 py-2">动作</th>
+                      <th className="text-right px-3 py-2">手数</th>
+                      <th className="text-right px-3 py-2">价格</th>
+                      <th className="text-right px-3 py-2">止损</th>
+                      <th className="text-right px-3 py-2">止盈</th>
+                      <th className="text-right px-3 py-2">盈亏</th>
+                      <th className="text-left px-3 py-2">信号</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tradeLog.map((t, i) => {
+                      const isClose = t.type === 'close'
+                      const hasPnl = isClose && (t.entry_price ?? 0) > 0
+                      const holdMin = (t.holding_seconds ?? 0) > 0 ? Math.floor((t.holding_seconds ?? 0) / 60) : 0
+                      return (
+                        <tr key={i} className={`border-b border-gray-800/30 ${
+                          isClose ? ((t.pnl_points ?? 0) > 0 ? 'bg-red-900/10' : 'bg-green-900/10') : 'bg-cyan-900/5'
+                        }`}>
+                          <td className="px-3 py-1.5 text-gray-500 whitespace-nowrap">
+                            {t.timestamp.slice(5, 19).replace('T', ' ')}
+                          </td>
+                          <td className="px-3 py-1.5 font-mono text-gray-300">{t.symbol}</td>
+                          <td className="px-3 py-1.5 text-center">
+                            <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${
+                              isClose ? 'bg-yellow-900/40 text-yellow-300' : 'bg-blue-900/40 text-blue-300'
+                            }`}>
+                              {isClose ? '平仓' : '开仓'}
+                            </span>
+                          </td>
+                          <td className="px-3 py-1.5 text-center">
+                            <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${
+                              t.direction === 'LONG' ? 'bg-red-900/30 text-red-400' : 'bg-green-900/30 text-green-400'
+                            }`}>
+                              {t.direction === 'LONG' ? '多' : '空'}
+                            </span>
+                          </td>
+                          <td className="px-3 py-1.5 text-center"><ActionBadge action={t.action} /></td>
+                          <td className="px-3 py-1.5 text-right text-gray-400">{t.lots}</td>
+                          <td className="px-3 py-1.5 text-right text-gray-400">
+                            {t.price?.toFixed(1)}
+                            {hasPnl && <span className="text-[9px] text-gray-600 block">入{(t.entry_price ?? 0).toFixed(1)}</span>}
+                          </td>
+                          <td className="px-3 py-1.5 text-right text-red-400/70">{t.stop_loss ? t.stop_loss.toFixed(1) : '-'}</td>
+                          <td className="px-3 py-1.5 text-right text-green-400/70">{t.take_profit ? t.take_profit.toFixed(1) : '-'}</td>
+                          <td className="px-3 py-1.5 text-right">
+                            {hasPnl ? (
+                              <div className="flex flex-col items-end">
+                                <span className={`font-mono font-medium ${(t.pnl_points ?? 0) > 0 ? 'text-red-400' : 'text-green-400'}`}>
+                                  {(t.pnl_points ?? 0) > 0 ? '+' : ''}{(t.pnl_points ?? 0).toFixed(1)}
+                                </span>
+                                <span className={`text-[9px] ${(t.pnl_pct ?? 0) > 0 ? 'text-red-500/60' : 'text-green-500/60'}`}>
+                                  {(t.pnl_pct ?? 0) > 0 ? '+' : ''}{(t.pnl_pct ?? 0).toFixed(2)}%
+                                  {holdMin > 0 && <span className="text-gray-600 ml-1">{holdMin}分钟</span>}
+                                </span>
+                              </div>
+                            ) : <span className="text-gray-700">-</span>}
+                          </td>
+                          <td className="px-3 py-1.5 text-center"><SignalBadge signal={t.signal} /></td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              {tradeLogTotal > 50 && (
+                <div className="flex items-center justify-center gap-3 mt-2 text-xs">
+                  <button disabled={tradeLogPage <= 1}
+                    onClick={() => { const p = tradeLogPage - 1; setTradeLogPage(p); fetchTradeLog(p) }}
+                    className="px-2 py-0.5 rounded bg-gray-800 text-gray-400 hover:text-white disabled:opacity-30">
+                    上一页
+                  </button>
+                  <span className="text-gray-500">{tradeLogPage} / {Math.ceil(tradeLogTotal / 50)}</span>
+                  <button disabled={tradeLogPage >= Math.ceil(tradeLogTotal / 50)}
+                    onClick={() => { const p = tradeLogPage + 1; setTradeLogPage(p); fetchTradeLog(p) }}
+                    className="px-2 py-0.5 rounded bg-gray-800 text-gray-400 hover:text-white disabled:opacity-30">
+                    下一页
+                  </button>
+                </div>
+              )}
+            </>
+          )
+        )}
+      </div>
+
       {/* AI Decision Log */}
-      {decisions.length > 0 && (() => {
+      {(() => {
         const filtered = showHold ? decisions : decisions.filter((d: any) => d.action !== 'HOLD')
         const actionCount = decisions.filter((d: any) => d.action !== 'HOLD').length
+        const totalPages = decPageSize > 0 ? Math.max(1, Math.ceil(decTotal / decPageSize)) : 1
         return (
         <div>
           <div className="flex items-center justify-between border-b border-gray-800 pb-2 mb-3">
             <h3 className="text-sm font-semibold text-gray-300">
               AI 交易决策日志
               <span className="text-[10px] text-gray-600 ml-2 font-normal">
-                ({actionCount} 条交易 / 共 {autoStatus?.decisions_count || 0} 条)
+                ({actionCount} 条交易 / 共 {decTotal} 条)
               </span>
             </h3>
-            <button onClick={() => { const v = !showHold; setShowHold(v); localStorage.setItem('quant_showHold', String(v)) }}
-              className={`text-[10px] px-2 py-0.5 rounded transition-colors ${
-                showHold ? 'bg-gray-700 text-gray-300' : 'bg-gray-800 text-gray-500 hover:text-gray-300'}`}>
-              {showHold ? '隐藏观望' : '显示观望'}
-            </button>
+            <div className="flex items-center gap-2">
+              <select
+                value={decPageSize}
+                onChange={e => { const v = Number(e.target.value); setDecPageSize(v); setDecPage(1); localStorage.setItem('quant_decPageSize', String(v)) }}
+                className="text-[10px] bg-gray-800 text-gray-400 border border-gray-700 rounded px-1 py-0.5 outline-none"
+              >
+                <option value={10}>10条/页</option>
+                <option value={20}>20条/页</option>
+                <option value={50}>50条/页</option>
+                <option value={100}>100条/页</option>
+              </select>
+              <button onClick={() => { const v = !showHold; setShowHold(v); localStorage.setItem('quant_showHold', String(v)) }}
+                className={`text-[10px] px-2 py-0.5 rounded transition-colors ${
+                  showHold ? 'bg-gray-700 text-gray-300' : 'bg-gray-800 text-gray-500 hover:text-gray-300'}`}>
+                {showHold ? '隐藏观望' : '显示观望'}
+              </button>
+              <button onClick={handleClearDecisions}
+                className="text-[10px] px-2 py-0.5 rounded bg-red-900/30 text-red-400 hover:bg-red-900/50 transition-colors">
+                清除日志
+              </button>
+            </div>
           </div>
           {filtered.length === 0 ? (
             <p className="text-xs text-gray-600 text-center py-4">暂无交易动作记录</p>
           ) : (
+          <>
           <div className="overflow-auto rounded-lg border border-gray-800 max-h-[400px]">
             <table className="w-full text-xs">
               <thead className="bg-gray-900 sticky top-0 z-10">
@@ -996,6 +1194,25 @@ export default function QuantTradingPanel({ futuresContracts, tqsdkConnected, tq
               </tbody>
             </table>
           </div>
+          {/* Pagination controls */}
+          <div className="flex items-center justify-between mt-2 text-xs">
+            <span className="text-gray-600">
+              第 {decPage} / {totalPages} 页，共 {decTotal} 条
+            </span>
+            <div className="flex items-center gap-2">
+              <button disabled={decPage <= 1}
+                onClick={() => setDecPage(p => Math.max(1, p - 1))}
+                className="px-2 py-0.5 rounded bg-gray-800 text-gray-400 hover:text-white disabled:opacity-30 transition-colors">
+                上一页
+              </button>
+              <button disabled={decPage >= totalPages}
+                onClick={() => setDecPage(p => Math.min(totalPages, p + 1))}
+                className="px-2 py-0.5 rounded bg-gray-800 text-gray-400 hover:text-white disabled:opacity-30 transition-colors">
+                下一页
+              </button>
+            </div>
+          </div>
+          </>
           )}
         </div>
         )

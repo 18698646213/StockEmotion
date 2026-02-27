@@ -334,10 +334,38 @@ export interface QuantAutoStatus {
   account_pnl: QuantAccountPnl
   unrealized_pnl: number
   decisions_count: number
-  decisions: QuantDecision[]
+  decisions?: QuantDecision[]
   ai_bias?: Record<string, string>
   daily_pnl?: number
   daily_loss_count?: number
+}
+
+export interface QuantTradeLogEntry {
+  timestamp: string
+  symbol: string
+  action: string
+  type: 'open' | 'close'
+  direction: 'LONG' | 'SHORT'
+  lots: number
+  price: number
+  atr: number
+  stop_loss: number
+  take_profit: number
+  signal: string
+  composite_score: number
+  reason: string
+  order_result: Record<string, unknown> | null
+  entry_price?: number
+  pnl_points?: number
+  pnl_pct?: number
+  holding_seconds?: number
+}
+
+export interface PaginatedResult<T> {
+  items: T[]
+  total: number
+  page: number
+  page_size: number
 }
 
 export type ActiveView = 'analysis' | 'portfolio' | 'backtest' | 'quant'

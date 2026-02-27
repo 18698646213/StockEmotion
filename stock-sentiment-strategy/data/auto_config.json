@@ -5,7 +5,7 @@
     "JD2604",
     "M2605"
   ],
-  "enabled": true,
+  "enabled": false,
   "max_lots": 1,
   "max_positions": 3,
   "signal_threshold": 0.3,

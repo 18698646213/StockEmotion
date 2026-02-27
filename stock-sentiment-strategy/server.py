@@ -1486,6 +1486,31 @@ def quant_auto_status():
     }
 
 
+@app.get("/api/quant/auto/decisions")
+def quant_auto_decisions(page: int = 1, page_size: int = 20):
+    """Get paginated AI decision logs (newest first)."""
+    from src.trading.auto_strategy import get_auto_trader
+    trader = get_auto_trader()
+    return trader.get_decisions(limit=50, page=page, page_size=page_size)
+
+
+@app.delete("/api/quant/auto/decisions")
+def quant_clear_decisions():
+    """Clear all AI decision logs."""
+    from src.trading.auto_strategy import get_auto_trader
+    trader = get_auto_trader()
+    trader.clear_decisions()
+    return {"status": "OK", "message": "已清除所有 AI 决策日志"}
+
+
+@app.get("/api/quant/auto/trade-log")
+def quant_auto_trade_log(page: int = 1, page_size: int = 50):
+    """Get paginated open/close trade log."""
+    from src.trading.auto_strategy import get_auto_trader
+    trader = get_auto_trader()
+    return trader.get_trade_log(page=page, page_size=page_size)
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------

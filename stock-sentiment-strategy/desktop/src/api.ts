@@ -4,6 +4,7 @@ import type {
   StockAnalysis, AppConfig, AnalyzeRequest,
   PortfolioSummary, TradeRecord, TradeResult,
   TradeRequest, SignalTradeRequest, BacktestRequest, BacktestReport,
+  QuantTradeLogEntry, PaginatedResult,
 } from './types'
 
 const API_BASE = 'http://127.0.0.1:8321'
@@ -291,7 +292,7 @@ export async function runBacktest(
 // Quant Trading API (TqSdk + DeepSeek)
 // ---------------------------------------------------------------------------
 
-import type { QuantAccount, QuantPosition, QuantAutoStatus } from './types'
+import type { QuantAccount, QuantPosition, QuantAutoStatus, QuantDecision } from './types'
 
 export async function getQuantAccount(): Promise<{
   connected: boolean
@@ -372,6 +373,24 @@ export async function getAutoTradeStatus(): Promise<QuantAutoStatus> {
   return request<QuantAutoStatus>('/api/quant/auto/status', { timeout: 10_000 })
 }
 
+export async function getAutoDecisions(page: number = 1, pageSize: number = 20): Promise<{
+  items: QuantDecision[]; total: number; page: number; page_size: number
+}> {
+  return request(`/api/quant/auto/decisions?page=${page}&page_size=${pageSize}`, { timeout: 10_000 })
+}
+
 export async function getQuantTrades(): Promise<Record<string, unknown>[]> {
   return request('/api/quant/trades', { timeout: 10_000 })
+}
+
+export async function clearAutoDecisions(): Promise<{ status: string; message: string }> {
+  return request('/api/quant/auto/decisions', { method: 'DELETE', timeout: 10_000 })
+}
+
+export async function getQuantTradeLog(params?: {
+  page?: number; page_size?: number
+}): Promise<PaginatedResult<QuantTradeLogEntry>> {
+  const p = params?.page || 1
+  const ps = params?.page_size || 50
+  return request(`/api/quant/auto/trade-log?page=${p}&page_size=${ps}`, { timeout: 10_000 })
 }

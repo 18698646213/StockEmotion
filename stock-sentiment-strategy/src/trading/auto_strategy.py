@@ -30,6 +30,7 @@ PERSIST_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 DECISIONS_FILE = PERSIST_DIR / "auto_decisions.json"
 POSITIONS_FILE = PERSIST_DIR / "auto_positions.json"
 CONFIG_FILE = PERSIST_DIR / "auto_config.json"
+TRADE_LOG_FILE = PERSIST_DIR / "auto_trade_log.json"
 
 # ---------------------------------------------------------------------------
 # ATR 参数 — 波段模式默认值
@@ -130,6 +131,7 @@ class AutoTrader:
         self._running = False
         self._thread: Optional[threading.Thread] = None
         self._decisions: list[TradeDecision] = []
+        self._trade_log: list[dict] = []
         self._lock = threading.Lock()
         self._cycle_lock = threading.Lock()   # prevents concurrent analysis cycles
         self._contracts: list[str] = []
@@ -410,31 +412,56 @@ class AutoTrader:
             "avg_holding_seconds": int(avg_hold),
         }
 
-    def get_decisions(self, limit: int = 50) -> list[dict]:
+    def get_decisions(self, limit: int = 50, *,
+                      page: int = 1, page_size: int = 0) -> dict | list[dict]:
+        """Return decisions. If page_size > 0, return paginated result dict;
+        otherwise fall back to legacy list (limit most recent)."""
         with self._lock:
-            items = self._decisions[-limit:]
-        rows = [
-            {
-                "timestamp": d.timestamp,
-                "symbol": d.symbol,
-                "action": d.action,
-                "lots": d.lots,
-                "price": d.price,
-                "reason": d.reason,
-                "signal": d.signal,
-                "composite_score": d.composite_score,
-                "atr": d.atr,
-                "stop_loss": d.stop_loss,
-                "take_profit": d.take_profit,
+            total = len(self._decisions)
+            if page_size > 0:
+                end = total - (page - 1) * page_size
+                start = end - page_size
+                start = max(start, 0)
+                end = max(end, 0)
+                items = list(reversed(self._decisions[start:end]))
+            else:
+                items = list(reversed(self._decisions[-limit:]))
+
+        def _to_dict(d: TradeDecision) -> dict:
+            return {
+                "timestamp": d.timestamp, "symbol": d.symbol,
+                "action": d.action, "lots": d.lots, "price": d.price,
+                "reason": d.reason, "signal": d.signal,
+                "composite_score": d.composite_score, "atr": d.atr,
+                "stop_loss": d.stop_loss, "take_profit": d.take_profit,
                 "order_result": d.order_result,
-                "entry_price": d.entry_price,
-                "pnl_points": d.pnl_points,
-                "pnl_pct": d.pnl_pct,
-                "holding_seconds": d.holding_seconds,
+                "entry_price": d.entry_price, "pnl_points": d.pnl_points,
+                "pnl_pct": d.pnl_pct, "holding_seconds": d.holding_seconds,
             }
-            for d in reversed(items)
-        ]
-        return self._sanitize(rows)
+
+        rows = self._sanitize([_to_dict(d) for d in items])
+        if page_size > 0:
+            return {"items": rows, "total": total, "page": page, "page_size": page_size}
+        return rows
+
+    def clear_decisions(self):
+        """Clear all decision records from memory and disk."""
+        with self._lock:
+            self._decisions.clear()
+        self._save_state()
+        logger.info("已清除所有 AI 决策日志")
+
+    def get_trade_log(self, *, page: int = 1, page_size: int = 50) -> dict:
+        """Return paginated open/close trade log (newest first)."""
+        with self._lock:
+            total = len(self._trade_log)
+            end = total - (page - 1) * page_size
+            start = end - page_size
+            start = max(start, 0)
+            end = max(end, 0)
+            items = list(reversed(self._trade_log[start:end]))
+        return {"items": self._sanitize(items), "total": total,
+                "page": page, "page_size": page_size}
 
     # ------------------------------------------------------------------
     # Core loop
@@ -1534,7 +1561,35 @@ class AutoTrader:
                          d.symbol, d.action, d.lots, d.price,
                          d.atr, d.stop_loss, d.take_profit, pnl_str,
                          d.order_result or "")
+            self._append_trade_log(d)
         self._save_state()
+
+    def _append_trade_log(self, d: TradeDecision):
+        """Record open/close trades to the separate trade log."""
+        is_close = d.action in ("CLOSE_LONG", "CLOSE_SHORT")
+        entry = {
+            "timestamp": d.timestamp,
+            "symbol": d.symbol,
+            "action": d.action,
+            "type": "close" if is_close else "open",
+            "direction": "LONG" if d.action in ("BUY", "CLOSE_LONG") else "SHORT",
+            "lots": d.lots,
+            "price": d.price,
+            "atr": d.atr,
+            "stop_loss": d.stop_loss,
+            "take_profit": d.take_profit,
+            "signal": d.signal,
+            "composite_score": d.composite_score,
+            "reason": d.reason,
+            "order_result": d.order_result,
+        }
+        if is_close:
+            entry["entry_price"] = d.entry_price
+            entry["pnl_points"] = d.pnl_points
+            entry["pnl_pct"] = d.pnl_pct
+            entry["holding_seconds"] = d.holding_seconds
+        with self._lock:
+            self._trade_log.append(entry)
 
     # ------------------------------------------------------------------
     # Persistence
@@ -1582,6 +1637,12 @@ class AutoTrader:
             }
             with open(POSITIONS_FILE, "w", encoding="utf-8") as f:
                 json.dump(positions_data, f, ensure_ascii=False, indent=2)
+
+            with self._lock:
+                trade_log_data = list(self._trade_log)
+            trade_log_data = self._sanitize(trade_log_data)
+            with open(TRADE_LOG_FILE, "w", encoding="utf-8") as f:
+                json.dump(trade_log_data, f, ensure_ascii=False, indent=2)
         except Exception as e:
             logger.warning("保存自动交易记录失败: %s", e)
 
@@ -1681,6 +1742,14 @@ class AutoTrader:
                 logger.info("已加载 %d 个管理持仓状态", len(self._positions))
             except Exception as e:
                 logger.warning("加载管理持仓状态失败: %s", e)
+
+        if TRADE_LOG_FILE.exists():
+            try:
+                with open(TRADE_LOG_FILE, "r", encoding="utf-8") as f:
+                    self._trade_log = json.load(f)
+                logger.info("已加载 %d 条持仓交易记录", len(self._trade_log))
+            except Exception as e:
+                logger.warning("加载持仓交易记录失败: %s", e)
 
 
 # ---------------------------------------------------------------------------
