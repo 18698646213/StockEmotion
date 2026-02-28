@@ -22,7 +22,7 @@ import time
 from dataclasses import dataclass, field, asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional, Union
 
 logger = logging.getLogger(__name__)
 
@@ -413,7 +413,7 @@ class AutoTrader:
         }
 
     def get_decisions(self, limit: int = 50, *,
-                      page: int = 1, page_size: int = 0) -> dict | list[dict]:
+                      page: int = 1, page_size: int = 0) -> Union[dict, List[dict]]:
         """Return decisions. If page_size > 0, return paginated result dict;
         otherwise fall back to legacy list (limit most recent)."""
         with self._lock:
